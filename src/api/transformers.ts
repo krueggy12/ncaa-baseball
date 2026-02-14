@@ -1,4 +1,4 @@
-import type { Game, TeamScore, GameSituation, GameState, RankedTeam } from '../types/game';
+import type { Game, TeamScore, GameSituation, GameState, RankedTeam, ConferenceStandings, StandingEntry } from '../types/game';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -151,5 +151,56 @@ export function transformTeams(raw: any): ESPNTeam[] {
       color: team.color ? `#${team.color}` : '#666',
       conferenceId: team.groups?.id,
     };
+  });
+}
+
+function getStat(stats: any[], name: string): string {
+  const s = stats.find((st: any) => st.name === name);
+  return s?.displayValue || s?.value?.toString() || '0';
+}
+
+export function transformStandings(raw: any): ConferenceStandings[] {
+  const division = raw?.children?.[0]; // NCAA Division I
+  if (!division?.children) return [];
+
+  return division.children.map((conf: any) => {
+    const entries: StandingEntry[] = (conf.standings?.entries || []).map((entry: any) => {
+      const team = entry.team || {};
+      const stats = entry.stats || [];
+
+      // Conference record from 'overall' stat under 'vsconf' or from league-specific stats
+      const confWins = parseInt(getStat(stats, 'leagueWins') || getStat(stats, 'wins'), 10) || 0;
+      const confLosses = parseInt(getStat(stats, 'leagueLosses') || getStat(stats, 'losses'), 10) || 0;
+      const overallWins = parseInt(getStat(stats, 'wins'), 10) || 0;
+      const overallLosses = parseInt(getStat(stats, 'losses'), 10) || 0;
+
+      return {
+        teamId: team.id || '',
+        displayName: team.displayName || team.shortDisplayName || '',
+        abbreviation: team.abbreviation || '',
+        logo: team.logos?.[0]?.href || '',
+        conferenceWins: confWins,
+        conferenceLosses: confLosses,
+        conferenceWinPct: parseFloat(getStat(stats, 'leagueWinPercent')) || 0,
+        overallWins,
+        overallLosses,
+        overallWinPct: parseFloat(getStat(stats, 'winPercent')) || 0,
+        gamesPlayed: parseInt(getStat(stats, 'gamesPlayed'), 10) || 0,
+        streak: getStat(stats, 'streak'),
+        runDifferential: getStat(stats, 'pointDifferential'),
+        runsScored: parseInt(getStat(stats, 'pointsFor'), 10) || 0,
+        runsAllowed: parseInt(getStat(stats, 'pointsAgainst'), 10) || 0,
+      } satisfies StandingEntry;
+    });
+
+    // Sort by conference win pct descending
+    entries.sort((a, b) => b.conferenceWinPct - a.conferenceWinPct);
+
+    return {
+      conferenceName: conf.name || conf.abbreviation || '',
+      conferenceAbbreviation: conf.abbreviation || '',
+      conferenceId: conf.id || '',
+      entries,
+    } satisfies ConferenceStandings;
   });
 }

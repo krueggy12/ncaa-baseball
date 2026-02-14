@@ -79,3 +79,28 @@ export interface Conference {
 }
 
 export type StatusFilter = 'all' | 'live' | 'final' | 'scheduled';
+
+export interface StandingEntry {
+  teamId: string;
+  displayName: string;
+  abbreviation: string;
+  logo: string;
+  conferenceWins: number;
+  conferenceLosses: number;
+  conferenceWinPct: number;
+  overallWins: number;
+  overallLosses: number;
+  overallWinPct: number;
+  gamesPlayed: number;
+  streak: string;
+  runDifferential: string;
+  runsScored: number;
+  runsAllowed: number;
+}
+
+export interface ConferenceStandings {
+  conferenceName: string;
+  conferenceAbbreviation: string;
+  conferenceId: string;
+  entries: StandingEntry[];
+}

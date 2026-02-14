@@ -55,11 +55,13 @@ body {
   padding-top: env(safe-area-inset-top, 0px);
 }
 
-/* Hide scrollbar for date strip */
-.no-scrollbar::-webkit-scrollbar {
+/* Hide scrollbar for scrollable strips */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
-.no-scrollbar {
+.no-scrollbar,
+.scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }

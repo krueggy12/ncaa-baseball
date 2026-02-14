@@ -63,6 +63,14 @@ export default defineConfig({
               expiration: { maxEntries: 5, maxAgeSeconds: 60 * 60 * 24 * 7 },
             },
           },
+          {
+            urlPattern: /^https:\/\/site\.web\.api\.espn\.com\/apis\/v2\/sports\/baseball\/college-baseball\/standings/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'espn-standings',
+              expiration: { maxEntries: 5, maxAgeSeconds: 3600 },
+            },
+          },
         ],
       },
     }),
