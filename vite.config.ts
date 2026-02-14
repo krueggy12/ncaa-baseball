@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
-  base: '/ncaa-baseball/',
+  base: '/',
   plugins: [
     react(),
     tailwindcss(),
@@ -19,8 +19,8 @@ export default defineConfig({
         background_color: '#f8fafc',
         display: 'standalone',
         orientation: 'portrait',
-        scope: '/ncaa-baseball/',
-        start_url: '/ncaa-baseball/',
+        scope: '/',
+        start_url: '/',
         categories: ['sports'],
         icons: [
           { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' },
