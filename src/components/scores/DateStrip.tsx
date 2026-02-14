@@ -31,9 +31,9 @@ export default function DateStrip({ selectedDate, onSelectDate }: DateStripProps
             onClick={() => onSelectDate(date)}
             className={`flex flex-col items-center shrink-0 px-2.5 py-1.5 rounded-lg transition-colors min-w-[48px] ${
               selected
-                ? 'bg-navy text-white'
+                ? 'bg-royal text-white'
                 : today
-                ? 'bg-blue-50 dark:bg-blue-900/30 text-navy dark:text-blue-400'
+                ? 'bg-blue-50 dark:bg-blue-900/30 text-royal dark:text-blue-400'
                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
             }`}
           >

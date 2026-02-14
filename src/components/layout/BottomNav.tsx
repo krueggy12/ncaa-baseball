@@ -52,7 +52,7 @@ export default function BottomNav() {
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 px-3 py-1 transition-colors ${
                 isActive
-                  ? 'text-navy dark:text-blue-400'
+                  ? 'text-royal dark:text-blue-400'
                   : 'text-gray-400 dark:text-gray-500'
               }`
             }

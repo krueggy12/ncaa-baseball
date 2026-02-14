@@ -29,7 +29,7 @@ export default function PlayByPlay({ plays }: PlayByPlayProps) {
         <div
           key={play.id || i}
           className={`text-xs text-gray-600 dark:text-gray-400 py-1.5 border-b border-gray-50 dark:border-gray-700/50 ${
-            play.scoreValue > 0 ? 'font-semibold text-navy dark:text-blue-400' : ''
+            play.scoreValue > 0 ? 'font-semibold text-royal dark:text-blue-400' : ''
           }`}
         >
           {play.period && (

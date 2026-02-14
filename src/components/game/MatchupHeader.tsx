@@ -13,7 +13,7 @@ export default function MatchupHeader({ game }: Props) {
   const isLive = game.status.state === 'in';
 
   return (
-    <div className="bg-navy text-white px-4 py-5">
+    <div className="bg-gradient-to-b from-navy to-[#1f3561] text-white px-4 py-5">
       <div className="flex items-center justify-between max-w-md mx-auto">
         {/* Away team */}
         <div className="flex flex-col items-center gap-1 flex-1">
@@ -22,7 +22,7 @@ export default function MatchupHeader({ game }: Props) {
             <RankBadge rank={game.away.rank} />
             <span className="text-sm font-semibold">{game.away.abbreviation}</span>
           </div>
-          <span className="text-xs text-blue-200">{game.away.record}</span>
+          <span className="text-xs text-blue-200/70">{game.away.record}</span>
           <span className="text-3xl font-bold tabular-nums">{game.away.score}</span>
         </div>
 
@@ -53,7 +53,7 @@ export default function MatchupHeader({ game }: Props) {
             <RankBadge rank={game.home.rank} />
             <span className="text-sm font-semibold">{game.home.abbreviation}</span>
           </div>
-          <span className="text-xs text-blue-200">{game.home.record}</span>
+          <span className="text-xs text-blue-200/70">{game.home.record}</span>
           <span className="text-3xl font-bold tabular-nums">{game.home.score}</span>
         </div>
       </div>

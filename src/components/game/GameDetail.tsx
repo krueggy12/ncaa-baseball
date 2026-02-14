@@ -35,7 +35,7 @@ export default function GameDetail({ game, summary }: Props) {
             onClick={() => setActiveTab(tab.id)}
             className={`flex-1 py-2.5 text-xs font-semibold uppercase tracking-wide transition-colors ${
               activeTab === tab.id
-                ? 'text-navy dark:text-blue-400 border-b-2 border-navy dark:border-blue-400'
+                ? 'text-royal dark:text-blue-400 border-b-2 border-royal dark:border-blue-400'
                 : 'text-gray-400 dark:text-gray-500'
             }`}
           >

@@ -37,7 +37,7 @@ export default function FavoritesPage() {
         </div>
         <button
           onClick={() => setShowSearch(true)}
-          className="px-3 py-1.5 bg-navy text-white text-xs font-semibold rounded-lg"
+          className="px-3 py-1.5 bg-royal text-white text-xs font-semibold rounded-lg"
         >
           + Add Team
         </button>
@@ -93,7 +93,7 @@ export default function FavoritesPage() {
           </p>
           <button
             onClick={() => setShowSearch(true)}
-            className="px-4 py-2 bg-navy text-white text-sm font-medium rounded-lg"
+            className="px-4 py-2 bg-royal text-white text-sm font-medium rounded-lg"
           >
             Search Teams
           </button>

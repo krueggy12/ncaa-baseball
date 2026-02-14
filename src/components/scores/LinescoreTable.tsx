@@ -20,7 +20,7 @@ export default function LinescoreTable({ away, home, currentInning }: LinescoreP
               <th
                 key={i}
                 className={`px-1.5 py-1 font-medium min-w-[24px] ${
-                  currentInning && i + 1 === currentInning ? 'text-navy dark:text-blue-400 font-bold' : ''
+                  currentInning && i + 1 === currentInning ? 'text-royal dark:text-blue-400 font-bold' : ''
                 }`}
               >
                 {i + 1}

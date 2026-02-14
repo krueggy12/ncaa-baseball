@@ -1,25 +1,31 @@
+import logoImg from '/logo.png?url';
+
 interface HeaderProps {
   liveCount?: number;
 }
 
 export default function Header({ liveCount }: HeaderProps) {
   return (
-    <header className="safe-top bg-navy text-white sticky top-0 z-30">
-      <div className="flex items-center justify-between px-4 py-3">
-        <div className="flex items-center gap-2">
-          <svg className="w-7 h-7" viewBox="0 0 64 64" fill="none">
-            <circle cx="32" cy="32" r="30" fill="#c41e3a" />
-            <circle cx="32" cy="32" r="18" stroke="white" strokeWidth="2" fill="none" />
-            <path d="M32 14 C26 20, 20 26, 20 32 C20 38, 26 44, 32 50" stroke="white" strokeWidth="1.5" fill="none" />
-            <path d="M32 14 C38 20, 44 26, 44 32 C44 38, 38 44, 32 50" stroke="white" strokeWidth="1.5" fill="none" />
-            <line x1="14" y1="32" x2="50" y2="32" stroke="white" strokeWidth="1.5" />
-          </svg>
-          <h1 className="text-lg font-bold tracking-tight">NCAA Baseball</h1>
+    <header className="safe-top bg-gradient-to-r from-navy to-[#1f3561] text-white sticky top-0 z-30 shadow-md">
+      <div className="flex items-center justify-between px-4 py-2">
+        <div className="flex items-center gap-2.5">
+          <img
+            src={logoImg}
+            alt="D1 Diamond"
+            className="h-9 w-auto object-contain drop-shadow-sm"
+          />
+          <div className="leading-tight">
+            <h1 className="text-base font-extrabold tracking-tight">
+              <span className="text-white">D1</span>
+              <span className="text-d1red">DIAMOND</span>
+            </h1>
+            <p className="text-[9px] font-medium text-blue-200/80 uppercase tracking-widest">College Baseball Scores</p>
+          </div>
         </div>
         {liveCount !== undefined && liveCount > 0 && (
-          <div className="flex items-center gap-1.5 bg-white/15 rounded-full px-2.5 py-1">
-            <span className="w-2 h-2 rounded-full bg-live animate-pulse-live" />
-            <span className="text-xs font-semibold">{liveCount} LIVE</span>
+          <div className="flex items-center gap-1.5 bg-d1red/90 rounded-full px-2.5 py-1 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-white animate-pulse-live" />
+            <span className="text-[11px] font-bold text-white">{liveCount} LIVE</span>
           </div>
         )}
       </div>

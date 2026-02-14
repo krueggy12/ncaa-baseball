@@ -80,7 +80,7 @@ function GameCardInner({ game }: GameCardProps) {
             {/* Detail arrow */}
             <button
               onClick={(e) => { e.stopPropagation(); navigate(`/game/${game.id}`); }}
-              className="p-1 text-gray-400 hover:text-navy dark:hover:text-blue-400"
+              className="p-1 text-gray-400 hover:text-royal dark:hover:text-blue-400"
               aria-label="View game details"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">

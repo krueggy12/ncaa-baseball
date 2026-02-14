@@ -21,5 +21,5 @@ export default function StatusBadge({ state, detail }: StatusBadgeProps) {
     return <span className={`${base} text-gray-500 dark:text-gray-400`}>{detail}</span>;
   }
 
-  return <span className={`${base} text-blue-600 dark:text-blue-400`}>{detail}</span>;
+  return <span className={`${base} text-royal dark:text-blue-400`}>{detail}</span>;
 }

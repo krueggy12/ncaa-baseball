@@ -1,8 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <circle cx="32" cy="32" r="30" fill="#1e3a5f"/>
-  <circle cx="32" cy="32" r="18" fill="none" stroke="#ffffff" stroke-width="2"/>
-  <path d="M32 14 C26 20, 20 26, 20 32 C20 38, 26 44, 32 50" fill="none" stroke="#ffffff" stroke-width="1.5"/>
-  <path d="M32 14 C38 20, 44 26, 44 32 C44 38, 38 44, 32 50" fill="none" stroke="#ffffff" stroke-width="1.5"/>
-  <line x1="14" y1="32" x2="50" y2="32" stroke="#ffffff" stroke-width="1.5"/>
-  <circle cx="32" cy="32" r="3" fill="#c41e3a"/>
+  <!-- Shield background -->
+  <path d="M32 4 L58 18 L58 38 L32 58 L6 38 L6 18 Z" fill="#2e5ba8"/>
+  <path d="M32 8 L54 20 L54 36 L32 54 L10 36 L10 20 Z" fill="#1a2b4a"/>
+  <!-- Red stripe -->
+  <path d="M10 28 L54 28 L54 34 L10 34 Z" fill="#d42a2a"/>
+  <!-- Baseball -->
+  <circle cx="32" cy="24" r="10" fill="#ffffff"/>
+  <path d="M27 16 C29 19, 29 22, 27 25" fill="none" stroke="#d42a2a" stroke-width="1.2"/>
+  <path d="M37 16 C35 19, 35 22, 37 25" fill="none" stroke="#d42a2a" stroke-width="1.2"/>
+  <path d="M26 24 C28 27, 28 30, 26 33" fill="none" stroke="#d42a2a" stroke-width="1.2"/>
+  <path d="M38 24 C36 27, 36 30, 38 33" fill="none" stroke="#d42a2a" stroke-width="1.2"/>
+  <!-- Stars -->
+  <polygon points="24,42 25.5,45 29,45 26.5,47 27.5,50 24,48 20.5,50 21.5,47 19,45 22.5,45" fill="#ffffff"/>
+  <polygon points="32,40 33.5,43 37,43 34.5,45 35.5,48 32,46 28.5,48 29.5,45 27,43 30.5,43" fill="#ffffff"/>
+  <polygon points="40,42 41.5,45 45,45 42.5,47 43.5,50 40,48 36.5,50 37.5,47 35,45 38.5,45" fill="#ffffff"/>
 </svg>

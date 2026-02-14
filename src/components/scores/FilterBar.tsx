@@ -36,7 +36,7 @@ export default function FilterBar({
           onClick={() => onStatusFilterChange(opt.value)}
           className={`shrink-0 px-3 py-1 rounded-full text-xs font-medium transition-colors ${
             statusFilter === opt.value
-              ? 'bg-navy text-white'
+              ? 'bg-royal text-white'
               : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
           }`}
         >

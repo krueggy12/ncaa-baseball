@@ -70,7 +70,7 @@ export default function GameDetailPage() {
         <p className="text-gray-500 dark:text-gray-400 mb-4">Game not found.</p>
         <button
           onClick={() => navigate('/')}
-          className="px-4 py-2 bg-navy text-white rounded-lg text-sm font-medium"
+          className="px-4 py-2 bg-royal text-white rounded-lg text-sm font-medium"
         >
           Back to Scores
         </button>
@@ -81,7 +81,7 @@ export default function GameDetailPage() {
   return (
     <div>
       {/* Back button */}
-      <div className="bg-navy px-3 pt-1">
+      <div className="bg-gradient-to-r from-navy to-[#1f3561] px-3 pt-1">
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-1 text-white/70 text-sm py-1"

@@ -12,7 +12,7 @@ function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (val
         aria-checked={checked}
         onClick={() => onChange(!checked)}
         className={`relative w-10 h-6 rounded-full transition-colors ${
-          checked ? 'bg-navy' : 'bg-gray-300 dark:bg-gray-600'
+          checked ? 'bg-royal' : 'bg-gray-300 dark:bg-gray-600'
         }`}
       >
         <span
@@ -123,7 +123,7 @@ export default function SettingsPage() {
           About
         </h3>
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm px-4 py-3">
-          <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">NCAA Baseball Scores</p>
+          <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">D1 Diamond — College Baseball Scores</p>
           <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
             Track live NCAA college baseball scores, rankings, and your favorite teams. Data provided by ESPN.
           </p>

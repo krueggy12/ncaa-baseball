@@ -1,13 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy: #1e3a5f;
-  --color-ncaa-red: #c41e3a;
-  --color-live: #ef4444;
+  /* D1 Diamond brand palette */
+  --color-navy: #1a2b4a;
+  --color-royal: #2e5ba8;
+  --color-d1red: #d42a2a;
+  --color-silver: #8c8c8c;
+  --color-live: #d42a2a;
   --color-surface-light: #ffffff;
-  --color-surface-dark: #1e293b;
-  --color-bg-light: #f8fafc;
-  --color-bg-dark: #0f172a;
+  --color-surface-dark: #1a2236;
+  --color-bg-light: #f0f4f8;
+  --color-bg-dark: #0d1526;
 }
 
 html, body, #root {
