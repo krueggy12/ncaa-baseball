@@ -1,47 +1,83 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useGameDetail } from '../hooks/useGameDetail';
 import { fetchESPN } from '../api/espnClient';
 import { getScoreboardUrl } from '../api/endpoints';
 import { transformScoreboard } from '../api/transformers';
-import { toESPNDate } from '../utils/dateUtils';
+import { toESPNDate, addDays } from '../utils/dateUtils';
 import GameDetail from '../components/game/GameDetail';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import type { Game } from '../types/game';
 
 export default function GameDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [game, setGame] = useState<Game | null>(null);
   const [gameLoading, setGameLoading] = useState(true);
 
-  // Fetch the game from scoreboard to get base game data
+  // Fetch the game from scoreboard — try provided date, today, and nearby dates
   useEffect(() => {
     if (!id) return;
+    let cancelled = false;
+
+    async function findGame(date: string): Promise<Game | null> {
+      try {
+        const raw = await fetchESPN<any>(getScoreboardUrl(date));
+        const games = transformScoreboard(raw);
+        return games.find(g => g.id === id) || null;
+      } catch {
+        return null;
+      }
+    }
+
     async function loadGame() {
       setGameLoading(true);
-      try {
-        // Try today first, then try to find the event
-        const today = toESPNDate(new Date());
-        const raw = await fetchESPN<any>(getScoreboardUrl(today));
-        const games = transformScoreboard(raw);
-        const found = games.find(g => g.id === id);
-        if (found) {
+
+      // If a date was passed via query param, try that first
+      const dateParam = searchParams.get('date');
+      if (dateParam) {
+        const found = await findGame(dateParam);
+        if (found && !cancelled) {
           setGame(found);
+          setGameLoading(false);
+          return;
         }
-      } catch {
-        // ignore
-      } finally {
+      }
+
+      // Try today
+      const today = new Date();
+      const todayStr = toESPNDate(today);
+      const found = await findGame(todayStr);
+      if (found && !cancelled) {
+        setGame(found);
+        setGameLoading(false);
+        return;
+      }
+
+      // Try yesterday and tomorrow
+      const yesterday = toESPNDate(addDays(today, -1));
+      const tomorrow = toESPNDate(addDays(today, 1));
+
+      const [yGame, tGame] = await Promise.all([
+        findGame(yesterday),
+        findGame(tomorrow),
+      ]);
+
+      if (!cancelled) {
+        setGame(yGame || tGame || null);
         setGameLoading(false);
       }
     }
+
     loadGame();
-  }, [id]);
+    return () => { cancelled = true; };
+  }, [id, searchParams]);
 
   const isLive = game?.status.state === 'in';
   const { summary } = useGameDetail(id || '', isLive || false);
 
-  // Periodically refresh the game data too
+  // Periodically refresh the game data for live games
   useEffect(() => {
     if (!id || !isLive) return;
     const interval = setInterval(async () => {

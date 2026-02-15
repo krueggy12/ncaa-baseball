@@ -140,20 +140,26 @@ export default function TeamDirectoryPage() {
                     fav ? 'bg-yellow-50/60 dark:bg-yellow-900/10' : ''
                   }`}
                 >
-                  <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={28} />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                      {team.displayName}
-                    </p>
-                    {conf && (
-                      <p className="text-[10px] text-gray-400 dark:text-gray-500">
-                        {conf.abbreviation}
+                  <button
+                    onClick={() => navigate(`/more/teams/${team.id}`)}
+                    className="flex items-center gap-2.5 flex-1 min-w-0 text-left"
+                  >
+                    <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={28} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                        {team.displayName}
                       </p>
-                    )}
-                  </div>
+                      <p className="text-[10px] text-gray-400 dark:text-gray-500">
+                        {conf ? conf.abbreviation + ' · ' : ''}Schedule
+                      </p>
+                    </div>
+                    <svg className="w-4 h-4 text-gray-300 dark:text-gray-600 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                  </button>
                   <button
                     onClick={() => toggleFavorite(team.id)}
-                    className="p-1.5"
+                    className="p-1.5 shrink-0"
                     aria-label={fav ? `Remove ${team.displayName} from favorites` : `Add ${team.displayName} to favorites`}
                   >
                     <svg

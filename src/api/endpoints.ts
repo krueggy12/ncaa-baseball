@@ -22,3 +22,7 @@ export function getStandingsUrl(season?: number): string {
   const base = 'https://site.web.api.espn.com/apis/v2/sports/baseball/college-baseball/standings?type=0&level=3';
   return season ? `${base}&season=${season}` : base;
 }
+
+export function getTeamScheduleUrl(teamId: string): string {
+  return `${ESPN_BASE}/teams/${teamId}/schedule`;
+}

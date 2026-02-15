@@ -104,3 +104,31 @@ export interface ConferenceStandings {
   conferenceId: string;
   entries: StandingEntry[];
 }
+
+export interface ScheduleGame {
+  id: string;
+  date: string;
+  shortName: string;
+  state: GameState;
+  detail: string;
+  isHome: boolean;
+  opponent: {
+    id: string;
+    displayName: string;
+    abbreviation: string;
+    logo: string;
+  };
+  teamScore: number | null;
+  opponentScore: number | null;
+  isWin: boolean | null;
+  venue?: string;
+}
+
+export interface TeamSchedule {
+  teamId: string;
+  teamName: string;
+  teamLogo: string;
+  teamAbbreviation: string;
+  season: string;
+  games: ScheduleGame[];
+}

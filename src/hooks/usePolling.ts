@@ -34,6 +34,7 @@ export function usePolling<T>({ fetcher, interval, enabled = true }: UsePollingO
     }
   }, []);
 
+  // Main polling setup — re-runs when fetcher identity changes (e.g. date change)
   useEffect(() => {
     if (!enabled) return;
 
@@ -44,6 +45,7 @@ export function usePolling<T>({ fetcher, interval, enabled = true }: UsePollingO
     const onVisibility = () => {
       if (document.visibilityState === 'visible') {
         doFetch(false);
+        clearInterval(intervalRef.current);
         intervalRef.current = setInterval(() => doFetch(false), interval);
       } else {
         clearInterval(intervalRef.current);
@@ -55,7 +57,7 @@ export function usePolling<T>({ fetcher, interval, enabled = true }: UsePollingO
       clearInterval(intervalRef.current);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [interval, enabled, doFetch]);
+  }, [fetcher, interval, enabled, doFetch]);
 
   return { data, isLoading, error, refetch: () => doFetch(true) };
 }

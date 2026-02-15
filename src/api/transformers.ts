@@ -1,4 +1,4 @@
-import type { Game, TeamScore, GameSituation, GameState, RankedTeam, ConferenceStandings, StandingEntry } from '../types/game';
+import type { Game, TeamScore, GameSituation, GameState, RankedTeam, ConferenceStandings, StandingEntry, TeamSchedule, ScheduleGame } from '../types/game';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -203,4 +203,68 @@ export function transformStandings(raw: any): ConferenceStandings[] {
       entries,
     } satisfies ConferenceStandings;
   });
+}
+
+export function transformSchedule(raw: any, teamId: string): TeamSchedule {
+  const team = raw?.team || {};
+  const events = raw?.events || [];
+  const season = raw?.season || {};
+
+  const games: ScheduleGame[] = events.map((event: any) => {
+    const comp = event.competitions?.[0] || {};
+    const statusType = comp.status?.type || {};
+    const competitors = comp.competitors || [];
+    const state = (statusType.state || 'pre') as GameState;
+
+    // Find our team and opponent
+    const us = competitors.find((c: any) => String(c.team?.id) === String(teamId));
+    const them = competitors.find((c: any) => String(c.team?.id) !== String(teamId));
+    const isHome = us?.homeAway === 'home';
+
+    const oppTeam = them?.team || {};
+    const usScore = us?.score;
+    const themScore = them?.score;
+
+    // Parse scores — schedule endpoint returns {value, displayValue} objects
+    const parseScore = (s: any): number | null => {
+      if (s == null || s === '') return null;
+      if (typeof s === 'object') return s.value != null ? Math.round(s.value) : null;
+      const n = parseInt(String(s), 10);
+      return isNaN(n) ? null : n;
+    };
+
+    const teamScore = parseScore(usScore);
+    const opponentScore = parseScore(themScore);
+    const isWin = state === 'post' && teamScore != null && opponentScore != null
+      ? teamScore > opponentScore
+      : null;
+
+    return {
+      id: event.id || '',
+      date: event.date || '',
+      shortName: event.shortName || '',
+      state,
+      detail: statusType.detail || statusType.shortDetail || '',
+      isHome,
+      opponent: {
+        id: oppTeam.id || '',
+        displayName: oppTeam.displayName || '',
+        abbreviation: oppTeam.abbreviation || '',
+        logo: oppTeam.logos?.[0]?.href || '',
+      },
+      teamScore,
+      opponentScore,
+      isWin,
+      venue: comp.venue?.fullName || comp.venue?.shortName,
+    } satisfies ScheduleGame;
+  });
+
+  return {
+    teamId: team.id || teamId,
+    teamName: team.displayName || '',
+    teamLogo: team.logo || '',
+    teamAbbreviation: team.abbreviation || '',
+    season: season.displayName || '',
+    games,
+  };
 }

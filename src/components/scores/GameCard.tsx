@@ -2,6 +2,7 @@ import { useState, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Game } from '../../types/game';
 import { useFavorites } from '../../context/FavoritesContext';
+import { toESPNDate } from '../../utils/dateUtils';
 import TeamLogo from '../common/TeamLogo';
 import RankBadge from '../common/RankBadge';
 import StatusBadge from '../common/StatusBadge';
@@ -32,12 +33,16 @@ function TeamRow({ team, isLive, isWinSide }: { team: Game['home']; isLive: bool
 }
 
 function GameCardInner({ game }: GameCardProps) {
-  const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
   const { isFavorite } = useFavorites();
   const isLive = game.status.state === 'in';
   const isFinal = game.status.state === 'post';
   const isFavGame = isFavorite(game.home.id) || isFavorite(game.away.id);
+  const hasLinescores = game.away.linescores.length > 0 || game.home.linescores.length > 0;
+
+  // Auto-expand for live games, user can toggle for others
+  const [manualToggle, setManualToggle] = useState<boolean | null>(null);
+  const expanded = manualToggle !== null ? manualToggle : isLive;
 
   return (
     <div
@@ -47,7 +52,7 @@ function GameCardInner({ game }: GameCardProps) {
     >
       <div
         className="px-4 py-2 cursor-pointer"
-        onClick={() => setExpanded(e => !e)}
+        onClick={() => setManualToggle(prev => prev !== null ? !prev : !isLive)}
       >
         <TeamRow team={game.away} isLive={isLive} isWinSide={isFinal && game.away.isWinner} />
 
@@ -57,7 +62,15 @@ function GameCardInner({ game }: GameCardProps) {
 
         {/* Status bar */}
         <div className="flex items-center justify-between mt-1 pt-1 border-t border-gray-50 dark:border-gray-700/50">
-          <StatusBadge state={game.status.state} detail={game.status.detail} />
+          <div className="flex items-center gap-2">
+            <StatusBadge state={game.status.state} detail={game.status.detail} />
+            {/* Batter/Pitcher for live games */}
+            {isLive && game.situation?.pitcher && (
+              <span className="text-[10px] text-gray-400 dark:text-gray-500 truncate max-w-[100px]">
+                P: {game.situation.pitcher}
+              </span>
+            )}
+          </div>
 
           <div className="flex items-center gap-2">
             {/* Live situation */}
@@ -77,9 +90,20 @@ function GameCardInner({ game }: GameCardProps) {
               </>
             )}
 
+            {/* Expand indicator */}
+            {hasLinescores && !isLive && (
+              <svg className={`w-3.5 h-3.5 text-gray-300 dark:text-gray-600 transition-transform ${expanded ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            )}
+
             {/* Detail arrow */}
             <button
-              onClick={(e) => { e.stopPropagation(); navigate(`/game/${game.id}`); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                const gameDate = game.date ? toESPNDate(new Date(game.date)) : '';
+                navigate(`/game/${game.id}${gameDate ? `?date=${gameDate}` : ''}`);
+              }}
               className="p-1 text-gray-400 hover:text-royal dark:hover:text-blue-400"
               aria-label="View game details"
             >
@@ -91,14 +115,26 @@ function GameCardInner({ game }: GameCardProps) {
         </div>
       </div>
 
-      {/* Expanded linescore */}
-      {expanded && (game.away.linescores.length > 0 || isFinal) && (
+      {/* Expanded linescore — only when actual data exists */}
+      {expanded && hasLinescores && (
         <div className="px-3 pb-3 bg-gray-50 dark:bg-slate-800/50 border-t border-gray-100 dark:border-gray-700">
           <LinescoreTable
             away={game.away}
             home={game.home}
             currentInning={isLive ? game.status.inning : undefined}
           />
+          {/* Last play for live games */}
+          {isLive && game.situation?.lastPlay && (
+            <div className="mt-2 text-[11px] text-gray-600 dark:text-gray-300 italic">
+              {game.situation.lastPlay}
+            </div>
+          )}
+          {/* Batter at bat */}
+          {isLive && game.situation?.batter && (
+            <div className="text-[10px] text-gray-400 dark:text-gray-500">
+              AB: {game.situation.batter}
+            </div>
+          )}
           {game.broadcasts.length > 0 && (
             <div className="mt-2 text-[10px] text-gray-400 dark:text-gray-500">
               {game.broadcasts.join(' / ')}
