@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useScoreboard } from '../hooks/useScoreboard';
 import { useDateNavigation } from '../hooks/useDateNavigation';
+import { useFavoriteSchedules } from '../hooks/useFavoriteSchedules';
 import { useSwipe } from '../hooks/useSwipe';
 import { useGameNotifications } from '../hooks/useNotifications';
 import { useFavorites } from '../context/FavoritesContext';
 import DateStrip from '../components/scores/DateStrip';
 import FilterBar from '../components/scores/FilterBar';
 import ScoreList from '../components/scores/ScoreList';
+import FavoriteScheduleList from '../components/scores/FavoriteScheduleList';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import type { StatusFilter } from '../types/game';
 
@@ -19,6 +21,9 @@ export default function ScoresPage() {
 
   const { games, previousGames, isLoading, error } = useScoreboard(espnDate, conferenceFilter || undefined);
 
+  // Fetch favorite team schedules when favorites mode is on
+  const { dateGroups, isLoading: favLoading } = useFavoriteSchedules(favoriteIds, favoritesOnly);
+
   // Fire notifications for favorite teams
   useGameNotifications(games, previousGames);
 
@@ -29,7 +34,11 @@ export default function ScoresPage() {
 
   return (
     <div {...swipeHandlers}>
-      <DateStrip selectedDate={selectedDate} onSelectDate={goToDate} />
+      {/* Hide date strip when in favorites mode (multi-day view) */}
+      {!favoritesOnly && (
+        <DateStrip selectedDate={selectedDate} onSelectDate={goToDate} />
+      )}
+
       <FilterBar
         statusFilter={statusFilter}
         onStatusFilterChange={setStatusFilter}
@@ -40,13 +49,15 @@ export default function ScoresPage() {
         hasFavorites={favoriteIds.size > 0}
       />
 
-      {error && (
+      {error && !favoritesOnly && (
         <div className="mx-4 mt-2 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-sm text-red-600 dark:text-red-400 text-center">
           Failed to load scores. Pull down to retry.
         </div>
       )}
 
-      {isLoading ? (
+      {favoritesOnly ? (
+        <FavoriteScheduleList dateGroups={dateGroups} isLoading={favLoading} />
+      ) : isLoading ? (
         <div className="mt-4">
           <LoadingSpinner />
         </div>
@@ -55,7 +66,7 @@ export default function ScoresPage() {
           <ScoreList
             games={games}
             statusFilter={statusFilter}
-            favoritesOnly={favoritesOnly}
+            favoritesOnly={false}
             favoriteIds={favoriteIds}
           />
         </div>
