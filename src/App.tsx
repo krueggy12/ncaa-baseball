@@ -13,6 +13,7 @@ import StandingsPage from './pages/StandingsPage';
 import TeamDirectoryPage from './pages/TeamDirectoryPage';
 import TeamSchedulePage from './pages/TeamSchedulePage';
 import SettingsPage from './pages/SettingsPage';
+import StatsPage from './pages/StatsPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/more/standings" element={<StandingsPage />} />
                 <Route path="/more/teams" element={<TeamDirectoryPage />} />
                 <Route path="/more/teams/:teamId" element={<TeamSchedulePage />} />
+                <Route path="/more/stats" element={<StatsPage />} />
                 <Route path="/more/settings" element={<SettingsPage />} />
                 {/* Redirect old settings route */}
                 <Route path="/settings" element={<Navigate to="/more/settings" replace />} />
