@@ -13,6 +13,8 @@ export function useCollegeStats(
   sortDir: SortDir,
   qual: boolean,
   page: number,
+  conferenceId: string,  // '0' = all
+  teamId: number,        // 0 = all
 ) {
   const season = new Date().getFullYear();
 
@@ -24,16 +26,16 @@ export function useCollegeStats(
       qual: qual ? 'y' : '0',
       seasonstart: String(season),
       seasonend: String(season),
-      team: '0',
+      team: String(teamId),
       players: '0',
-      conference: '0',
+      conference: conferenceId,
       pageitems: String(PAGE_SIZE),
       pagenum: String(page),
       sortstat: sortStat,
       sortdir: sortDir,
     });
     return fetchESPN<FanGraphsLeaderboardResponse>(`${FANGRAPHS_BASE}?${params}`);
-  }, [tab, sortStat, sortDir, qual, page, season]);
+  }, [tab, sortStat, sortDir, qual, page, season, conferenceId, teamId]);
 
   const { data, isLoading, error } = usePolling<FanGraphsLeaderboardResponse>({
     fetcher,

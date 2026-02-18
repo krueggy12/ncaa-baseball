@@ -6,16 +6,19 @@ import { transformScoreboard } from '../api/transformers';
 import { POLL_INTERVAL_LIVE, POLL_INTERVAL_IDLE } from '../utils/constants';
 import type { Game } from '../types/game';
 
-export function useScoreboard(date: string, conferenceId?: string) {
+// conferenceId is intentionally not passed to ESPN — the groups= param doesn't
+// work for college baseball. Conference filtering is done client-side in ScoresPage
+// using the team→conference map built from standings data.
+export function useScoreboard(date: string) {
   const previousGamesRef = useRef<Game[]>([]);
   const [hasLive, setHasLive] = useState(false);
 
   const fetcher = useCallback(async () => {
-    const raw = await fetchESPN(getScoreboardUrl(date, conferenceId));
+    const raw = await fetchESPN(getScoreboardUrl(date));
     const result = transformScoreboard(raw);
     setHasLive(result.some((g: Game) => g.status.state === 'in'));
     return result;
-  }, [date, conferenceId]);
+  }, [date]);
 
   const { data: games, isLoading, error, refetch } = usePolling<Game[]>({
     fetcher,

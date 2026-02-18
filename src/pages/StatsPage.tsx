@@ -1,9 +1,42 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCollegeStats } from '../hooks/useCollegeStats';
+import { FG_SCHOOLS } from '../api/fgSchools';
 import type { StatTab, SortDir } from '../types/stats';
 
-// ─── Column definitions ──────────────────────────────────────────────────────
+// ─── FanGraphs conference IDs (verified by sampling team data) ───────────────
+const FG_CONFERENCES = [
+  { id: '1',  name: 'ACC' },
+  { id: '26', name: 'Big 12' },
+  { id: '11', name: 'Big Ten' },
+  { id: '34', name: 'SEC' },
+  { id: '24', name: 'AAC' },
+  { id: '30', name: 'Big East' },
+  { id: '10', name: 'ASUN' },
+  { id: '8',  name: 'Big South-OVC' },
+  { id: '20', name: 'CAA' },
+  { id: '21', name: 'CUSA' },
+  { id: '16', name: 'Horizon League' },
+  { id: '33', name: 'MAAC' },
+  { id: '3',  name: 'MAC' },
+  { id: '27', name: 'MEAC' },
+  { id: '17', name: 'Missouri Valley' },
+  { id: '22', name: 'Mountain West' },
+  { id: '25', name: 'NEC' },
+  { id: '13', name: 'Ohio Valley' },
+  { id: '5',  name: 'Patriot League' },
+  { id: '23', name: 'Southland' },
+  { id: '14', name: 'Southern Conference' },
+  { id: '6',  name: 'Sun Belt' },
+  { id: '4',  name: 'Summit League' },
+  { id: '15', name: 'SWAC' },
+  { id: '28', name: 'WAC' },
+  { id: '29', name: 'America East' },
+  { id: '19', name: 'Big West' },
+  { id: '18', name: 'WCC' },
+];
+
+// ─── Column definitions ───────────────────────────────────────────────────────
 
 type Fmt = (v: number | string | null) => string;
 
@@ -49,7 +82,15 @@ const PIT_COLS: ColDef[] = [
   { key: 'BABIP', label: 'BABIP', defaultDir: 'asc',  fmt: fmtAvg  },
 ];
 
-// ─── Page ────────────────────────────────────────────────────────────────────
+// Select dropdown shared style
+const SELECT_CLS = [
+  'shrink-0 px-3 py-1.5 rounded-full text-xs font-medium',
+  'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400',
+  'border-none outline-none cursor-pointer appearance-none',
+  'max-w-[130px] truncate',
+].join(' ');
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function StatsPage() {
   const navigate = useNavigate();
@@ -60,14 +101,30 @@ export default function StatsPage() {
   const [page, setPage] = useState(1);
   const [sortStat, setSortStat] = useState('wRC+');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
+  const [conferenceId, setConferenceId] = useState('0');
+  const [teamId, setTeamId] = useState(0);
+  const [schoolSearch, setSchoolSearch] = useState('');
 
   const cols = tab === 'bat' ? BAT_COLS : PIT_COLS;
 
   const { rows, totalCount, pageSize, isLoading, error } = useCollegeStats(
-    tab, sortStat, sortDir, qual, page,
+    tab, sortStat, sortDir, qual, page, conferenceId, teamId,
   );
 
   const totalPages = totalCount > 0 ? Math.ceil(totalCount / pageSize) : 0;
+
+  // Filtered school list for the picker
+  const filteredSchools = useMemo(() => {
+    const q = schoolSearch.trim().toLowerCase();
+    if (!q) return FG_SCHOOLS;
+    return FG_SCHOOLS.filter(s =>
+      s.name.toLowerCase().includes(q) || s.abbr.toLowerCase().includes(q)
+    );
+  }, [schoolSearch]);
+
+  // Selected school name for the active filter badge
+  const selectedSchool = teamId ? FG_SCHOOLS.find(s => s.id === teamId) : null;
+  const selectedConf = conferenceId !== '0' ? FG_CONFERENCES.find(c => c.id === conferenceId) : null;
 
   function handleTabChange(t: StatTab) {
     setTab(t);
@@ -86,11 +143,27 @@ export default function StatsPage() {
     setPage(1);
   }
 
-  function handleQualToggle() {
-    setQual(q => !q);
+  function handleConferenceChange(id: string) {
+    setConferenceId(id);
+    setTeamId(0); // clear school filter when conference changes
+    setSchoolSearch('');
     setPage(1);
   }
 
+  function handleTeamChange(id: number) {
+    setTeamId(id);
+    setConferenceId('0'); // clear conference filter when school is chosen
+    setPage(1);
+  }
+
+  function clearFilters() {
+    setConferenceId('0');
+    setTeamId(0);
+    setSchoolSearch('');
+    setPage(1);
+  }
+
+  const hasFilter = conferenceId !== '0' || teamId !== 0;
   const showTable = rows.length > 0;
   const showEmpty = !isLoading && rows.length === 0;
 
@@ -114,9 +187,8 @@ export default function StatsPage() {
         </div>
       </div>
 
-      {/* Controls row */}
-      <div className="flex items-center gap-1.5 px-4 pb-3">
-        {/* Batting / Pitching tabs */}
+      {/* Row 1: Batting/Pitching tabs + Qual toggle */}
+      <div className="flex items-center gap-1.5 px-4 pb-2">
         {(['bat', 'pit'] as StatTab[]).map(t => (
           <button
             key={t}
@@ -130,12 +202,9 @@ export default function StatsPage() {
             {t === 'bat' ? 'Batting' : 'Pitching'}
           </button>
         ))}
-
         <div className="flex-1" />
-
-        {/* Qualified toggle */}
         <button
-          onClick={handleQualToggle}
+          onClick={() => { setQual(q => !q); setPage(1); }}
           className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
             qual
               ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
@@ -144,6 +213,46 @@ export default function StatsPage() {
         >
           {qual ? 'Qualified' : 'All'}
         </button>
+      </div>
+
+      {/* Row 2: Conference + School filters */}
+      <div className="flex items-center gap-2 px-4 pb-3 overflow-x-auto no-scrollbar">
+        {/* Conference picker */}
+        <select
+          value={conferenceId}
+          onChange={e => handleConferenceChange(e.target.value)}
+          className={SELECT_CLS}
+        >
+          <option value="0">All Conferences</option>
+          {FG_CONFERENCES.map(c => (
+            <option key={c.id} value={c.id}>{c.name}</option>
+          ))}
+        </select>
+
+        {/* School search + picker */}
+        <select
+          value={teamId}
+          onChange={e => handleTeamChange(Number(e.target.value))}
+          className={SELECT_CLS}
+        >
+          <option value={0}>All Schools</option>
+          {filteredSchools.map(s => (
+            <option key={s.id} value={s.id}>{s.name}</option>
+          ))}
+        </select>
+
+        {/* Active filter badges + clear */}
+        {hasFilter && (
+          <button
+            onClick={clearFilters}
+            className="shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-medium bg-royal/10 dark:bg-royal/20 text-royal dark:text-blue-400 whitespace-nowrap"
+          >
+            {selectedSchool ? selectedSchool.abbr : selectedConf ? selectedConf.name : ''}
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" d="M2 2l8 8M10 2l-8 8" />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Initial skeleton */}
@@ -167,7 +276,7 @@ export default function StatsPage() {
         <div className="px-3">
           <div className="relative bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
 
-            {/* Loading overlay when re-sorting / changing pages */}
+            {/* Loading overlay on re-sort / filter change */}
             {isLoading && (
               <div className="absolute inset-0 bg-white/60 dark:bg-slate-800/60 z-30 rounded-xl" />
             )}
@@ -176,27 +285,19 @@ export default function StatsPage() {
               <table className="w-full">
                 <thead>
                   <tr className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 border-b border-gray-100 dark:border-gray-700/50">
-                    <th className="sticky left-0 z-20 bg-white dark:bg-slate-800 text-left pl-3 pr-1 py-2 w-7">
-                      #
-                    </th>
-                    <th className="sticky left-7 z-20 bg-white dark:bg-slate-800 text-left px-2 py-2 min-w-[124px]">
-                      Player
-                    </th>
+                    <th className="sticky left-0 z-20 bg-white dark:bg-slate-800 text-left pl-3 pr-1 py-2 w-7">#</th>
+                    <th className="sticky left-7 z-20 bg-white dark:bg-slate-800 text-left px-2 py-2 min-w-[124px]">Player</th>
                     {cols.map(col => (
                       <th
                         key={col.key}
                         onClick={() => handleColClick(col)}
                         className={`text-center px-2 py-2 cursor-pointer select-none whitespace-nowrap transition-colors hover:text-gray-700 dark:hover:text-gray-200 ${
-                          sortStat === col.key
-                            ? 'text-royal dark:text-blue-400'
-                            : ''
+                          sortStat === col.key ? 'text-royal dark:text-blue-400' : ''
                         }`}
                       >
                         {col.label}
                         {sortStat === col.key && (
-                          <span className="ml-0.5 text-[9px]">
-                            {sortDir === 'desc' ? '▼' : '▲'}
-                          </span>
+                          <span className="ml-0.5 text-[9px]">{sortDir === 'desc' ? '▼' : '▲'}</span>
                         )}
                       </th>
                     ))}
@@ -210,12 +311,9 @@ export default function StatsPage() {
                         key={(row['UPID'] as string) || idx}
                         className="border-b border-gray-50 dark:border-gray-700/30 last:border-b-0"
                       >
-                        {/* Rank — sticky */}
                         <td className="sticky left-0 z-10 bg-white dark:bg-slate-800 pl-3 pr-1 py-2.5 text-xs text-gray-400 dark:text-gray-500 tabular-nums">
                           {rank}
                         </td>
-
-                        {/* Player + Team — sticky */}
                         <td className="sticky left-7 z-10 bg-white dark:bg-slate-800 px-2 py-2.5 min-w-[124px]">
                           <p className="text-xs font-medium text-gray-900 dark:text-white truncate max-w-[112px] leading-tight">
                             {row['PlayerName'] as string}
@@ -224,8 +322,6 @@ export default function StatsPage() {
                             {row['Team'] as string}
                           </p>
                         </td>
-
-                        {/* Stat columns */}
                         {cols.map(col => (
                           <td
                             key={col.key}
@@ -269,7 +365,6 @@ export default function StatsPage() {
             </div>
           )}
 
-          {/* Attribution */}
           <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-2 text-center">
             Stats via FanGraphs · Tap column headers to sort
           </p>
@@ -279,11 +374,18 @@ export default function StatsPage() {
       {/* Empty state */}
       {showEmpty && !error && (
         <div className="text-center py-16 px-8">
-          <p className="text-gray-500 dark:text-gray-400 text-sm">No stats available yet.</p>
-          {qual && (
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
+            {hasFilter ? 'No stats found for this filter.' : 'No stats available yet.'}
+          </p>
+          {qual && !hasFilter && (
             <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">
               Early in the season, try switching to "All" players.
             </p>
+          )}
+          {hasFilter && (
+            <button onClick={clearFilters} className="mt-3 text-xs text-royal dark:text-blue-400 underline">
+              Clear filter
+            </button>
           )}
         </div>
       )}

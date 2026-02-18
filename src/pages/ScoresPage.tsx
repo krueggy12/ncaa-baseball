@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useScoreboard } from '../hooks/useScoreboard';
 import { useDateNavigation } from '../hooks/useDateNavigation';
 import { useFavoriteSchedules } from '../hooks/useFavoriteSchedules';
 import { useSwipe } from '../hooks/useSwipe';
 import { useGameNotifications } from '../hooks/useNotifications';
 import { useFavorites } from '../context/FavoritesContext';
+import { useTeamConferenceMap } from '../hooks/useTeamConferenceMap';
 import DateStrip from '../components/scores/DateStrip';
 import FilterBar from '../components/scores/FilterBar';
 import ScoreList from '../components/scores/ScoreList';
@@ -18,8 +19,18 @@ export default function ScoresPage() {
   const [conferenceFilter, setConferenceFilter] = useState('');
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const { favoriteIds } = useFavorites();
+  const { map: teamConfMap, conferences } = useTeamConferenceMap();
 
-  const { games, previousGames, isLoading, error } = useScoreboard(espnDate, conferenceFilter || undefined);
+  const { games, previousGames, isLoading, error } = useScoreboard(espnDate);
+
+  // Client-side conference filter — ESPN's &groups= param doesn't work for baseball
+  const filteredGames = useMemo(() => {
+    if (!conferenceFilter) return games;
+    return games.filter(g =>
+      teamConfMap.get(g.home.id) === conferenceFilter ||
+      teamConfMap.get(g.away.id) === conferenceFilter
+    );
+  }, [games, conferenceFilter, teamConfMap]);
 
   // Fetch favorite team schedules when favorites mode is on
   const { dateGroups, isLoading: favLoading } = useFavoriteSchedules(favoriteIds, favoritesOnly);
@@ -44,6 +55,7 @@ export default function ScoresPage() {
         onStatusFilterChange={setStatusFilter}
         conferenceFilter={conferenceFilter}
         onConferenceFilterChange={setConferenceFilter}
+        conferences={conferences}
         favoritesOnly={favoritesOnly}
         onFavoritesOnlyChange={setFavoritesOnly}
         hasFavorites={favoriteIds.size > 0}
@@ -64,7 +76,7 @@ export default function ScoresPage() {
       ) : (
         <div className="mt-2">
           <ScoreList
-            games={games}
+            games={filteredGames}
             statusFilter={statusFilter}
             favoritesOnly={false}
             favoriteIds={favoriteIds}

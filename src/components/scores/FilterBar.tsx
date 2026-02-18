@@ -1,11 +1,11 @@
-import { CONFERENCES } from '../../api/conferences';
-import type { StatusFilter } from '../../types/game';
+import type { StatusFilter, Conference } from '../../types/game';
 
 interface FilterBarProps {
   statusFilter: StatusFilter;
   onStatusFilterChange: (filter: StatusFilter) => void;
   conferenceFilter: string;
   onConferenceFilterChange: (conf: string) => void;
+  conferences: Conference[];
   favoritesOnly: boolean;
   onFavoritesOnlyChange: (val: boolean) => void;
   hasFavorites: boolean;
@@ -23,6 +23,7 @@ export default function FilterBar({
   onStatusFilterChange,
   conferenceFilter,
   onConferenceFilterChange,
+  conferences,
   favoritesOnly,
   onFavoritesOnlyChange,
   hasFavorites,
@@ -72,7 +73,7 @@ export default function FilterBar({
         style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' stroke='%239ca3af' fill='none' stroke-width='1.5'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center' }}
       >
         <option value="">All Conferences</option>
-        {CONFERENCES.map(c => (
+        {conferences.map(c => (
           <option key={c.id} value={c.id}>{c.abbreviation}</option>
         ))}
       </select>
