@@ -53,20 +53,20 @@ export default function ScoreList({ games, statusFilter, favoritesOnly, favorite
   ].filter(s => s.games.length > 0);
 
   return (
-    <div className="px-3 pb-4 space-y-3">
+    <div className="px-3 pb-4 space-y-4">
       {sections.map(section => (
         <div key={section.label}>
           {sections.length > 1 && (
-            <div className="flex items-center gap-2 py-2">
+            <div className="flex items-center gap-2 py-1.5">
               {section.label === 'Live' && (
-                <span className="w-2 h-2 rounded-full bg-live animate-pulse-live" />
+                <span className="w-1.5 h-1.5 rounded-full bg-live animate-pulse-live" />
               )}
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                {section.label} ({section.games.length})
+              <h3 className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-600">
+                {section.label}
               </h3>
             </div>
           )}
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {section.games.map(game => (
               <GameCard key={game.id} game={game} />
             ))}

@@ -43,10 +43,9 @@ export default function BottomNav() {
   const location = useLocation();
 
   return (
-    <nav className="safe-bottom fixed bottom-0 left-0 right-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-700">
-      <div className="flex items-center justify-around h-14 max-w-lg mx-auto">
+    <nav className="safe-bottom fixed bottom-0 left-0 right-0 z-30 bg-white/92 dark:bg-navy/92 backdrop-blur-xl border-t border-gray-200/60 dark:border-white/[0.07]">
+      <div className="flex items-center justify-around h-14 max-w-lg mx-auto px-1">
         {tabs.map(tab => {
-          // "More" tab should be active for any /more/* sub-paths
           const isMoreActive = tab.to === '/more' && location.pathname.startsWith('/more');
 
           return (
@@ -54,13 +53,14 @@ export default function BottomNav() {
               key={tab.to}
               to={tab.to}
               end={tab.to === '/'}
-              className={({ isActive }) =>
-                `flex flex-col items-center gap-0.5 px-3 py-1 transition-colors ${
-                  isActive || isMoreActive
-                    ? 'text-royal dark:text-blue-400'
-                    : 'text-gray-400 dark:text-gray-500'
-                }`
-              }
+              className={({ isActive }) => {
+                const active = isActive || isMoreActive;
+                return `flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all duration-200 min-w-[60px] ${
+                  active
+                    ? 'bg-royal/10 dark:bg-royal/15 text-royal dark:text-blue-400'
+                    : 'text-gray-400 dark:text-gray-600'
+                }`;
+              }}
             >
               {tab.icon}
               <span className="text-[10px] font-medium leading-tight">{tab.label}</span>

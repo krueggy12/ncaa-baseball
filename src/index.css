@@ -2,15 +2,15 @@
 
 @theme {
   /* D1 Diamond brand palette */
-  --color-navy: #1a2b4a;
-  --color-royal: #2e5ba8;
-  --color-d1red: #d42a2a;
-  --color-silver: #8c8c8c;
-  --color-live: #d42a2a;
+  --color-navy: #080e1d;
+  --color-royal: #3474e6;
+  --color-d1red: #e53e3e;
+  --color-silver: #6b7280;
+  --color-live: #e53e3e;
   --color-surface-light: #ffffff;
-  --color-surface-dark: #1a2236;
-  --color-bg-light: #f0f4f8;
-  --color-bg-dark: #0d1526;
+  --color-surface-dark: #0f1729;
+  --color-bg-light: #f3f6fb;
+  --color-bg-dark: #060a16;
 }
 
 html, body, #root {
