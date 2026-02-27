@@ -105,6 +105,20 @@ export interface ConferenceStandings {
   entries: StandingEntry[];
 }
 
+export interface PowerRankedTeam {
+  rank: number;
+  teamId: string;
+  displayName: string;
+  abbreviation: string;
+  logo: string;
+  record: string;
+  wins: number;
+  losses: number;
+  winPct: number;
+  runDiffPerGame: number;
+  powerScore: number;
+}
+
 export interface ScheduleGame {
   id: string;
   date: string;
