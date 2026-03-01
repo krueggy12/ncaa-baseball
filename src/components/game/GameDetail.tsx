@@ -2,7 +2,7 @@ import type { Game } from '../../types/game';
 import type { GameSummary } from '../../hooks/useGameDetail';
 import MatchupHeader from './MatchupHeader';
 import LinescoreTable from '../scores/LinescoreTable';
-import BoxScore from './BoxScore';
+import NcaaBoxScore from './NcaaBoxScore';
 import PlayByPlay from './PlayByPlay';
 import { useState } from 'react';
 
@@ -67,13 +67,8 @@ export default function GameDetail({ game, summary }: Props) {
           </div>
         )}
 
-        {activeTab === 'boxscore' && summary?.boxScore && (
-          <BoxScore boxScore={summary.boxScore} />
-        )}
-        {activeTab === 'boxscore' && !summary?.boxScore && (
-          <p className="text-sm text-gray-400 dark:text-gray-500 text-center py-8">
-            Box score data not yet available.
-          </p>
+        {activeTab === 'boxscore' && (
+          <NcaaBoxScore game={game} />
         )}
 
         {activeTab === 'plays' && (

@@ -15,18 +15,20 @@ No test suite exists in this project.
 
 ## Architecture
 
-**D1 Diamond** is a React 19 + TypeScript + Vite PWA for live NCAA college baseball scores, rankings, standings, and team schedules. All data comes from the public ESPN API (no auth).
+**D1 Diamond** is a React 19 + TypeScript + Vite PWA for live NCAA college baseball scores, rankings, standings, and team schedules. All data comes from the public ESPN API (no auth). FanGraphs is used for stats leaderboards only.
 
 ### Data Flow
 
 ```
 ESPN API → espnClient.fetchESPN<T>() → transformers.ts → typed models → hooks → pages/components
+FanGraphs API → useCollegeStats → StatsPage
 ```
 
 - **`src/api/espnClient.ts`** — Single generic `fetchESPN<T>(url)` with 8s abort timeout
-- **`src/api/endpoints.ts`** — URL builder functions (`getScoreboardUrl`, `getStandingsUrl`, etc.)
-- **`src/api/transformers.ts`** — Converts raw ESPN JSON (`any`) into typed models from `src/types/game.ts`; uses `satisfies` to catch type mismatches
-- **`src/api/conferences.ts`** — Static array of conference `{ id, name, abbreviation }` used for filtering; ESPN conference IDs are integers passed as `groups=` query param
+- **`src/api/endpoints.ts`** — URL builder functions (`getScoreboardUrl`, `getStandingsUrl`, etc.); standings uses `site.web.api.espn.com` (alternate host)
+- **`src/api/transformers.ts`** — Converts raw ESPN JSON (`any`) into typed models; uses `satisfies` over `as` to catch shape mismatches at compile time
+- **`src/api/conferences.ts`** — Static `CONFERENCES` array with ESPN integer IDs (3=ACC, 23=SEC, 8=B12, etc.)
+- **`src/api/fgSchools.ts`** — FanGraphs school ID lookup table (300+ teams) for the stats leaderboard
 
 ### Polling Pattern
 
@@ -36,45 +38,68 @@ ESPN API → espnClient.fetchESPN<T>() → transformers.ts → typed models → 
 - Pauses polling when the tab is hidden (via `visibilitychange`); resumes and refetches on tab focus
 - Returns `{ data, isLoading, error, refetch }`
 
-`useScoreboard` switches poll interval between `POLL_INTERVAL_LIVE` (30s) and `POLL_INTERVAL_IDLE` (5min) based on whether any game has `status.state === 'in'`.
+Poll intervals by hook: `useScoreboard` 30s live / 5min idle (adaptive); `useGameDetail` 10s live / 30s post; `useRankings` / `usePowerRankings` 1hr; `useCollegeStats` 30min.
+
+### Conference Filtering (Non-Obvious)
+
+ESPN's `groups=` query param doesn't work for baseball scoreboards. Instead:
+1. `useTeamConferenceMap` builds a `Map<teamId, conferenceId>` by fetching all conference standings
+2. `ScoresPage` uses this map to filter the `Game[]` returned by `useScoreboard` client-side
 
 ### Routing
 
-Routes are defined in `src/App.tsx`. Most pages render inside `AppShell` (which provides `BottomNav` + `Header`). `GameDetailPage` (`/game/:id`) renders outside `AppShell` as a full-screen overlay.
+Routes are defined in `src/App.tsx`. Most pages render inside `AppShell` (Header + BottomNav). `GameDetailPage` renders outside `AppShell` as a full-screen overlay.
 
 ```
 /                       → ScoresPage
-/rankings               → RankingsPage
+/rankings               → RankingsPage (Poll + Power Rankings tabs)
 /favorites              → FavoritesPage
 /more                   → MorePage
 /more/standings         → StandingsPage
+/more/stats             → StatsPage (FanGraphs leaderboards)
 /more/teams             → TeamDirectoryPage
 /more/teams/:teamId     → TeamSchedulePage
 /more/settings          → SettingsPage
-/game/:id               → GameDetailPage (no shell)
+/game/:id               → GameDetailPage (no AppShell)
 ```
 
 ### State Management
 
 Three React contexts in `src/context/`, all backed by `localStorage` via `src/utils/storage.ts`:
-- **`FavoritesContext`** — `Set<string>` of favorite team IDs; persisted under `STORAGE_KEYS.FAVORITES`
-- **`ThemeContext`** — light/dark/system preference; persisted under `STORAGE_KEYS.THEME`
-- **`NotificationContext`** — per-team notification prefs; persisted under `STORAGE_KEYS.NOTIFICATION_PREFS`
+- **`FavoritesContext`** — `Set<string>` of favorite team IDs
+- **`ThemeContext`** — light/dark/system; applies `dark` class to `document.documentElement`
+- **`NotificationContext`** — per-team push notification prefs
 
 ### Types
 
-All app-level types live in `src/types/game.ts`. Key types: `Game`, `TeamScore`, `GameStatus`, `GameSituation`, `RankedTeam`, `ConferenceStandings`, `StandingEntry`, `TeamSchedule`, `ScheduleGame`.
+- **`src/types/game.ts`** — All ESPN-derived types: `Game`, `TeamScore`, `GameStatus`, `GameSituation`, `RankedTeam`, `PowerRankedTeam`, `ConferenceStandings`, `StandingEntry`, `TeamSchedule`, `ScheduleGame`. `GameState` is `'pre' | 'in' | 'post'`.
+- **`src/types/stats.ts`** — FanGraphs stat types for the leaderboard
 
-`GameState` is `'pre' | 'in' | 'post'` — maps directly to ESPN's `status.type.state`.
+### Power Rankings
+
+`usePowerRankings` computes a metric-driven ranking independent of polls:
+- Pulls all conference standings via `useStandings`; filters to teams with ≥10 games played
+- **Score = 60% × normalized(Win%) + 40% × normalized(Run Differential per Game)**
+- Normalizes win% and RD/G independently across the full pool; outputs top 25
 
 ### Styling
 
-Tailwind CSS v4 via `@tailwindcss/vite` plugin. No `tailwind.config.js` — configuration is inline in CSS or via the Vite plugin. Global styles in `src/index.css`.
+Tailwind CSS v4 via `@tailwindcss/vite` plugin. No `tailwind.config.js`. Custom design tokens defined in `src/index.css` under `@theme`:
+- `--color-navy` (`#080e1d`) — header, dark surfaces
+- `--color-royal` (`#3474e6`) — primary accent, active states
+- `--color-d1red` (`#e53e3e`) — live indicator
+- `--color-surface-dark` / `--color-bg-dark` — dark mode card/page backgrounds
+
+Dark mode toggled via `document.documentElement.classList` by `ThemeContext`.
+
+### Favorites Schedule
+
+When "Favorites Only" is active on ScoresPage, `useFavoriteSchedules` parallel-fetches all favorite teams' schedules, deduplicates shared games, and groups results by date across a rolling 8-day window (yesterday + today + next 7 days).
 
 ### PWA / Caching
 
 `vite-plugin-pwa` + Workbox. Caching strategies in `vite.config.ts`:
-- **Scoreboard** (`/scoreboard`): `NetworkFirst`, 5-min expiry (live score freshness)
+- **Scoreboard** (`/scoreboard`): `NetworkFirst`, 5-min expiry
 - **Team logos** (`a.espncdn.com/*.png`): `CacheFirst`, 30-day expiry
 - **Rankings / Standings**: `StaleWhileRevalidate`, 1-hour expiry
 - **Teams list**: `CacheFirst`, 7-day expiry
