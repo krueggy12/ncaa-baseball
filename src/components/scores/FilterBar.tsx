@@ -13,7 +13,7 @@ interface FilterBarProps {
 
 const statusOptions: { value: StatusFilter; label: string }[] = [
   { value: 'all', label: 'All' },
-  { value: 'live', label: 'Live' },
+  { value: 'live', label: '⬤ Live' },
   { value: 'final', label: 'Final' },
   { value: 'scheduled', label: 'Upcoming' },
 ];
@@ -29,33 +29,36 @@ export default function FilterBar({
   hasFavorites,
 }: FilterBarProps) {
   return (
-    <div className="flex gap-2 overflow-x-auto no-scrollbar px-3 py-2.5 items-center">
-      {/* Status filters */}
-      {statusOptions.map(opt => (
-        <button
-          key={opt.value}
-          onClick={() => onStatusFilterChange(opt.value)}
-          className={`shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 ${
-            statusFilter === opt.value
-              ? 'bg-royal text-white shadow-sm'
-              : 'bg-gray-100 dark:bg-white/[0.07] text-gray-500 dark:text-gray-400'
-          }`}
-        >
-          {opt.label}
-        </button>
-      ))}
+    <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-3 py-2.5 items-center bg-bg-dark dark:bg-bg-dark border-b border-white/[0.05]">
+      {statusOptions.map(opt => {
+        const isActive = statusFilter === opt.value;
+        const isLiveOpt = opt.value === 'live';
+        return (
+          <button
+            key={opt.value}
+            onClick={() => onStatusFilterChange(opt.value)}
+            className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wide transition-all duration-200 ${
+              isActive
+                ? isLiveOpt
+                  ? 'bg-d1red text-white shadow-[0_0_10px_rgba(240,64,64,0.4)]'
+                  : 'bg-royal text-white shadow-[0_0_10px_rgba(52,116,230,0.4)]'
+                : 'bg-white/[0.07] text-white/40 hover:bg-white/[0.11] hover:text-white/70'
+            }`}
+          >
+            {opt.label}
+          </button>
+        );
+      })}
 
-      {/* Divider */}
-      <div className="w-px h-4 bg-gray-200 dark:bg-white/[0.08] shrink-0" />
+      <div className="w-px h-4 bg-white/[0.08] shrink-0 mx-0.5" />
 
-      {/* Favorites toggle */}
       {hasFavorites && (
         <button
           onClick={() => onFavoritesOnlyChange(!favoritesOnly)}
-          className={`shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 flex items-center gap-1 ${
+          className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wide transition-all duration-200 flex items-center gap-1.5 ${
             favoritesOnly
-              ? 'bg-amber-50 dark:bg-amber-400/10 text-amber-600 dark:text-amber-400'
-              : 'bg-gray-100 dark:bg-white/[0.07] text-gray-500 dark:text-gray-400'
+              ? 'bg-amber-400/15 text-amber-400 ring-1 ring-amber-400/40 shadow-[0_0_10px_rgba(251,191,36,0.2)]'
+              : 'bg-white/[0.07] text-white/40 hover:bg-white/[0.11] hover:text-white/70'
           }`}
         >
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -65,20 +68,23 @@ export default function FilterBar({
         </button>
       )}
 
-      {/* Conference select */}
       <select
         value={conferenceFilter}
         onChange={e => onConferenceFilterChange(e.target.value)}
-        className={`shrink-0 px-3 py-1 rounded-full text-xs font-semibold border-none outline-none cursor-pointer appearance-none pr-6 transition-all duration-200 ${
+        className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold border-none outline-none cursor-pointer appearance-none pr-6 transition-all duration-200 ${
           conferenceFilter
-            ? 'bg-royal text-white'
-            : 'bg-gray-100 dark:bg-white/[0.07] text-gray-500 dark:text-gray-400'
+            ? 'bg-royal text-white shadow-[0_0_10px_rgba(52,116,230,0.4)]'
+            : 'bg-white/[0.07] text-white/40'
         }`}
-        style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' stroke='%239ca3af' fill='none' stroke-width='1.5'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center' }}
+        style={{
+          backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' stroke='%236b7280' fill='none' stroke-width='1.5'/%3E%3C/svg%3E\")",
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'right 8px center',
+        }}
       >
-        <option value="">Conference</option>
+        <option value="" style={{ background: '#0b1225' }}>Conference</option>
         {conferences.map(c => (
-          <option key={c.id} value={c.id}>{c.abbreviation}</option>
+          <option key={c.id} value={c.id} style={{ background: '#0b1225' }}>{c.abbreviation}</option>
         ))}
       </select>
     </div>

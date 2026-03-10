@@ -4,13 +4,13 @@ interface CountProps {
   outs: number;
 }
 
-function Dots({ count, max, color }: { count: number; max: number; color: string }) {
+function Pips({ count, max, active, inactive }: { count: number; max: number; active: string; inactive: string }) {
   return (
-    <div className="flex gap-0.5">
+    <div className="flex gap-[3px]">
       {Array.from({ length: max }).map((_, i) => (
         <span
           key={i}
-          className={`w-2 h-2 rounded-full ${i < count ? color : 'bg-gray-300 dark:bg-gray-600'}`}
+          className={`w-[7px] h-[7px] rounded-full ${i < count ? active : inactive}`}
         />
       ))}
     </div>
@@ -19,18 +19,18 @@ function Dots({ count, max, color }: { count: number; max: number; color: string
 
 export default function CountDisplay({ balls, strikes, outs }: CountProps) {
   return (
-    <div className="flex items-center gap-2 text-[10px] font-medium text-gray-500 dark:text-gray-400">
+    <div className="flex items-center gap-2">
       <div className="flex items-center gap-1">
-        <span>B</span>
-        <Dots count={balls} max={4} color="bg-yellow-400" />
+        <span className="text-[9px] font-black text-white/30 uppercase tracking-wide">B</span>
+        <Pips count={balls} max={4} active="bg-emerald-400" inactive="bg-white/10" />
       </div>
       <div className="flex items-center gap-1">
-        <span>S</span>
-        <Dots count={strikes} max={3} color="bg-red-500" />
+        <span className="text-[9px] font-black text-white/30 uppercase tracking-wide">S</span>
+        <Pips count={strikes} max={3} active="bg-d1red" inactive="bg-white/10" />
       </div>
       <div className="flex items-center gap-1">
-        <span>O</span>
-        <Dots count={outs} max={3} color="bg-gray-500" />
+        <span className="text-[9px] font-black text-white/30 uppercase tracking-wide">O</span>
+        <Pips count={outs} max={3} active="bg-amber-400" inactive="bg-white/10" />
       </div>
     </div>
   );

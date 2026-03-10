@@ -2,33 +2,40 @@ export default function LoadingSpinner() {
   return (
     <div className="space-y-2.5 px-3 pt-2">
       {[1, 2, 3].map(i => (
-        <div key={i} className="bg-white dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-white/[0.06] shadow-sm dark:shadow-none animate-pulse overflow-hidden">
-          {/* Side-by-side team layout skeleton */}
+        <div
+          key={i}
+          className="rounded-2xl overflow-hidden border border-white/[0.05] bg-surface-dark"
+          style={{ opacity: 1 - (i - 1) * 0.2 }}
+        >
+          {/* Shimmer top accent */}
+          <div className="h-[2px] animate-shimmer" />
+
           <div className="px-3 pt-4 pb-3">
             <div className="flex items-start justify-between">
               {/* Away team */}
-              <div className="flex flex-col items-center gap-2 w-[100px]">
-                <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-white/[0.08]" />
-                <div className="h-3 w-16 bg-gray-200 dark:bg-white/[0.08] rounded-full" />
-                <div className="h-2.5 w-10 bg-gray-100 dark:bg-white/[0.05] rounded-full" />
+              <div className="flex flex-col items-center gap-2 w-[96px]">
+                <div className="w-13 h-13 rounded-full animate-shimmer" style={{ width: 52, height: 52 }} />
+                <div className="h-3 w-16 rounded-full animate-shimmer" />
+                <div className="h-2.5 w-10 rounded-full animate-shimmer" />
               </div>
               {/* Center */}
-              <div className="flex flex-col items-center justify-center gap-2 flex-1 px-2">
-                <div className="h-8 w-24 bg-gray-200 dark:bg-white/[0.08] rounded-lg" />
-                <div className="h-2.5 w-14 bg-gray-100 dark:bg-white/[0.05] rounded-full" />
+              <div className="flex flex-col items-center justify-center gap-2.5 flex-1 px-2 pt-1">
+                <div className="h-10 w-28 rounded-lg animate-shimmer" />
+                <div className="h-5 w-20 rounded-full animate-shimmer" />
               </div>
               {/* Home team */}
-              <div className="flex flex-col items-center gap-2 w-[100px]">
-                <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-white/[0.08]" />
-                <div className="h-3 w-16 bg-gray-200 dark:bg-white/[0.08] rounded-full" />
-                <div className="h-2.5 w-10 bg-gray-100 dark:bg-white/[0.05] rounded-full" />
+              <div className="flex flex-col items-center gap-2 w-[96px]">
+                <div className="w-13 h-13 rounded-full animate-shimmer" style={{ width: 52, height: 52 }} />
+                <div className="h-3 w-16 rounded-full animate-shimmer" />
+                <div className="h-2.5 w-10 rounded-full animate-shimmer" />
               </div>
             </div>
           </div>
+
           {/* Status bar skeleton */}
-          <div className="flex items-center justify-between px-3 py-2 bg-gray-50 dark:bg-white/[0.03] border-t border-gray-100 dark:border-white/[0.05]">
-            <div className="h-2.5 w-16 bg-gray-200 dark:bg-white/[0.08] rounded-full" />
-            <div className="h-2.5 w-8 bg-gray-100 dark:bg-white/[0.05] rounded-full" />
+          <div className="flex items-center justify-between px-3 py-2 bg-black/20 border-t border-white/[0.05]">
+            <div className="h-2.5 w-16 rounded-full animate-shimmer" />
+            <div className="h-2.5 w-8 rounded-full animate-shimmer" />
           </div>
         </div>
       ))}

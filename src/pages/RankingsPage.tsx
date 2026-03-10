@@ -17,38 +17,43 @@ export default function RankingsPage() {
 
   return (
     <div>
-      {/* Header */}
-      <div className="px-4 py-3">
-        <h2 className="text-lg font-bold text-gray-900 dark:text-white">Top 25 Rankings</h2>
+      {/* Page header */}
+      <div className="px-4 pt-4 pb-3">
+        <h2 className="text-[22px] font-black text-white tracking-tight">
+          Top 25 Rankings
+        </h2>
+        <p className="text-[11px] text-white/30 font-medium mt-0.5">
+          {activeTab === 'top25' ? 'D1 Diamond composite model' : 'D1Baseball media poll'}
+        </p>
       </div>
 
       {/* Tab switcher */}
-      <div className="flex gap-1 px-4 mb-3">
+      <div className="flex gap-1.5 px-4 mb-3">
         <button
           onClick={() => setActiveTab('top25')}
-          className={`flex-1 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+          className={`flex-1 py-2 rounded-xl text-[12px] font-black tracking-wide transition-all duration-200 ${
             activeTab === 'top25'
-              ? 'bg-royal text-white'
-              : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300'
+              ? 'bg-royal text-white shadow-[0_0_14px_rgba(52,116,230,0.4)]'
+              : 'bg-white/[0.06] text-white/35 hover:bg-white/[0.09] hover:text-white/60'
           }`}
         >
-          D1 Diamond Top 25
+          D1 Diamond
         </button>
         <button
           onClick={() => setActiveTab('poll')}
-          className={`flex-1 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+          className={`flex-1 py-2 rounded-xl text-[12px] font-black tracking-wide transition-all duration-200 ${
             activeTab === 'poll'
-              ? 'bg-royal text-white'
-              : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300'
+              ? 'bg-royal text-white shadow-[0_0_14px_rgba(52,116,230,0.4)]'
+              : 'bg-white/[0.06] text-white/35 hover:bg-white/[0.09] hover:text-white/60'
           }`}
         >
-          D1Baseball Poll
+          Media Poll
         </button>
       </div>
 
       {error && (
-        <div className="mx-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-sm text-red-600 dark:text-red-400 text-center">
-          Failed to load rankings.
+        <div className="mx-4 p-3 bg-d1red/10 border border-d1red/20 rounded-xl text-[12px] text-d1red text-center font-medium">
+          Failed to load rankings. Pull to refresh.
         </div>
       )}
 

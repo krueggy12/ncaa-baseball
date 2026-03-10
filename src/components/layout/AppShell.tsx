@@ -6,7 +6,7 @@ export default function AppShell() {
   return (
     <div className="flex flex-col h-full bg-bg-light dark:bg-bg-dark">
       <Header />
-      <main className="flex-1 overflow-y-auto pb-16">
+      <main className="flex-1 overflow-y-auto pb-[76px]">
         <Outlet />
       </main>
       <BottomNav />

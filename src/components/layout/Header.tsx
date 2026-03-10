@@ -2,22 +2,31 @@ import logoImg from '/logo.png?url';
 
 export default function Header() {
   return (
-    <header className="safe-top sticky top-0 z-30 bg-navy backdrop-blur-lg border-b border-white/[0.07]">
+    <header className="safe-top sticky top-0 z-30 glass border-b border-white/[0.06]">
       <div className="flex items-center justify-between px-4 py-2.5">
-        <div className="flex items-center gap-2.5">
-          <img
-            src={logoImg}
-            alt="D1 Diamond"
-            className="h-8 w-auto object-contain"
-          />
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <div className="absolute inset-0 rounded-xl bg-royal/20 blur-md" />
+            <img
+              src={logoImg}
+              alt="D1 Diamond"
+              className="relative h-8 w-auto object-contain drop-shadow-sm"
+            />
+          </div>
           <div className="leading-none">
-            <h1 className="text-[15px] font-black tracking-tight text-white">
-              D1<span className="text-d1red">DIAMOND</span>
+            <h1 className="text-[16px] font-black tracking-tight">
+              <span className="gradient-brand">D1 DIAMOND</span>
             </h1>
-            <p className="text-[9px] font-medium text-white/40 uppercase tracking-widest mt-0.5">
+            <p className="text-[9px] font-semibold text-white/30 uppercase tracking-[0.18em] mt-0.5">
               College Baseball
             </p>
           </div>
+        </div>
+
+        {/* Live badge indicator slot — can be extended */}
+        <div className="flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-d1red animate-glow-live" />
+          <span className="text-[10px] font-bold text-d1red uppercase tracking-widest">Live</span>
         </div>
       </div>
     </header>

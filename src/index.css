@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* D1 Diamond brand palette */
-  --color-navy: #080e1d;
+  /* D1 Diamond brand palette — Premium Midnight */
+  --color-navy: #060c1a;
   --color-royal: #3474e6;
-  --color-d1red: #e53e3e;
+  --color-royal-bright: #4d8ef5;
+  --color-d1red: #f04040;
   --color-silver: #6b7280;
-  --color-live: #e53e3e;
+  --color-live: #f04040;
   --color-surface-light: #ffffff;
-  --color-surface-dark: #0f1729;
-  --color-bg-light: #f3f6fb;
-  --color-bg-dark: #060a16;
+  --color-surface-dark: #0b1225;
+  --color-surface-elevated: #101a30;
+  --color-bg-light: #eef2f9;
+  --color-bg-dark: #050810;
 }
 
 html, body, #root {
@@ -30,23 +32,55 @@ body {
 
 .dark body {
   background-color: var(--color-bg-dark);
-  color: #f1f5f9;
+  color: #e8edf8;
 }
 
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
+/* ── Live pulse animation ─────────────────────────────── */
 @keyframes pulse-live {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.35; }
 }
 
 .animate-pulse-live {
-  animation: pulse-live 1.5s ease-in-out infinite;
+  animation: pulse-live 1.4s ease-in-out infinite;
 }
 
-/* Safe area padding for notched phones */
+/* ── Live glow pulse (for dot indicator) ──────────────── */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 4px 1px rgba(240, 64, 64, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 10px 3px rgba(240, 64, 64, 0.9);
+  }
+}
+
+.animate-glow-live {
+  animation: glow-pulse 1.4s ease-in-out infinite;
+}
+
+/* ── Shimmer loading animation ──────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.09) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* ── Safe area padding for notched phones ──────────────── */
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -55,7 +89,7 @@ body {
   padding-top: env(safe-area-inset-top, 0px);
 }
 
-/* Hide scrollbar for scrollable strips */
+/* ── Hide scrollbar for scrollable strips ──────────────── */
 .no-scrollbar::-webkit-scrollbar,
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
@@ -64,4 +98,35 @@ body {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* ── Gradient brand text ───────────────────────────────── */
+.gradient-brand {
+  background: linear-gradient(135deg, #ffffff 0%, #a8c4f8 60%, #3474e6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glass surface ─────────────────────────────────────── */
+.glass {
+  background: rgba(11, 18, 37, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* ── Live card accent glow ─────────────────────────────── */
+.live-card-glow {
+  box-shadow:
+    inset 3px 0 0 #f04040,
+    0 0 28px 0 rgba(240, 64, 64, 0.08);
+}
+
+/* ── Card hover lift ──────────────────────────────────── */
+.card-hover {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-hover:active {
+  transform: scale(0.992);
 }

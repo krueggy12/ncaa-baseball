@@ -6,76 +6,114 @@ interface Props {
   rankings: Top25Team[];
 }
 
+const MEDAL_COLORS: Record<number, string> = {
+  1: 'text-amber-400',
+  2: 'text-slate-300',
+  3: 'text-amber-600',
+};
+
 export default function Top25Table({ rankings }: Props) {
   const { isFavorite, toggleFavorite } = useFavorites();
 
   if (rankings.length === 0) {
     return (
-      <div className="text-center py-16 text-gray-400 dark:text-gray-500 text-sm">
+      <div className="text-center py-16 text-white/25 text-sm">
         Rankings not available.
       </div>
     );
   }
 
-  return (
-    <div className="px-3 pb-4">
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 border-b border-gray-100 dark:border-gray-700">
-          <span className="w-8 text-center">#</span>
-          <span className="flex-1 pl-2">Team</span>
-          <span className="w-14 text-center">Record</span>
-          <span className="w-12 text-center">Elo</span>
-          <span className="w-12 text-center">RD/G</span>
-          <span className="w-10 text-center">Score</span>
-          <span className="w-6" />
-        </div>
+  const maxScore = Math.max(...rankings.map(t => t.compositeScore));
 
-        {rankings.map(team => {
+  return (
+    <div className="px-3 pb-6">
+      {/* Column headers */}
+      <div className="flex items-center px-3 py-1.5 mb-1 text-[10px] font-black uppercase tracking-widest text-white/20">
+        <span className="w-8 text-center">#</span>
+        <span className="flex-1 pl-2">Team</span>
+        <span className="w-14 text-center">W-L</span>
+        <span className="w-12 text-center">ELO</span>
+        <span className="w-14 text-center">Score</span>
+        <span className="w-7" />
+      </div>
+
+      <div className="rounded-2xl overflow-hidden border border-white/[0.06]">
+        {rankings.map((team, idx) => {
           const fav = isFavorite(team.teamId);
           const rdColor =
             team.runDiffPerGame > 2
-              ? 'text-emerald-600 dark:text-emerald-400'
+              ? 'text-emerald-400'
               : team.runDiffPerGame < -1
-              ? 'text-red-500 dark:text-red-400'
-              : 'text-gray-500 dark:text-gray-400';
-          const rdLabel = team.runDiffPerGame > 0 ? `+${team.runDiffPerGame}` : `${team.runDiffPerGame}`;
+              ? 'text-red-400'
+              : 'text-white/40';
+          const rankColor = MEDAL_COLORS[team.rank] ?? 'text-white/50';
+          const scoreWidth = Math.round((team.compositeScore / maxScore) * 100);
+          const isTop3 = team.rank <= 3;
 
           return (
             <div
               key={team.teamId}
-              className={`flex items-center px-4 py-2.5 border-b border-gray-50 dark:border-gray-700/50 ${
-                fav ? 'bg-yellow-50/50 dark:bg-yellow-900/10' : ''
+              className={`flex items-center px-3 py-2.5 border-b border-white/[0.04] last:border-b-0 transition-colors duration-150 ${
+                fav
+                  ? 'bg-amber-400/5'
+                  : isTop3
+                  ? 'bg-royal/[0.04]'
+                  : idx % 2 === 0
+                  ? 'bg-surface-dark'
+                  : 'bg-[#0a1122]'
               }`}
             >
-              <span className="w-8 text-center text-sm font-bold tabular-nums text-gray-700 dark:text-gray-300">
+              {/* Rank */}
+              <span className={`w-8 text-center text-sm font-black tabular-nums ${rankColor}`}>
                 {team.rank}
               </span>
+
+              {/* Team */}
               <div className="flex items-center gap-2 flex-1 pl-2 min-w-0">
-                <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={28} />
-                <span className="text-sm font-medium text-gray-900 dark:text-white truncate block">
-                  {team.displayName}
-                </span>
+                <div className={`${isTop3 ? 'p-0.5 rounded-lg bg-white/5' : ''}`}>
+                  <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={30} />
+                </div>
+                <div className="min-w-0">
+                  <span className={`text-[13px] font-bold truncate block ${fav ? 'text-amber-300' : 'text-white/90'}`}>
+                    {team.displayName}
+                  </span>
+                  <span className={`text-[10px] font-medium ${rdColor}`}>
+                    {team.runDiffPerGame > 0 ? `+${team.runDiffPerGame}` : team.runDiffPerGame} RD/G
+                  </span>
+                </div>
               </div>
-              <span className="w-14 text-center text-xs text-gray-500 dark:text-gray-400 tabular-nums">
+
+              {/* Record */}
+              <span className="w-14 text-center text-[11px] font-semibold text-white/40 tabular-nums">
                 {team.wins}–{team.losses}
               </span>
-              <span className="w-12 text-center text-xs text-gray-500 dark:text-gray-400 tabular-nums">
+
+              {/* ELO */}
+              <span className="w-12 text-center text-[11px] font-semibold text-white/40 tabular-nums">
                 {team.elo}
               </span>
-              <span className={`w-12 text-center text-xs font-medium tabular-nums ${rdColor}`}>
-                {rdLabel}
-              </span>
-              <span className="w-10 text-center text-xs font-bold text-royal tabular-nums">
-                {team.compositeScore}
-              </span>
+
+              {/* Score bar */}
+              <div className="w-14 flex flex-col items-center gap-1">
+                <span className="text-[11px] font-black text-royal-bright tabular-nums">
+                  {team.compositeScore}
+                </span>
+                <div className="w-full h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-royal to-royal-bright"
+                    style={{ width: `${scoreWidth}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Favorite toggle */}
               <button
                 onClick={() => toggleFavorite(team.teamId)}
-                className="w-6 flex justify-center"
+                className="w-7 flex justify-center ml-1 shrink-0"
                 aria-label={fav ? 'Remove from favorites' : 'Add to favorites'}
               >
                 <svg
-                  className={`w-4 h-4 ${fav ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
+                  className={`w-4 h-4 transition-colors ${fav ? 'text-amber-400' : 'text-white/15 hover:text-white/40'}`}
                   viewBox="0 0 20 20"
                   fill={fav ? 'currentColor' : 'none'}
                   stroke="currentColor"
@@ -89,8 +127,8 @@ export default function Top25Table({ rankings }: Props) {
         })}
       </div>
 
-      <p className="text-[10px] text-gray-400 dark:text-gray-600 text-center mt-3 px-2">
-        D1 Diamond composite ranking. Min. 5 games played.
+      <p className="text-[10px] text-white/20 text-center mt-3 px-2">
+        D1 Diamond composite ranking — ELO + run differential. Min. 5 games played.
       </p>
     </div>
   );
