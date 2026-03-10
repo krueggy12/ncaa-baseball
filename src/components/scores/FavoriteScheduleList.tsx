@@ -112,7 +112,7 @@ export default function FavoriteScheduleList({ dateGroups, isLoading }: Props) {
               {group.games.length}
             </span>
           </div>
-          <div className="rounded-2xl overflow-hidden border border-white/[0.06] bg-surface-dark">
+          <div className="rounded-md overflow-hidden border border-white/[0.06] bg-surface-dark">
             {group.games.map((game, idx) => (
               <ScheduleRow key={`${game.id}-${game.team.id}-${idx}`} game={game} />
             ))}

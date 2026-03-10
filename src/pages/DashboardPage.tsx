@@ -37,31 +37,19 @@ function SectionHeader({ title, label, onViewMore }: { title: string; label?: st
   );
 }
 
-// ─── Compact game row for dashboard ──────────────────────────────────────────
+// ─── 3-column grid game cell ──────────────────────────────────────────────────
 
-function TeamRow({ team, isFinal }: { team: Game['away']; isFinal: boolean }) {
-  const dimmed = isFinal && !team.isWinner;
-  return (
-    <div className="flex items-center gap-2.5">
-      <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={30} />
-      <div className="min-w-0">
-        <div className="flex items-center gap-1.5">
-          {team.rank != null && (
-            <span className="text-[10px] font-black text-royal-bright shrink-0">#{team.rank}</span>
-          )}
-          <span className={`text-[15px] font-black leading-tight ${dimmed ? 'text-white/30' : 'text-white'}`}>
-            {team.abbreviation}
-          </span>
-        </div>
-        {team.record && (
-          <span className="text-[11px] text-white/30 font-medium leading-tight">{team.record}</span>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function GamePreview({ game, onClick }: { game: Game; onClick: () => void }) {
+function GameCell({
+  game,
+  idx,
+  total,
+  onClick,
+}: {
+  game: Game;
+  idx: number;
+  total: number;
+  onClick: () => void;
+}) {
   const isLive = game.status.state === 'in';
   const isFinal = game.status.state === 'post';
 
@@ -72,47 +60,83 @@ function GamePreview({ game, onClick }: { game: Game; onClick: () => void }) {
     } catch { return ''; }
   })();
 
+  // Border logic: right border unless last in row, bottom border unless last row
+  const isLastInRow = (idx + 1) % 3 === 0;
+  const isLastRow = idx >= total - (total % 3 === 0 ? 3 : total % 3);
+  const borderCls = [
+    !isLastInRow ? 'border-r border-white/[0.07]' : '',
+    !isLastRow   ? 'border-b border-white/[0.07]' : '',
+  ].join(' ');
+
   return (
     <div
       onClick={onClick}
-      className="flex items-center gap-3 px-4 py-3.5 border-b border-white/[0.04] last:border-b-0 active:bg-white/5 cursor-pointer transition-colors"
+      className={`p-2.5 cursor-pointer active:bg-white/[0.06] transition-colors ${borderCls}`}
     >
-      {/* Teams — stacked away over home */}
-      <div className="flex-1 min-w-0 flex flex-col gap-2.5">
-        <TeamRow team={game.away} isFinal={isFinal} />
-        <TeamRow team={game.home} isFinal={isFinal} />
+      {/* Away team */}
+      <div className="flex items-center gap-1.5 mb-0.5">
+        <TeamLogo src={game.away.logo} alt={game.away.displayName} abbreviation={game.away.abbreviation} size={22} />
+        <div className="min-w-0">
+          <div className="flex items-center gap-1">
+            {game.away.rank != null && (
+              <span className="text-[8px] font-black text-royal-bright shrink-0">#{game.away.rank}</span>
+            )}
+            <span className={`text-[12px] font-black truncate leading-tight ${isFinal && !game.away.isWinner ? 'text-white/30' : 'text-white'}`}>
+              {game.away.abbreviation}
+            </span>
+          </div>
+          {game.away.record && (
+            <span className="text-[9px] text-white/30 font-medium leading-none">{game.away.record}</span>
+          )}
+        </div>
       </div>
 
-      {/* Right column: score (live/final) or time + channel (pre) */}
-      <div className="shrink-0 flex flex-col items-end justify-between gap-2">
+      {/* Home team */}
+      <div className="flex items-center gap-1.5 mt-2">
+        <TeamLogo src={game.home.logo} alt={game.home.displayName} abbreviation={game.home.abbreviation} size={22} />
+        <div className="min-w-0">
+          <div className="flex items-center gap-1">
+            {game.home.rank != null && (
+              <span className="text-[8px] font-black text-royal-bright shrink-0">#{game.home.rank}</span>
+            )}
+            <span className={`text-[12px] font-black truncate leading-tight ${isFinal && !game.home.isWinner ? 'text-white/30' : 'text-white'}`}>
+              {game.home.abbreviation}
+            </span>
+          </div>
+          {game.home.record && (
+            <span className="text-[9px] text-white/30 font-medium leading-none">{game.home.record}</span>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom: time/channel or score/status */}
+      <div className="mt-2 pt-1.5 border-t border-white/[0.05]">
         {isLive ? (
-          <>
-            <span className={`text-[20px] font-black tabular-nums leading-none ${game.away.isWinner || !isFinal ? 'text-white' : 'text-white/30'}`}>
-              {game.away.score}
-            </span>
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-d1red animate-glow-live" />
-              <span className="text-[10px] font-black text-d1red">{game.status.shortDetail}</span>
+              <span className="w-1 h-1 rounded-full bg-d1red animate-glow-live" />
+              <span className="text-[9px] font-black text-d1red">{game.status.shortDetail}</span>
             </div>
-            <span className={`text-[20px] font-black tabular-nums leading-none ${game.home.isWinner || !isFinal ? 'text-white' : 'text-white/30'}`}>
-              {game.home.score}
-            </span>
-          </>
+            <div className="flex items-center gap-1.5">
+              <span className={`text-[12px] font-black tabular-nums ${game.away.isWinner ? 'text-white' : 'text-white/40'}`}>{game.away.score}</span>
+              <span className="text-white/20 text-[10px]">–</span>
+              <span className={`text-[12px] font-black tabular-nums ${game.home.isWinner ? 'text-white' : 'text-white/40'}`}>{game.home.score}</span>
+            </div>
+          </div>
         ) : isFinal ? (
-          <>
-            <span className={`text-[20px] font-black tabular-nums leading-none ${game.away.isWinner ? 'text-white' : 'text-white/30'}`}>
-              {game.away.score}
-            </span>
-            <span className="text-[9px] font-black text-white/20 uppercase tracking-widest">Final</span>
-            <span className={`text-[20px] font-black tabular-nums leading-none ${game.home.isWinner ? 'text-white' : 'text-white/30'}`}>
-              {game.home.score}
-            </span>
-          </>
+          <div className="flex items-center justify-between">
+            <span className="text-[9px] font-black text-white/20 uppercase tracking-wider">Final</span>
+            <div className="flex items-center gap-1.5">
+              <span className={`text-[12px] font-black tabular-nums ${game.away.isWinner ? 'text-white' : 'text-white/30'}`}>{game.away.score}</span>
+              <span className="text-white/20 text-[10px]">–</span>
+              <span className={`text-[12px] font-black tabular-nums ${game.home.isWinner ? 'text-white' : 'text-white/30'}`}>{game.home.score}</span>
+            </div>
+          </div>
         ) : (
-          <div className="flex flex-col items-end gap-0.5">
-            <span className="text-[15px] font-bold text-white/70">{gameTime}</span>
+          <div className="flex items-end justify-between gap-1">
+            <span className="text-[11px] font-bold text-white/60 leading-tight">{gameTime}</span>
             {game.broadcasts.length > 0 && (
-              <span className="text-[11px] font-semibold text-white/35">{game.broadcasts[0]}</span>
+              <span className="text-[10px] font-semibold text-white/30 leading-tight truncate max-w-[50px] text-right">{game.broadcasts[0]}</span>
             )}
           </div>
         )}
@@ -125,7 +149,7 @@ function GamePreview({ game, onClick }: { game: Game; onClick: () => void }) {
 
 function SkeletonRows({ count = 4 }: { count?: number }) {
   return (
-    <div className="rounded-2xl overflow-hidden border border-white/[0.06] bg-surface-dark mx-4">
+    <div className="rounded-md overflow-hidden border border-white/[0.06] bg-surface-dark mx-4">
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} className="flex items-center px-4 py-3 border-b border-white/[0.04] last:border-b-0 gap-3">
           <div className="w-7 h-7 rounded-full animate-shimmer flex-shrink-0" />
@@ -179,24 +203,28 @@ export default function DashboardPage() {
           onViewMore={() => navigate('/scores')}
         />
         {gamesLoading && featured.length === 0 ? (
-          <SkeletonRows count={4} />
+          <SkeletonRows count={3} />
         ) : featured.length === 0 ? (
-          <div className="mx-4 rounded-2xl border border-white/[0.06] bg-surface-dark px-4 py-8 text-center">
+          <div className="mx-4 rounded-md border border-white/[0.06] bg-surface-dark px-4 py-8 text-center">
             <p className="text-white/30 text-sm font-bold">No games scheduled today</p>
           </div>
         ) : (
-          <div className="mx-4 rounded-2xl overflow-hidden border border-white/[0.06] bg-surface-dark">
-            {featured.map(game => (
-              <GamePreview
-                key={game.id}
-                game={game}
-                onClick={() => navigate(`/game/${game.id}?date=${espnDate}`)}
-              />
-            ))}
+          <div className="mx-4 rounded-md overflow-hidden border border-white/[0.07] bg-surface-dark">
+            <div className="grid grid-cols-3">
+              {featured.map((game, idx) => (
+                <GameCell
+                  key={game.id}
+                  game={game}
+                  idx={idx}
+                  total={featured.length}
+                  onClick={() => navigate(`/game/${game.id}?date=${espnDate}`)}
+                />
+              ))}
+            </div>
             {games.length > 6 && (
               <button
                 onClick={() => navigate('/scores')}
-                className="w-full py-2.5 text-[11px] font-black text-white/30 hover:text-white/60 transition-colors border-t border-white/[0.04]"
+                className="w-full py-2.5 text-[11px] font-black text-white/30 hover:text-white/60 transition-colors border-t border-white/[0.07]"
               >
                 +{games.length - 6} more games today
               </button>
@@ -215,7 +243,7 @@ export default function DashboardPage() {
         {rankingsLoading && top10.length === 0 ? (
           <SkeletonRows count={5} />
         ) : (
-          <div className="mx-4 rounded-2xl overflow-hidden border border-white/[0.06] bg-surface-dark">
+          <div className="mx-4 rounded-md overflow-hidden border border-white/[0.06] bg-surface-dark">
             {top10.map((team, idx) => {
               const rankColor = idx === 0 ? 'text-amber-400' : idx === 1 ? 'text-slate-300' : idx === 2 ? 'text-amber-600' : 'text-white/30';
               return (
@@ -242,11 +270,11 @@ export default function DashboardPage() {
         {batLoading && top5Bat.length === 0 ? (
           <SkeletonRows count={5} />
         ) : top5Bat.length === 0 ? (
-          <div className="mx-4 rounded-2xl border border-white/[0.06] bg-surface-dark px-4 py-6 text-center">
+          <div className="mx-4 rounded-md border border-white/[0.06] bg-surface-dark px-4 py-6 text-center">
             <p className="text-white/30 text-sm">Stats unavailable</p>
           </div>
         ) : (
-          <div className="mx-4 rounded-2xl overflow-hidden border border-white/[0.06] bg-surface-dark">
+          <div className="mx-4 rounded-md overflow-hidden border border-white/[0.06] bg-surface-dark">
             {top5Bat.map((row, idx) => (
               <div key={String(row['UPID']) || idx} className="flex items-center px-4 py-2.5 border-b border-white/[0.04] last:border-b-0">
                 <span className="w-5 text-[11px] font-black text-white/25 tabular-nums">{idx + 1}</span>
@@ -288,11 +316,11 @@ export default function DashboardPage() {
         {pitLoading && top5Pit.length === 0 ? (
           <SkeletonRows count={5} />
         ) : top5Pit.length === 0 ? (
-          <div className="mx-4 rounded-2xl border border-white/[0.06] bg-surface-dark px-4 py-6 text-center">
+          <div className="mx-4 rounded-md border border-white/[0.06] bg-surface-dark px-4 py-6 text-center">
             <p className="text-white/30 text-sm">Stats unavailable</p>
           </div>
         ) : (
-          <div className="mx-4 rounded-2xl overflow-hidden border border-white/[0.06] bg-surface-dark">
+          <div className="mx-4 rounded-md overflow-hidden border border-white/[0.06] bg-surface-dark">
             {top5Pit.map((row, idx) => (
               <div key={String(row['UPID']) || idx} className="flex items-center px-4 py-2.5 border-b border-white/[0.04] last:border-b-0">
                 <span className="w-5 text-[11px] font-black text-white/25 tabular-nums">{idx + 1}</span>

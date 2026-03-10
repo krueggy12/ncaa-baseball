@@ -37,7 +37,7 @@ export default function Top25Table({ rankings }: Props) {
         <span className="w-7" />
       </div>
 
-      <div className="rounded-2xl overflow-hidden border border-white/[0.06]">
+      <div className="rounded-md overflow-hidden border border-white/[0.06]">
         {rankings.map((team, idx) => {
           const fav = isFavorite(team.teamId);
           const rdColor =

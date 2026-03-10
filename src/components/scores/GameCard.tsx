@@ -108,7 +108,7 @@ function GameCardInner({ game }: GameCardProps) {
 
   return (
     <div
-      className={`rounded-2xl overflow-hidden transition-all duration-200 card-hover ${
+      className={`rounded-lg overflow-hidden transition-all duration-200 card-hover ${
         isLive
           ? 'live-card-glow bg-surface-dark dark:bg-[#0e1525]'
           : isFavGame
