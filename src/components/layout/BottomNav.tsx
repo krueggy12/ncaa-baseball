@@ -52,7 +52,7 @@ export default function BottomNav() {
   return (
     <nav className="safe-bottom fixed bottom-0 left-0 right-0 z-30 glass">
       {/* Bleed gradient — content fades into nav as you scroll down */}
-      <div className="absolute left-0 right-0 bottom-full h-8 bg-gradient-to-t from-[#060c1a] to-transparent pointer-events-none" />
+      <div className="absolute left-0 right-0 bottom-full h-24 bg-gradient-to-t from-[#060c1a] via-[#060c1a]/60 to-transparent pointer-events-none" />
       <div className="flex items-center justify-around h-[60px] max-w-lg mx-auto px-2">
         {tabs.map(tab => {
           const isMoreActive = tab.to === '/more' && location.pathname.startsWith('/more');
