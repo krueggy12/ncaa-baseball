@@ -65,9 +65,9 @@ function GameCell({
     } catch { return ''; }
   })();
 
-  // Border logic: 2-column grid
-  const isLastInRow = (idx + 1) % 2 === 0;
-  const isLastRow = Math.floor(idx / 2) === Math.ceil(total / 2) - 1;
+  // Border logic: 3-column grid
+  const isLastInRow = (idx + 1) % 3 === 0;
+  const isLastRow = idx >= total - (total % 3 === 0 ? 3 : total % 3);
   const borderCls = [
     !isLastInRow ? 'border-r border-white/[0.07]' : '',
     !isLastRow   ? 'border-b border-white/[0.07]' : '',
@@ -211,17 +211,20 @@ export default function DashboardPage() {
             <p className="text-white/30 text-sm font-bold">No games scheduled today</p>
           </div>
         ) : (
-          <div className="mx-4 rounded-md overflow-hidden border border-white/[0.07] bg-surface-dark">
-            <div className="grid grid-cols-2">
-              {featured.map((game, idx) => (
-                <GameCell
-                  key={game.id}
-                  game={game}
-                  idx={idx}
-                  total={featured.length}
-                  onClick={() => navigate(`/game/${game.id}?date=${espnDate}`)}
-                />
-              ))}
+          <div className="mx-4 rounded-md border border-white/[0.07] bg-surface-dark overflow-hidden">
+            {/* Horizontally scrollable on mobile so 3 columns never get squished */}
+            <div className="overflow-x-auto scrollbar-hide">
+              <div className="grid grid-cols-3 min-w-[390px]">
+                {featured.map((game, idx) => (
+                  <GameCell
+                    key={game.id}
+                    game={game}
+                    idx={idx}
+                    total={featured.length}
+                    onClick={() => navigate(`/game/${game.id}?date=${espnDate}`)}
+                  />
+                ))}
+              </div>
             </div>
             {games.length > 6 && (
               <button
