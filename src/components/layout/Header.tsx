@@ -30,8 +30,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Bleed gradient — content fades into header as you scroll */}
-      <div className="absolute left-0 right-0 top-full h-24 bg-gradient-to-b from-[#060c1a] via-[#060c1a]/60 to-transparent pointer-events-none z-10" />
     </header>
   );
 }
