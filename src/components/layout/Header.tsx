@@ -2,7 +2,7 @@ import logoImg from '/logo.png?url';
 
 export default function Header() {
   return (
-    <header className="safe-top sticky top-0 z-30 glass border-b border-white/[0.06]">
+    <header className="safe-top sticky top-0 z-30 glass">
       <div className="flex items-center justify-between px-4 py-2.5">
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -23,12 +23,15 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Live badge indicator slot — can be extended */}
+        {/* Live badge indicator slot */}
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-d1red animate-glow-live" />
           <span className="text-[10px] font-bold text-d1red uppercase tracking-widest">Live</span>
         </div>
       </div>
+
+      {/* Bleed gradient — content fades into header as you scroll */}
+      <div className="absolute left-0 right-0 top-full h-8 bg-gradient-to-b from-[#060c1a] to-transparent pointer-events-none z-10" />
     </header>
   );
 }

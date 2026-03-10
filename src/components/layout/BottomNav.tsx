@@ -5,8 +5,12 @@ const tabs = [
     to: '/',
     label: 'Scores',
     icon: (active: boolean) => (
+      // Scoreboard grid icon
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={active ? 2 : 1.75} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+        <rect x="2" y="5" width="20" height="14" rx="2" />
+        <line x1="2" y1="12" x2="22" y2="12" />
+        <line x1="9" y1="5" x2="9" y2="19" />
+        <line x1="15" y1="5" x2="15" y2="19" />
       </svg>
     ),
   },
@@ -14,8 +18,9 @@ const tabs = [
     to: '/rankings',
     label: 'Rankings',
     icon: (active: boolean) => (
+      // Ranked list icon (three lines, progressively shorter = ranked order)
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={active ? 2 : 1.75} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.5V17a1 1 0 001 1h3V13.5M9 8.5V18h3V8.5M15 11V18h3a1 1 0 001-1v-5a1 1 0 00-1-1h-3z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
       </svg>
     ),
   },
@@ -45,7 +50,9 @@ export default function BottomNav() {
   const location = useLocation();
 
   return (
-    <nav className="safe-bottom fixed bottom-0 left-0 right-0 z-30 glass border-t border-white/[0.07]">
+    <nav className="safe-bottom fixed bottom-0 left-0 right-0 z-30 glass">
+      {/* Bleed gradient — content fades into nav as you scroll down */}
+      <div className="absolute left-0 right-0 bottom-full h-8 bg-gradient-to-t from-[#060c1a] to-transparent pointer-events-none" />
       <div className="flex items-center justify-around h-[60px] max-w-lg mx-auto px-2">
         {tabs.map(tab => {
           const isMoreActive = tab.to === '/more' && location.pathname.startsWith('/more');
