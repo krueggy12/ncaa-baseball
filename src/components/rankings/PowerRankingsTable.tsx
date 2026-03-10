@@ -11,7 +11,7 @@ export default function PowerRankingsTable({ rankings }: Props) {
 
   if (rankings.length === 0) {
     return (
-      <div className="text-center py-16 text-gray-400 dark:text-gray-500 text-sm">
+      <div className="text-center py-16 text-[var(--c-text-50)] text-sm">
         Power rankings not available.
       </div>
     );
@@ -19,9 +19,9 @@ export default function PowerRankingsTable({ rankings }: Props) {
 
   return (
     <div className="px-3 pb-4">
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-[var(--c-surface)] rounded-xl shadow-sm overflow-hidden">
         {/* Header */}
-        <div className="flex items-center px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 border-b border-gray-100 dark:border-gray-700">
+        <div className="flex items-center px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-[var(--c-text-40)] border-b border-[var(--c-border)]">
           <span className="w-8 text-center">#</span>
           <span className="flex-1 pl-2">Team</span>
           <span className="w-14 text-center">Record</span>
@@ -37,7 +37,7 @@ export default function PowerRankingsTable({ rankings }: Props) {
               ? 'text-emerald-600 dark:text-emerald-400'
               : team.runDiffPerGame < -1
               ? 'text-red-500 dark:text-red-400'
-              : 'text-gray-500 dark:text-gray-400';
+              : 'text-[var(--c-text-50)]';
           const rdLabel = team.runDiffPerGame > 0
             ? `+${team.runDiffPerGame}`
             : `${team.runDiffPerGame}`;
@@ -45,22 +45,22 @@ export default function PowerRankingsTable({ rankings }: Props) {
           return (
             <div
               key={team.teamId}
-              className={`flex items-center px-4 py-2.5 border-b border-gray-50 dark:border-gray-700/50 ${
+              className={`flex items-center px-4 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0 ${
                 fav ? 'bg-yellow-50/50 dark:bg-yellow-900/10' : ''
               }`}
             >
-              <span className="w-8 text-center text-sm font-bold tabular-nums text-gray-700 dark:text-gray-300">
+              <span className="w-8 text-center text-sm font-bold tabular-nums text-[var(--c-text-80)]">
                 {team.rank}
               </span>
               <div className="flex items-center gap-2 flex-1 pl-2 min-w-0">
                 <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={28} />
                 <div className="min-w-0">
-                  <span className="text-sm font-medium text-gray-900 dark:text-white truncate block">
+                  <span className="text-sm font-medium text-[var(--c-text)] truncate block">
                     {team.displayName}
                   </span>
                 </div>
               </div>
-              <span className="w-14 text-center text-xs text-gray-500 dark:text-gray-400 tabular-nums">
+              <span className="w-14 text-center text-xs text-[var(--c-text-50)] tabular-nums">
                 {team.record}
               </span>
               <span className={`w-12 text-center text-xs font-medium tabular-nums ${rdColor}`}>
@@ -75,7 +75,7 @@ export default function PowerRankingsTable({ rankings }: Props) {
                 aria-label={fav ? 'Remove from favorites' : 'Add to favorites'}
               >
                 <svg
-                  className={`w-4 h-4 ${fav ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
+                  className={`w-4 h-4 ${fav ? 'text-yellow-400 fill-yellow-400' : 'text-[var(--c-text-30)]'}`}
                   viewBox="0 0 20 20"
                   fill={fav ? 'currentColor' : 'none'}
                   stroke="currentColor"
@@ -89,7 +89,7 @@ export default function PowerRankingsTable({ rankings }: Props) {
         })}
       </div>
 
-      <p className="text-[10px] text-gray-400 dark:text-gray-600 text-center mt-3 px-2">
+      <p className="text-[10px] text-[var(--c-text-40)] text-center mt-3 px-2">
         Score = 60% win % + 40% run differential per game (normalized). Min. {10} games.
       </p>
     </div>

@@ -60,8 +60,8 @@ export default function MorePage() {
   return (
     <div className="px-4 pb-4">
       <div className="pt-4 pb-3">
-        <h2 className="text-[22px] font-black text-white tracking-tight uppercase">More</h2>
-        <p className="text-[11px] text-white/30 font-medium mt-0.5">Standings, stats, teams & settings</p>
+        <h2 className="text-[22px] font-black text-[var(--c-text)] tracking-tight uppercase">More</h2>
+        <p className="text-[11px] text-[var(--c-text-30)] font-medium mt-0.5">Standings, stats, teams & settings</p>
       </div>
 
       <div className="space-y-1.5">
@@ -69,17 +69,17 @@ export default function MorePage() {
           <button
             key={item.path}
             onClick={() => navigate(item.path)}
-            className="w-full flex items-center gap-3.5 bg-surface-dark rounded-2xl border border-white/[0.06] px-4 py-3.5 text-left active:scale-[0.98] transition-all duration-150 hover:bg-surface-elevated"
+            className="w-full flex items-center gap-3.5 bg-[var(--c-surface)] rounded-2xl border border-[var(--c-border)] px-4 py-3.5 text-left active:scale-[0.98] transition-all duration-150 hover:bg-[var(--c-surface-alt)]"
             style={{ opacity: 1 - idx * 0.04 }}
           >
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-royal/15 text-royal-bright shrink-0 ring-1 ring-royal/20">
               {item.icon}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[14px] font-bold text-white/90">{item.title}</p>
-              <p className="text-[11px] text-white/30 mt-0.5 font-medium">{item.subtitle}</p>
+              <p className="text-[14px] font-bold text-[var(--c-text-90)]">{item.title}</p>
+              <p className="text-[11px] text-[var(--c-text-30)] mt-0.5 font-medium">{item.subtitle}</p>
             </div>
-            <svg className="w-4 h-4 text-white/15 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+            <svg className="w-4 h-4 text-[var(--c-text-15)] shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
           </button>

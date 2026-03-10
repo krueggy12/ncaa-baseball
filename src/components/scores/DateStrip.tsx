@@ -18,7 +18,7 @@ export default function DateStrip({ selectedDate, onSelectDate }: DateStripProps
   return (
     <div
       ref={scrollRef}
-      className="flex gap-1.5 overflow-x-auto no-scrollbar px-3 py-2.5 bg-surface-dark dark:bg-bg-dark border-b border-white/[0.05] dark:border-white/[0.05]"
+      className="flex gap-1.5 overflow-x-auto no-scrollbar px-3 py-2.5 bg-[var(--c-surface)] border-b border-[var(--c-border-faint)]"
     >
       {dates.map(date => {
         const selected = isSameDay(date, selectedDate);
@@ -36,8 +36,8 @@ export default function DateStrip({ selectedDate, onSelectDate }: DateStripProps
               selected
                 ? 'bg-royal text-white shadow-[0_0_12px_rgba(52,116,230,0.45)]'
                 : today
-                ? 'bg-royal/15 text-royal-bright dark:text-royal-bright ring-1 ring-royal/30'
-                : 'text-white/30 dark:text-white/25 hover:bg-white/5 hover:text-white/60'
+                ? 'bg-royal/15 text-royal-bright ring-1 ring-royal/30'
+                : 'text-[var(--c-text-30)] hover:bg-[var(--c-surface-subtle)] hover:text-[var(--c-text-60)]'
             }`}
           >
             <span className="text-[9px] font-semibold uppercase tracking-wider">{dayName}</span>

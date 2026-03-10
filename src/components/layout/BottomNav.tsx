@@ -67,7 +67,7 @@ export default function BottomNav() {
               className={({ isActive }) => {
                 const active = isActive || isMoreActive;
                 return `flex flex-col items-center gap-1 px-4 py-1.5 rounded-2xl transition-all duration-200 min-w-[60px] ${
-                  active ? 'text-white' : 'text-white/30 hover:text-white/60'
+                  active ? 'text-[var(--c-text)]' : 'text-[var(--c-text-30)] hover:text-[var(--c-text-60)]'
                 }`;
               }}
             >
@@ -81,7 +81,7 @@ export default function BottomNav() {
                       {tab.icon(active)}
                     </div>
                     <span className={`text-[10px] font-semibold leading-tight transition-all duration-200 ${
-                      active ? 'text-white' : 'text-white/30'
+                      active ? 'text-[var(--c-text)]' : 'text-[var(--c-text-30)]'
                     }`}>
                       {tab.label}
                     </span>

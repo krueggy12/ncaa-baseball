@@ -4,7 +4,7 @@ export default function LoadingSpinner() {
       {[1, 2, 3].map(i => (
         <div
           key={i}
-          className="rounded-2xl overflow-hidden border border-white/[0.05] bg-surface-dark"
+          className="rounded-2xl overflow-hidden border border-[var(--c-border-faint)] bg-[var(--c-surface)]"
           style={{ opacity: 1 - (i - 1) * 0.2 }}
         >
           {/* Shimmer top accent */}
@@ -33,7 +33,7 @@ export default function LoadingSpinner() {
           </div>
 
           {/* Status bar skeleton */}
-          <div className="flex items-center justify-between px-3 py-2 bg-black/20 border-t border-white/[0.05]">
+          <div className="flex items-center justify-between px-3 py-2 bg-[var(--c-overlay)] border-t border-[var(--c-border-faint)]">
             <div className="h-2.5 w-16 rounded-full animate-shimmer" />
             <div className="h-2.5 w-8 rounded-full animate-shimmer" />
           </div>

@@ -21,16 +21,16 @@ export default function CountDisplay({ balls, strikes, outs }: CountProps) {
   return (
     <div className="flex items-center gap-2">
       <div className="flex items-center gap-1">
-        <span className="text-[9px] font-black text-white/30 uppercase tracking-wide">B</span>
-        <Pips count={balls} max={4} active="bg-emerald-400" inactive="bg-white/10" />
+        <span className="text-[9px] font-black text-[var(--c-text-30)] uppercase tracking-wide">B</span>
+        <Pips count={balls} max={4} active="bg-emerald-400" inactive="bg-[var(--c-surface-subtle)]" />
       </div>
       <div className="flex items-center gap-1">
-        <span className="text-[9px] font-black text-white/30 uppercase tracking-wide">S</span>
-        <Pips count={strikes} max={3} active="bg-d1red" inactive="bg-white/10" />
+        <span className="text-[9px] font-black text-[var(--c-text-30)] uppercase tracking-wide">S</span>
+        <Pips count={strikes} max={3} active="bg-d1red" inactive="bg-[var(--c-surface-subtle)]" />
       </div>
       <div className="flex items-center gap-1">
-        <span className="text-[9px] font-black text-white/30 uppercase tracking-wide">O</span>
-        <Pips count={outs} max={3} active="bg-amber-400" inactive="bg-white/10" />
+        <span className="text-[9px] font-black text-[var(--c-text-30)] uppercase tracking-wide">O</span>
+        <Pips count={outs} max={3} active="bg-amber-400" inactive="bg-[var(--c-surface-subtle)]" />
       </div>
     </div>
   );

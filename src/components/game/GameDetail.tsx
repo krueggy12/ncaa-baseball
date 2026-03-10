@@ -28,15 +28,15 @@ export default function GameDetail({ game, summary }: Props) {
       <MatchupHeader game={game} />
 
       {/* Tabs */}
-      <div className="flex bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex bg-[var(--c-surface)] border-b border-[var(--c-border)]">
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`flex-1 py-2.5 text-xs font-semibold uppercase tracking-wide transition-colors ${
               activeTab === tab.id
-                ? 'text-royal dark:text-blue-400 border-b-2 border-royal dark:border-blue-400'
-                : 'text-gray-400 dark:text-gray-500'
+                ? 'text-royal border-b-2 border-royal'
+                : 'text-[var(--c-text-40)]'
             }`}
           >
             {tab.label}
@@ -45,7 +45,7 @@ export default function GameDetail({ game, summary }: Props) {
       </div>
 
       {/* Tab content */}
-      <div className="bg-white dark:bg-slate-800 p-4">
+      <div className="bg-[var(--c-surface)] p-4">
         {activeTab === 'linescore' && (
           <div>
             <LinescoreTable
@@ -54,13 +54,13 @@ export default function GameDetail({ game, summary }: Props) {
               currentInning={isLive ? game.status.inning : undefined}
             />
             {game.venue.name && (
-              <div className="mt-4 text-xs text-gray-400 dark:text-gray-500">
+              <div className="mt-4 text-xs text-[var(--c-text-40)]">
                 <p>{game.venue.name}</p>
                 {game.venue.city && <p>{game.venue.city}, {game.venue.state}</p>}
               </div>
             )}
             {game.broadcasts.length > 0 && (
-              <div className="mt-2 text-xs text-gray-400 dark:text-gray-500">
+              <div className="mt-2 text-xs text-[var(--c-text-40)]">
                 Broadcast: {game.broadcasts.join(', ')}
               </div>
             )}

@@ -18,7 +18,7 @@ export default function RankingsTable({ rankings }: Props) {
 
   if (rankings.length === 0) {
     return (
-      <div className="text-center py-16 text-white/25 text-sm">
+      <div className="text-center py-16 text-[var(--c-text-25)] text-sm">
         Rankings not available.
       </div>
     );
@@ -26,7 +26,7 @@ export default function RankingsTable({ rankings }: Props) {
 
   return (
     <div className="px-3 pb-6">
-      <div className="flex items-center px-3 py-1.5 mb-1 text-[10px] font-black uppercase tracking-widest text-white/20">
+      <div className="flex items-center px-3 py-1.5 mb-1 text-[10px] font-black uppercase tracking-widest text-[var(--c-text-20)]">
         <span className="w-8 text-center">#</span>
         <span className="w-6" />
         <span className="flex-1 pl-2">Team</span>
@@ -34,21 +34,21 @@ export default function RankingsTable({ rankings }: Props) {
         <span className="w-7" />
       </div>
 
-      <div className="rounded-md overflow-hidden border border-white/[0.06]">
+      <div className="rounded-md overflow-hidden border border-[var(--c-border)]">
         {rankings.map((team, idx) => {
           const fav = isFavorite(team.teamId);
           const diff = Math.abs(team.rank - team.previousRank);
-          const rankColor = MEDAL_COLORS[team.rank] ?? 'text-white/50';
+          const rankColor = MEDAL_COLORS[team.rank] ?? 'text-[var(--c-text-50)]';
 
           return (
             <div
               key={team.teamId}
-              className={`flex items-center px-3 py-2.5 border-b border-white/[0.04] last:border-b-0 transition-colors duration-150 ${
+              className={`flex items-center px-3 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0 transition-colors duration-150 ${
                 fav
                   ? 'bg-amber-400/5'
                   : idx % 2 === 0
-                  ? 'bg-surface-dark'
-                  : 'bg-[#0a1122]'
+                  ? 'bg-[var(--c-surface)]'
+                  : 'bg-[var(--c-surface-alt)]'
               }`}
             >
               <span className={`w-8 text-center text-sm font-black tabular-nums ${rankColor}`}>
@@ -60,12 +60,12 @@ export default function RankingsTable({ rankings }: Props) {
               <div className="flex items-center gap-2 flex-1 pl-2 min-w-0">
                 <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={30} />
                 <div className="min-w-0">
-                  <span className={`text-[13px] font-bold truncate block ${fav ? 'text-amber-300' : 'text-white/90'}`}>
+                  <span className={`text-[13px] font-bold truncate block ${fav ? 'text-amber-300' : 'text-[var(--c-text-90)]'}`}>
                     {team.displayName}
                   </span>
                 </div>
               </div>
-              <span className="w-16 text-center text-[11px] font-semibold text-white/40 tabular-nums">
+              <span className="w-16 text-center text-[11px] font-semibold text-[var(--c-text-40)] tabular-nums">
                 {team.record}
               </span>
               <button
@@ -74,7 +74,7 @@ export default function RankingsTable({ rankings }: Props) {
                 aria-label={fav ? 'Remove from favorites' : 'Add to favorites'}
               >
                 <svg
-                  className={`w-4 h-4 transition-colors ${fav ? 'text-amber-400' : 'text-white/15 hover:text-white/40'}`}
+                  className={`w-4 h-4 transition-colors ${fav ? 'text-amber-400' : 'text-[var(--c-text-15)] hover:text-[var(--c-text-40)]'}`}
                   viewBox="0 0 20 20"
                   fill={fav ? 'currentColor' : 'none'}
                   stroke="currentColor"
@@ -88,7 +88,7 @@ export default function RankingsTable({ rankings }: Props) {
         })}
       </div>
 
-      <p className="text-[10px] text-white/20 text-center mt-3 px-2">
+      <p className="text-[10px] text-[var(--c-text-20)] text-center mt-3 px-2">
         D1Baseball Media Poll — updated weekly.
       </p>
     </div>

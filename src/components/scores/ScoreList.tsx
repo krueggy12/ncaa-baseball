@@ -61,11 +61,11 @@ export default function ScoreList({ games, statusFilter, favoritesOnly, favorite
               {section.label === 'Live' && (
                 <span className="w-1.5 h-1.5 rounded-full bg-d1red animate-glow-live" />
               )}
-              <h3 className="text-[10px] font-black uppercase tracking-[0.18em] text-white/25">
+              <h3 className="text-[10px] font-black uppercase tracking-[0.18em] text-[var(--c-text-25)]">
                 {section.label}
               </h3>
-              <div className="flex-1 h-px bg-white/[0.05]" />
-              <span className="text-[10px] font-bold text-white/20">{section.games.length}</span>
+              <div className="flex-1 h-px bg-[var(--c-border-faint)]" />
+              <span className="text-[10px] font-bold text-[var(--c-text-20)]">{section.games.length}</span>
             </div>
           )}
           <div className="grid grid-cols-2 gap-2">

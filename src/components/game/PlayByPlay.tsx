@@ -4,7 +4,7 @@ interface PlayByPlayProps {
 
 export default function PlayByPlay({ plays }: PlayByPlayProps) {
   if (!plays || plays.length === 0) {
-    return <p className="text-sm text-gray-400 dark:text-gray-500 text-center py-4">No play-by-play data available.</p>;
+    return <p className="text-sm text-[var(--c-text-40)] text-center py-4">No play-by-play data available.</p>;
   }
 
   // Flatten all play items from each inning/period
@@ -28,12 +28,12 @@ export default function PlayByPlay({ plays }: PlayByPlayProps) {
       {recent.map((play: any, i: number) => (
         <div
           key={play.id || i}
-          className={`text-xs text-gray-600 dark:text-gray-400 py-1.5 border-b border-gray-50 dark:border-gray-700/50 ${
-            play.scoreValue > 0 ? 'font-semibold text-royal dark:text-blue-400' : ''
+          className={`text-xs text-[var(--c-text-60)] py-1.5 border-b border-[var(--c-border-faint)] ${
+            play.scoreValue > 0 ? 'font-semibold text-royal' : ''
           }`}
         >
           {play.period && (
-            <span className="text-[10px] text-gray-400 dark:text-gray-500 mr-2">Inn {play.period}</span>
+            <span className="text-[10px] text-[var(--c-text-40)] mr-2">Inn {play.period}</span>
           )}
           {play.text}
         </div>

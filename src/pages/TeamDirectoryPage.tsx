@@ -53,15 +53,15 @@ export default function TeamDirectoryPage() {
       <div className="flex items-center gap-2 px-4 py-3">
         <button
           onClick={() => navigate('/more')}
-          className="p-1 -ml-1 text-gray-400 dark:text-gray-500"
+          className="p-1 -ml-1 text-[var(--c-text-40)]"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
         </button>
         <div>
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white">Team Directory</h2>
-          <p className="text-xs text-gray-400 dark:text-gray-500">
+          <h2 className="text-lg font-bold text-[var(--c-text)]">Team Directory</h2>
+          <p className="text-xs text-[var(--c-text-40)]">
             {filteredTeams.length} team{filteredTeams.length !== 1 ? 's' : ''} &middot; {confName}
           </p>
         </div>
@@ -72,7 +72,7 @@ export default function TeamDirectoryPage() {
         {/* Search */}
         <div className="relative">
           <svg
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--c-text-40)]"
             fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -82,12 +82,12 @@ export default function TeamDirectoryPage() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search teams..."
-            className="w-full pl-9 pr-3 py-2 text-sm bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-royal/50"
+            className="w-full pl-9 pr-3 py-2 text-sm bg-[var(--c-surface)] border border-[var(--c-border)] rounded-lg text-[var(--c-text)] placeholder-[var(--c-text-40)] focus:outline-none focus:ring-2 focus:ring-royal/50"
           />
           {search && (
             <button
               onClick={() => setSearch('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--c-text-40)]"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -100,7 +100,7 @@ export default function TeamDirectoryPage() {
         <select
           value={selectedConf}
           onChange={e => setSelectedConf(e.target.value)}
-          className="w-full px-3 py-2 text-sm bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-royal/50 appearance-none"
+          className="w-full px-3 py-2 text-sm bg-[var(--c-surface)] border border-[var(--c-border)] rounded-lg text-[var(--c-text)] focus:outline-none focus:ring-2 focus:ring-royal/50 appearance-none"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
             backgroundPosition: 'right 0.5rem center',
@@ -121,7 +121,7 @@ export default function TeamDirectoryPage() {
       {loading && (
         <div className="px-4 space-y-1">
           {[1, 2, 3, 4, 5, 6].map(i => (
-            <div key={i} className="h-12 bg-white dark:bg-slate-800 rounded-lg animate-pulse" />
+            <div key={i} className="h-12 bg-[var(--c-surface)] rounded-lg animate-pulse" />
           ))}
         </div>
       )}
@@ -129,14 +129,14 @@ export default function TeamDirectoryPage() {
       {/* Teams list */}
       {!loading && filteredTeams.length > 0 && (
         <div className="px-3">
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-[var(--c-surface)] rounded-xl shadow-sm overflow-hidden">
             {filteredTeams.map(team => {
               const fav = isFavorite(team.id);
               const conf = CONFERENCES.find(c => c.id === team.conferenceId);
               return (
                 <div
                   key={team.id}
-                  className={`flex items-center gap-3 px-3 py-2.5 border-b border-gray-50 dark:border-gray-700/30 last:border-b-0 ${
+                  className={`flex items-center gap-3 px-3 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0 ${
                     fav ? 'bg-yellow-50/60 dark:bg-yellow-900/10' : ''
                   }`}
                 >
@@ -146,14 +146,14 @@ export default function TeamDirectoryPage() {
                   >
                     <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={28} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                      <p className="text-sm font-medium text-[var(--c-text)] truncate">
                         {team.displayName}
                       </p>
-                      <p className="text-[10px] text-gray-400 dark:text-gray-500">
+                      <p className="text-[10px] text-[var(--c-text-40)]">
                         {conf ? conf.abbreviation + ' · ' : ''}Schedule
                       </p>
                     </div>
-                    <svg className="w-4 h-4 text-gray-300 dark:text-gray-600 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <svg className="w-4 h-4 text-[var(--c-text-30)] shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                     </svg>
                   </button>
@@ -163,7 +163,7 @@ export default function TeamDirectoryPage() {
                     aria-label={fav ? `Remove ${team.displayName} from favorites` : `Add ${team.displayName} to favorites`}
                   >
                     <svg
-                      className={`w-5 h-5 ${fav ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
+                      className={`w-5 h-5 ${fav ? 'text-yellow-400 fill-yellow-400' : 'text-[var(--c-text-30)]'}`}
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
@@ -182,8 +182,8 @@ export default function TeamDirectoryPage() {
       {/* Empty state */}
       {!loading && filteredTeams.length === 0 && (
         <div className="text-center py-12 px-8">
-          <p className="text-gray-500 dark:text-gray-400 text-sm">No teams found</p>
-          <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">
+          <p className="text-[var(--c-text-50)] text-sm">No teams found</p>
+          <p className="text-[var(--c-text-40)] text-xs mt-1">
             Try a different search or conference filter.
           </p>
         </div>

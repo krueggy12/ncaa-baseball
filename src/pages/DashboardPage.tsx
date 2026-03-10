@@ -22,12 +22,12 @@ function SectionHeader({ title, label, onViewMore }: { title: string; label?: st
   return (
     <div className="flex items-center justify-between px-4 mb-2">
       <div>
-        <h2 className="text-[17px] font-black text-white tracking-tight">{title}</h2>
-        {label && <p className="text-[10px] text-white/30 font-semibold mt-0.5">{label}</p>}
+        <h2 className="text-[17px] font-black text-[var(--c-text)] tracking-tight">{title}</h2>
+        {label && <p className="text-[10px] text-[var(--c-text-30)] font-semibold mt-0.5">{label}</p>}
       </div>
       <button
         onClick={onViewMore}
-        className="flex items-center gap-1 text-[12px] font-black text-royal-bright hover:text-white transition-colors"
+        className="flex items-center gap-1 text-[12px] font-black text-royal-bright hover:text-[var(--c-text)] transition-colors"
       >
         View more
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
@@ -69,14 +69,14 @@ function GameCell({
   const isLastInRow = (idx + 1) % 3 === 0;
   const isLastRow = idx >= total - (total % 3 === 0 ? 3 : total % 3);
   const borderCls = [
-    !isLastInRow ? 'border-r border-white/[0.07]' : '',
-    !isLastRow   ? 'border-b border-white/[0.07]' : '',
+    !isLastInRow ? 'border-r border-[var(--c-border)]' : '',
+    !isLastRow   ? 'border-b border-[var(--c-border)]' : '',
   ].join(' ');
 
   return (
     <div
       onClick={onClick}
-      className={`relative flex items-center gap-1.5 p-2.5 cursor-pointer active:bg-white/[0.06] transition-colors ${borderCls}`}
+      className={`relative flex items-center gap-1.5 p-2.5 cursor-pointer active:bg-[var(--c-surface-subtle)] transition-colors ${borderCls}`}
     >
       {/* Status badge — absolute top-right, never pushes scores down */}
       {isLive && (
@@ -86,7 +86,7 @@ function GameCell({
         </div>
       )}
       {isFinal && (
-        <span className="absolute top-1.5 right-2 text-[7px] font-black text-white/20 uppercase tracking-wider leading-none">Final</span>
+        <span className="absolute top-1.5 right-2 text-[7px] font-black text-[var(--c-text-20)] uppercase tracking-wider leading-none">Final</span>
       )}
 
       {/* Teams — scores inline so they're always centered with their row */}
@@ -99,16 +99,16 @@ function GameCell({
               {awayRank != null && (
                 <span className="text-[8px] font-black text-royal-bright shrink-0">#{awayRank}</span>
               )}
-              <span className={`text-[13px] font-black truncate leading-tight ${isFinal && !game.away.isWinner ? 'text-white/25' : 'text-white'}`}>
+              <span className={`text-[13px] font-black truncate leading-tight ${isFinal && !game.away.isWinner ? 'text-[var(--c-text-25)]' : 'text-[var(--c-text)]'}`}>
                 {game.away.abbreviation}
               </span>
             </div>
             {game.away.record && (
-              <span className="text-[9px] text-white/30 font-medium mt-0.5 block">{game.away.record}</span>
+              <span className="text-[9px] text-[var(--c-text-30)] font-medium mt-0.5 block">{game.away.record}</span>
             )}
           </div>
           {(isLive || isFinal) && (
-            <span className={`shrink-0 text-[14px] font-black tabular-nums leading-none ${isFinal && !game.away.isWinner ? 'text-white/25' : 'text-white'}`}>
+            <span className={`shrink-0 text-[14px] font-black tabular-nums leading-none ${isFinal && !game.away.isWinner ? 'text-[var(--c-text-25)]' : 'text-[var(--c-text)]'}`}>
               {game.away.score}
             </span>
           )}
@@ -122,16 +122,16 @@ function GameCell({
               {homeRank != null && (
                 <span className="text-[8px] font-black text-royal-bright shrink-0">#{homeRank}</span>
               )}
-              <span className={`text-[13px] font-black truncate leading-tight ${isFinal && !game.home.isWinner ? 'text-white/25' : 'text-white'}`}>
+              <span className={`text-[13px] font-black truncate leading-tight ${isFinal && !game.home.isWinner ? 'text-[var(--c-text-25)]' : 'text-[var(--c-text)]'}`}>
                 {game.home.abbreviation}
               </span>
             </div>
             {game.home.record && (
-              <span className="text-[9px] text-white/30 font-medium mt-0.5 block">{game.home.record}</span>
+              <span className="text-[9px] text-[var(--c-text-30)] font-medium mt-0.5 block">{game.home.record}</span>
             )}
           </div>
           {(isLive || isFinal) && (
-            <span className={`shrink-0 text-[14px] font-black tabular-nums leading-none ${isFinal && !game.home.isWinner ? 'text-white/25' : 'text-white'}`}>
+            <span className={`shrink-0 text-[14px] font-black tabular-nums leading-none ${isFinal && !game.home.isWinner ? 'text-[var(--c-text-25)]' : 'text-[var(--c-text)]'}`}>
               {game.home.score}
             </span>
           )}
@@ -141,9 +141,9 @@ function GameCell({
       {/* Pre-game only: time + channel on the right */}
       {!isLive && !isFinal && (
         <div className="shrink-0 flex flex-col items-end justify-center gap-1">
-          <span className="text-[12px] font-bold text-white/60 leading-tight">{gameTime}</span>
+          <span className="text-[12px] font-bold text-[var(--c-text-60)] leading-tight">{gameTime}</span>
           {game.broadcasts.length > 0 && (
-            <span className="text-[9px] font-semibold text-white/30 leading-tight text-right max-w-[52px] truncate">{game.broadcasts[0]}</span>
+            <span className="text-[9px] font-semibold text-[var(--c-text-30)] leading-tight text-right max-w-[52px] truncate">{game.broadcasts[0]}</span>
           )}
         </div>
       )}
@@ -156,9 +156,9 @@ function GameCell({
 
 function SkeletonRows({ count = 4 }: { count?: number }) {
   return (
-    <div className="rounded-md overflow-hidden border border-white/[0.06] bg-surface-dark mx-4">
+    <div className="rounded-md overflow-hidden border border-[var(--c-border)] bg-[var(--c-surface)] mx-4">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="flex items-center px-4 py-3 border-b border-white/[0.04] last:border-b-0 gap-3">
+        <div key={i} className="flex items-center px-4 py-3 border-b border-[var(--c-border-faint)] last:border-b-0 gap-3">
           <div className="w-7 h-7 rounded-full animate-shimmer flex-shrink-0" />
           <div className="flex-1 h-3 rounded-full animate-shimmer" />
           <div className="w-16 h-3 rounded-full animate-shimmer" />
@@ -198,8 +198,8 @@ export default function DashboardPage() {
 
       {/* ── Page Header ── */}
       <div className="px-4 pt-4 pb-4">
-        <p className="text-[11px] font-bold text-white/25 uppercase tracking-[0.18em]">{dateLabel}</p>
-        <h1 className="text-[28px] font-black text-white tracking-tight leading-tight uppercase">Dashboard</h1>
+        <p className="text-[11px] font-bold text-[var(--c-text-25)] uppercase tracking-[0.18em]">{dateLabel}</p>
+        <h1 className="text-[28px] font-black text-[var(--c-text)] tracking-tight leading-tight uppercase">Dashboard</h1>
       </div>
 
       {/* ── Today's Games ── */}
@@ -212,11 +212,11 @@ export default function DashboardPage() {
         {gamesLoading && featured.length === 0 ? (
           <SkeletonRows count={3} />
         ) : featured.length === 0 ? (
-          <div className="mx-4 rounded-md border border-white/[0.06] bg-surface-dark px-4 py-8 text-center">
-            <p className="text-white/30 text-sm font-bold">No games scheduled today</p>
+          <div className="mx-4 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] px-4 py-8 text-center">
+            <p className="text-[var(--c-text-30)] text-sm font-bold">No games scheduled today</p>
           </div>
         ) : (
-          <div className="mx-4 rounded-md border border-white/[0.07] bg-surface-dark overflow-hidden">
+          <div className="mx-4 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] overflow-hidden">
             {/* Horizontally scrollable on mobile so 3 columns never get squished */}
             <div className="overflow-x-auto scrollbar-hide">
               <div className="grid grid-cols-3 min-w-[510px]">
@@ -234,7 +234,7 @@ export default function DashboardPage() {
             {games.length > 6 && (
               <button
                 onClick={() => navigate('/scores')}
-                className="w-full py-2.5 text-[11px] font-black text-white/30 hover:text-white/60 transition-colors border-t border-white/[0.07]"
+                className="w-full py-2.5 text-[11px] font-black text-[var(--c-text-30)] hover:text-[var(--c-text-60)] transition-colors border-t border-[var(--c-border)]"
               >
                 +{games.length - 6} more games today
               </button>
@@ -253,15 +253,15 @@ export default function DashboardPage() {
         {rankingsLoading && top10.length === 0 ? (
           <SkeletonRows count={5} />
         ) : (
-          <div className="mx-4 rounded-md overflow-hidden border border-white/[0.06] bg-surface-dark">
+          <div className="mx-4 rounded-md overflow-hidden border border-[var(--c-border)] bg-[var(--c-surface)]">
             {top10.map((team, idx) => {
-              const rankColor = idx === 0 ? 'text-amber-400' : idx === 1 ? 'text-slate-300' : idx === 2 ? 'text-amber-600' : 'text-white/30';
+              const rankColor = idx === 0 ? 'text-amber-400' : idx === 1 ? 'text-slate-300' : idx === 2 ? 'text-amber-600' : 'text-[var(--c-text-30)]';
               return (
-                <div key={team.teamId} className="flex items-center px-4 py-2.5 border-b border-white/[0.04] last:border-b-0">
+                <div key={team.teamId} className="flex items-center px-4 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0">
                   <span className={`w-6 text-[13px] font-black tabular-nums ${rankColor}`}>{team.rank}</span>
                   <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={26} />
-                  <span className="flex-1 text-[13px] font-bold text-white/85 ml-2.5 truncate">{team.displayName}</span>
-                  <span className="text-[11px] text-white/30 tabular-nums mr-3">{team.wins}–{team.losses}</span>
+                  <span className="flex-1 text-[13px] font-bold text-[var(--c-text-85)] ml-2.5 truncate">{team.displayName}</span>
+                  <span className="text-[11px] text-[var(--c-text-30)] tabular-nums mr-3">{team.wins}–{team.losses}</span>
                   <span className="text-[12px] font-black text-royal-bright tabular-nums w-10 text-right">{team.compositeScore}</span>
                 </div>
               );
@@ -280,34 +280,34 @@ export default function DashboardPage() {
         {batLoading && top5Bat.length === 0 ? (
           <SkeletonRows count={5} />
         ) : top5Bat.length === 0 ? (
-          <div className="mx-4 rounded-md border border-white/[0.06] bg-surface-dark px-4 py-6 text-center">
-            <p className="text-white/30 text-sm">Stats unavailable</p>
+          <div className="mx-4 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] px-4 py-6 text-center">
+            <p className="text-[var(--c-text-30)] text-sm">Stats unavailable</p>
           </div>
         ) : (
-          <div className="mx-4 rounded-md overflow-hidden border border-white/[0.06] bg-surface-dark">
+          <div className="mx-4 rounded-md overflow-hidden border border-[var(--c-border)] bg-[var(--c-surface)]">
             {top5Bat.map((row, idx) => (
-              <div key={String(row['UPID']) || idx} className="flex items-center px-4 py-2.5 border-b border-white/[0.04] last:border-b-0">
-                <span className="w-5 text-[11px] font-black text-white/25 tabular-nums">{idx + 1}</span>
+              <div key={String(row['UPID']) || idx} className="flex items-center px-4 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0">
+                <span className="w-5 text-[11px] font-black text-[var(--c-text-25)] tabular-nums">{idx + 1}</span>
                 <div className="flex-1 min-w-0 ml-1.5">
-                  <p className="text-[13px] font-bold text-white/85 truncate leading-tight">{String(row['PlayerName'])}</p>
-                  <p className="text-[10px] text-white/30 font-medium truncate leading-tight">{String(row['Team'])}</p>
+                  <p className="text-[13px] font-bold text-[var(--c-text-85)] truncate leading-tight">{String(row['PlayerName'])}</p>
+                  <p className="text-[10px] text-[var(--c-text-30)] font-medium truncate leading-tight">{String(row['Team'])}</p>
                 </div>
                 <div className="flex items-center gap-4 shrink-0 ml-2">
                   <div className="text-center min-w-[32px]">
-                    <p className="text-[13px] font-black text-white tabular-nums">{fmtAvg(row['AVG'])}</p>
-                    <p className="text-[9px] text-white/25 font-black uppercase tracking-wide">AVG</p>
+                    <p className="text-[13px] font-black text-[var(--c-text)] tabular-nums">{fmtAvg(row['AVG'])}</p>
+                    <p className="text-[9px] text-[var(--c-text-25)] font-black uppercase tracking-wide">AVG</p>
                   </div>
                   <div className="text-center min-w-[24px]">
-                    <p className="text-[13px] font-black text-white tabular-nums">{fmtInt(row['HR'])}</p>
-                    <p className="text-[9px] text-white/25 font-black uppercase tracking-wide">HR</p>
+                    <p className="text-[13px] font-black text-[var(--c-text)] tabular-nums">{fmtInt(row['HR'])}</p>
+                    <p className="text-[9px] text-[var(--c-text-25)] font-black uppercase tracking-wide">HR</p>
                   </div>
                   <div className="text-center min-w-[24px]">
-                    <p className="text-[13px] font-black text-white tabular-nums">{fmtInt(row['RBI'])}</p>
-                    <p className="text-[9px] text-white/25 font-black uppercase tracking-wide">RBI</p>
+                    <p className="text-[13px] font-black text-[var(--c-text)] tabular-nums">{fmtInt(row['RBI'])}</p>
+                    <p className="text-[9px] text-[var(--c-text-25)] font-black uppercase tracking-wide">RBI</p>
                   </div>
                   <div className="text-center min-w-[30px]">
                     <p className="text-[13px] font-black text-royal-bright tabular-nums">{fmtInt(row['wRC+'])}</p>
-                    <p className="text-[9px] text-white/25 font-black uppercase tracking-wide">wRC+</p>
+                    <p className="text-[9px] text-[var(--c-text-25)] font-black uppercase tracking-wide">wRC+</p>
                   </div>
                 </div>
               </div>
@@ -326,34 +326,34 @@ export default function DashboardPage() {
         {pitLoading && top5Pit.length === 0 ? (
           <SkeletonRows count={5} />
         ) : top5Pit.length === 0 ? (
-          <div className="mx-4 rounded-md border border-white/[0.06] bg-surface-dark px-4 py-6 text-center">
-            <p className="text-white/30 text-sm">Stats unavailable</p>
+          <div className="mx-4 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] px-4 py-6 text-center">
+            <p className="text-[var(--c-text-30)] text-sm">Stats unavailable</p>
           </div>
         ) : (
-          <div className="mx-4 rounded-md overflow-hidden border border-white/[0.06] bg-surface-dark">
+          <div className="mx-4 rounded-md overflow-hidden border border-[var(--c-border)] bg-[var(--c-surface)]">
             {top5Pit.map((row, idx) => (
-              <div key={String(row['UPID']) || idx} className="flex items-center px-4 py-2.5 border-b border-white/[0.04] last:border-b-0">
-                <span className="w-5 text-[11px] font-black text-white/25 tabular-nums">{idx + 1}</span>
+              <div key={String(row['UPID']) || idx} className="flex items-center px-4 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0">
+                <span className="w-5 text-[11px] font-black text-[var(--c-text-25)] tabular-nums">{idx + 1}</span>
                 <div className="flex-1 min-w-0 ml-1.5">
-                  <p className="text-[13px] font-bold text-white/85 truncate leading-tight">{String(row['PlayerName'])}</p>
-                  <p className="text-[10px] text-white/30 font-medium truncate leading-tight">{String(row['Team'])}</p>
+                  <p className="text-[13px] font-bold text-[var(--c-text-85)] truncate leading-tight">{String(row['PlayerName'])}</p>
+                  <p className="text-[10px] text-[var(--c-text-30)] font-medium truncate leading-tight">{String(row['Team'])}</p>
                 </div>
                 <div className="flex items-center gap-4 shrink-0 ml-2">
                   <div className="text-center min-w-[30px]">
                     <p className="text-[13px] font-black text-royal-bright tabular-nums">{fmtDec2(row['ERA'])}</p>
-                    <p className="text-[9px] text-white/25 font-black uppercase tracking-wide">ERA</p>
+                    <p className="text-[9px] text-[var(--c-text-25)] font-black uppercase tracking-wide">ERA</p>
                   </div>
                   <div className="text-center min-w-[28px]">
-                    <p className="text-[13px] font-black text-white tabular-nums">{fmtInt(row['IP'])}</p>
-                    <p className="text-[9px] text-white/25 font-black uppercase tracking-wide">IP</p>
+                    <p className="text-[13px] font-black text-[var(--c-text)] tabular-nums">{fmtInt(row['IP'])}</p>
+                    <p className="text-[9px] text-[var(--c-text-25)] font-black uppercase tracking-wide">IP</p>
                   </div>
                   <div className="text-center min-w-[24px]">
-                    <p className="text-[13px] font-black text-white tabular-nums">{fmtInt(row['SO'])}</p>
-                    <p className="text-[9px] text-white/25 font-black uppercase tracking-wide">SO</p>
+                    <p className="text-[13px] font-black text-[var(--c-text)] tabular-nums">{fmtInt(row['SO'])}</p>
+                    <p className="text-[9px] text-[var(--c-text-25)] font-black uppercase tracking-wide">SO</p>
                   </div>
                   <div className="text-center min-w-[34px]">
-                    <p className="text-[13px] font-black text-white tabular-nums">{fmtDec2(row['WHIP'])}</p>
-                    <p className="text-[9px] text-white/25 font-black uppercase tracking-wide">WHIP</p>
+                    <p className="text-[13px] font-black text-[var(--c-text)] tabular-nums">{fmtDec2(row['WHIP'])}</p>
+                    <p className="text-[9px] text-[var(--c-text-25)] font-black uppercase tracking-wide">WHIP</p>
                   </div>
                 </div>
               </div>

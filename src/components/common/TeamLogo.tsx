@@ -13,7 +13,7 @@ export default function TeamLogo({ src, alt, abbreviation, size = 32 }: TeamLogo
   if (failed || !src) {
     return (
       <div
-        className="flex items-center justify-center rounded-xl bg-white/[0.07] border border-white/[0.08] text-[10px] font-black text-white/40 shrink-0 tracking-wide"
+        className="flex items-center justify-center rounded-xl bg-[var(--c-surface-subtle)] border border-[var(--c-border)] text-[10px] font-black text-[var(--c-text-40)] shrink-0 tracking-wide"
         style={{ width: size, height: size }}
       >
         {abbreviation.slice(0, 3)}

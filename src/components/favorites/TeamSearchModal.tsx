@@ -38,10 +38,10 @@ export default function TeamSearchModal({ open, onClose }: Props) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-white dark:bg-slate-900 flex flex-col">
+    <div className="fixed inset-0 z-50 bg-[var(--c-bg)] flex flex-col">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-        <button onClick={onClose} className="text-gray-500 dark:text-gray-400">
+      <div className="flex items-center gap-3 px-4 py-3 border-b border-[var(--c-border)]">
+        <button onClick={onClose} className="text-[var(--c-text-50)]">
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -52,16 +52,16 @@ export default function TeamSearchModal({ open, onClose }: Props) {
           value={search}
           onChange={e => setSearch(e.target.value)}
           autoFocus
-          className="flex-1 bg-gray-100 dark:bg-gray-800 rounded-lg px-3 py-2 text-sm outline-none text-gray-900 dark:text-white placeholder-gray-400"
+          className="flex-1 bg-[var(--c-surface-alt)] rounded-lg px-3 py-2 text-sm outline-none text-[var(--c-text)] placeholder-[var(--c-text-40)]"
         />
       </div>
 
       {/* Team list */}
       <div className="flex-1 overflow-y-auto">
         {loading ? (
-          <div className="text-center py-8 text-gray-400 text-sm">Loading teams...</div>
+          <div className="text-center py-8 text-[var(--c-text-40)] text-sm">Loading teams...</div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-8 text-gray-400 text-sm">No teams found.</div>
+          <div className="text-center py-8 text-[var(--c-text-40)] text-sm">No teams found.</div>
         ) : (
           filtered.map(team => {
             const fav = isFavorite(team.id);
@@ -69,19 +69,19 @@ export default function TeamSearchModal({ open, onClose }: Props) {
               <button
                 key={team.id}
                 onClick={() => toggleFavorite(team.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 border-b border-gray-50 dark:border-gray-800 text-left ${
+                className={`w-full flex items-center gap-3 px-4 py-3 border-b border-[var(--c-border-faint)] text-left ${
                   fav ? 'bg-yellow-50/50 dark:bg-yellow-900/10' : ''
                 }`}
               >
                 <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={32} />
                 <div className="flex-1 min-w-0">
-                  <span className="text-sm font-medium text-gray-900 dark:text-white block truncate">
+                  <span className="text-sm font-medium text-[var(--c-text)] block truncate">
                     {team.displayName}
                   </span>
-                  <span className="text-[11px] text-gray-400">{team.abbreviation}</span>
+                  <span className="text-[11px] text-[var(--c-text-40)]">{team.abbreviation}</span>
                 </div>
                 <svg
-                  className={`w-5 h-5 shrink-0 ${fav ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
+                  className={`w-5 h-5 shrink-0 ${fav ? 'text-yellow-400 fill-yellow-400' : 'text-[var(--c-text-30)]'}`}
                   viewBox="0 0 20 20"
                   fill={fav ? 'currentColor' : 'none'}
                   stroke="currentColor"

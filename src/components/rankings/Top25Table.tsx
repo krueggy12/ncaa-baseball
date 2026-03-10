@@ -17,7 +17,7 @@ export default function Top25Table({ rankings }: Props) {
 
   if (rankings.length === 0) {
     return (
-      <div className="text-center py-16 text-white/25 text-sm">
+      <div className="text-center py-16 text-[var(--c-text-25)] text-sm">
         Rankings not available.
       </div>
     );
@@ -28,7 +28,7 @@ export default function Top25Table({ rankings }: Props) {
   return (
     <div className="px-3 pb-6">
       {/* Column headers */}
-      <div className="flex items-center px-3 py-1.5 mb-1 text-[10px] font-black uppercase tracking-widest text-white/20">
+      <div className="flex items-center px-3 py-1.5 mb-1 text-[10px] font-black uppercase tracking-widest text-[var(--c-text-20)]">
         <span className="w-8 text-center">#</span>
         <span className="flex-1 pl-2">Team</span>
         <span className="w-14 text-center">W-L</span>
@@ -37,7 +37,7 @@ export default function Top25Table({ rankings }: Props) {
         <span className="w-7" />
       </div>
 
-      <div className="rounded-md overflow-hidden border border-white/[0.06]">
+      <div className="rounded-md overflow-hidden border border-[var(--c-border)]">
         {rankings.map((team, idx) => {
           const fav = isFavorite(team.teamId);
           const rdColor =
@@ -45,22 +45,22 @@ export default function Top25Table({ rankings }: Props) {
               ? 'text-emerald-400'
               : team.runDiffPerGame < -1
               ? 'text-red-400'
-              : 'text-white/40';
-          const rankColor = MEDAL_COLORS[team.rank] ?? 'text-white/50';
+              : 'text-[var(--c-text-40)]';
+          const rankColor = MEDAL_COLORS[team.rank] ?? 'text-[var(--c-text-50)]';
           const scoreWidth = Math.round((team.compositeScore / maxScore) * 100);
           const isTop3 = team.rank <= 3;
 
           return (
             <div
               key={team.teamId}
-              className={`flex items-center px-3 py-2.5 border-b border-white/[0.04] last:border-b-0 transition-colors duration-150 ${
+              className={`flex items-center px-3 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0 transition-colors duration-150 ${
                 fav
                   ? 'bg-amber-400/5'
                   : isTop3
                   ? 'bg-royal/[0.04]'
                   : idx % 2 === 0
-                  ? 'bg-surface-dark'
-                  : 'bg-[#0a1122]'
+                  ? 'bg-[var(--c-surface)]'
+                  : 'bg-[var(--c-surface-alt)]'
               }`}
             >
               {/* Rank */}
@@ -70,11 +70,11 @@ export default function Top25Table({ rankings }: Props) {
 
               {/* Team */}
               <div className="flex items-center gap-2 flex-1 pl-2 min-w-0">
-                <div className={`${isTop3 ? 'p-0.5 rounded-lg bg-white/5' : ''}`}>
+                <div className={`${isTop3 ? 'p-0.5 rounded-lg bg-[var(--c-surface-subtle)]' : ''}`}>
                   <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={30} />
                 </div>
                 <div className="min-w-0">
-                  <span className={`text-[13px] font-bold truncate block ${fav ? 'text-amber-300' : 'text-white/90'}`}>
+                  <span className={`text-[13px] font-bold truncate block ${fav ? 'text-amber-300' : 'text-[var(--c-text-90)]'}`}>
                     {team.displayName}
                   </span>
                   <span className={`text-[10px] font-medium ${rdColor}`}>
@@ -84,12 +84,12 @@ export default function Top25Table({ rankings }: Props) {
               </div>
 
               {/* Record */}
-              <span className="w-14 text-center text-[11px] font-semibold text-white/40 tabular-nums">
+              <span className="w-14 text-center text-[11px] font-semibold text-[var(--c-text-40)] tabular-nums">
                 {team.wins}–{team.losses}
               </span>
 
               {/* ELO */}
-              <span className="w-12 text-center text-[11px] font-semibold text-white/40 tabular-nums">
+              <span className="w-12 text-center text-[11px] font-semibold text-[var(--c-text-40)] tabular-nums">
                 {team.elo}
               </span>
 
@@ -98,7 +98,7 @@ export default function Top25Table({ rankings }: Props) {
                 <span className="text-[11px] font-black text-royal-bright tabular-nums">
                   {team.compositeScore}
                 </span>
-                <div className="w-full h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                <div className="w-full h-1 rounded-full bg-[var(--c-border)] overflow-hidden">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-royal to-royal-bright"
                     style={{ width: `${scoreWidth}%` }}
@@ -113,7 +113,7 @@ export default function Top25Table({ rankings }: Props) {
                 aria-label={fav ? 'Remove from favorites' : 'Add to favorites'}
               >
                 <svg
-                  className={`w-4 h-4 transition-colors ${fav ? 'text-amber-400' : 'text-white/15 hover:text-white/40'}`}
+                  className={`w-4 h-4 transition-colors ${fav ? 'text-amber-400' : 'text-[var(--c-text-15)] hover:text-[var(--c-text-40)]'}`}
                   viewBox="0 0 20 20"
                   fill={fav ? 'currentColor' : 'none'}
                   stroke="currentColor"
@@ -127,7 +127,7 @@ export default function Top25Table({ rankings }: Props) {
         })}
       </div>
 
-      <p className="text-[10px] text-white/20 text-center mt-3 px-2">
+      <p className="text-[10px] text-[var(--c-text-20)] text-center mt-3 px-2">
         D1 Diamond composite ranking — ELO + run differential. Min. 5 games played.
       </p>
     </div>

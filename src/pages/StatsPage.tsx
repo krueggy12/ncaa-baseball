@@ -85,7 +85,7 @@ const PIT_COLS: ColDef[] = [
 // Select dropdown shared style
 const SELECT_CLS = [
   'shrink-0 px-3 py-1.5 rounded-full text-xs font-medium',
-  'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400',
+  'bg-[var(--c-surface-alt)] text-[var(--c-text-60)]',
   'border-none outline-none cursor-pointer appearance-none',
   'max-w-[130px] truncate',
 ].join(' ');
@@ -174,7 +174,7 @@ export default function StatsPage() {
       <div className="flex items-center gap-2 px-4 py-3">
         <button
           onClick={() => navigate('/more')}
-          className="p-1 -ml-1 text-gray-400 dark:text-gray-500"
+          className="p-1 -ml-1 text-[var(--c-text-40)]"
           aria-label="Back"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -182,8 +182,8 @@ export default function StatsPage() {
           </svg>
         </button>
         <div>
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white">Stat Leaderboards</h2>
-          <p className="text-xs text-gray-400 dark:text-gray-500">{season} D1 College Baseball</p>
+          <h2 className="text-lg font-bold text-[var(--c-text)]">Stat Leaderboards</h2>
+          <p className="text-xs text-[var(--c-text-40)]">{season} D1 College Baseball</p>
         </div>
       </div>
 
@@ -196,7 +196,7 @@ export default function StatsPage() {
             className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
               tab === t
                 ? 'bg-royal text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
+                : 'bg-[var(--c-surface-alt)] text-[var(--c-text-60)]'
             }`}
           >
             {t === 'bat' ? 'Batting' : 'Pitching'}
@@ -208,7 +208,7 @@ export default function StatsPage() {
           className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
             qual
               ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
-              : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'
+              : 'bg-[var(--c-surface-alt)] text-[var(--c-text-50)]'
           }`}
         >
           {qual ? 'Qualified' : 'All'}
@@ -259,7 +259,7 @@ export default function StatsPage() {
       {isLoading && rows.length === 0 && (
         <div className="px-4 space-y-2">
           {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="h-9 bg-white dark:bg-slate-800 rounded-lg animate-pulse" />
+            <div key={i} className="h-9 bg-[var(--c-surface)] rounded-lg animate-pulse" />
           ))}
         </div>
       )}
@@ -274,24 +274,24 @@ export default function StatsPage() {
       {/* Table */}
       {showTable && (
         <div className="px-3">
-          <div className="relative bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
+          <div className="relative bg-[var(--c-surface)] rounded-xl shadow-sm overflow-hidden">
 
             {/* Loading overlay on re-sort / filter change */}
             {isLoading && (
-              <div className="absolute inset-0 bg-white/60 dark:bg-slate-800/60 z-30 rounded-xl" />
+              <div className="absolute inset-0 bg-[var(--c-surface)]/60 z-30 rounded-xl" />
             )}
 
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 border-b border-gray-100 dark:border-gray-700/50">
-                    <th className="sticky left-0 z-20 bg-white dark:bg-slate-800 text-left pl-3 pr-1 py-2 w-7">#</th>
-                    <th className="sticky left-7 z-20 bg-white dark:bg-slate-800 text-left px-2 py-2 min-w-[124px]">Player</th>
+                  <tr className="text-[10px] font-semibold uppercase tracking-wider text-[var(--c-text-40)] border-b border-[var(--c-border)]">
+                    <th className="sticky left-0 z-20 bg-[var(--c-surface)] text-left pl-3 pr-1 py-2 w-7">#</th>
+                    <th className="sticky left-7 z-20 bg-[var(--c-surface)] text-left px-2 py-2 min-w-[124px]">Player</th>
                     {cols.map(col => (
                       <th
                         key={col.key}
                         onClick={() => handleColClick(col)}
-                        className={`text-center px-2 py-2 cursor-pointer select-none whitespace-nowrap transition-colors hover:text-gray-700 dark:hover:text-gray-200 ${
+                        className={`text-center px-2 py-2 cursor-pointer select-none whitespace-nowrap transition-colors hover:text-[var(--c-text-80)] ${
                           sortStat === col.key ? 'text-royal dark:text-blue-400' : ''
                         }`}
                       >
@@ -309,16 +309,16 @@ export default function StatsPage() {
                     return (
                       <tr
                         key={(row['UPID'] as string) || idx}
-                        className="border-b border-gray-50 dark:border-gray-700/30 last:border-b-0"
+                        className="border-b border-[var(--c-border-faint)] last:border-b-0"
                       >
-                        <td className="sticky left-0 z-10 bg-white dark:bg-slate-800 pl-3 pr-1 py-2.5 text-xs text-gray-400 dark:text-gray-500 tabular-nums">
+                        <td className="sticky left-0 z-10 bg-[var(--c-surface)] pl-3 pr-1 py-2.5 text-xs text-[var(--c-text-40)] tabular-nums">
                           {rank}
                         </td>
-                        <td className="sticky left-7 z-10 bg-white dark:bg-slate-800 px-2 py-2.5 min-w-[124px]">
-                          <p className="text-xs font-medium text-gray-900 dark:text-white truncate max-w-[112px] leading-tight">
+                        <td className="sticky left-7 z-10 bg-[var(--c-surface)] px-2 py-2.5 min-w-[124px]">
+                          <p className="text-xs font-medium text-[var(--c-text)] truncate max-w-[112px] leading-tight">
                             {row['PlayerName'] as string}
                           </p>
-                          <p className="text-[10px] text-gray-400 dark:text-gray-500 leading-tight">
+                          <p className="text-[10px] text-[var(--c-text-40)] leading-tight">
                             {row['Team'] as string}
                           </p>
                         </td>
@@ -327,8 +327,8 @@ export default function StatsPage() {
                             key={col.key}
                             className={`text-center px-2 py-2.5 text-xs tabular-nums whitespace-nowrap ${
                               sortStat === col.key
-                                ? 'font-semibold text-gray-900 dark:text-white'
-                                : 'text-gray-600 dark:text-gray-300'
+                                ? 'font-semibold text-[var(--c-text)]'
+                                : 'text-[var(--c-text-60)]'
                             }`}
                           >
                             {col.fmt(row[col.key] as number | null)}
@@ -348,24 +348,24 @@ export default function StatsPage() {
               <button
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-400 shadow-sm disabled:opacity-40 active:scale-95 transition-transform"
+                className="px-3 py-1.5 text-xs font-medium rounded-lg bg-[var(--c-surface)] text-[var(--c-text-60)] shadow-sm disabled:opacity-40 active:scale-95 transition-transform"
               >
                 ← Prev
               </button>
-              <span className="text-xs text-gray-400 dark:text-gray-500">
+              <span className="text-xs text-[var(--c-text-40)]">
                 {(page - 1) * pageSize + 1}–{Math.min(page * pageSize, totalCount)} of {totalCount.toLocaleString()}
               </span>
               <button
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
-                className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white dark:bg-slate-800 text-gray-600 dark:text-gray-400 shadow-sm disabled:opacity-40 active:scale-95 transition-transform"
+                className="px-3 py-1.5 text-xs font-medium rounded-lg bg-[var(--c-surface)] text-[var(--c-text-60)] shadow-sm disabled:opacity-40 active:scale-95 transition-transform"
               >
                 Next →
               </button>
             </div>
           )}
 
-          <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-2 text-center">
+          <p className="text-[10px] text-[var(--c-text-40)] mt-2 text-center">
             Stats via FanGraphs · Tap column headers to sort
           </p>
         </div>
@@ -374,11 +374,11 @@ export default function StatsPage() {
       {/* Empty state */}
       {showEmpty && !error && (
         <div className="text-center py-16 px-8">
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
+          <p className="text-[var(--c-text-50)] text-sm">
             {hasFilter ? 'No stats found for this filter.' : 'No stats available yet.'}
           </p>
           {qual && !hasFilter && (
-            <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">
+            <p className="text-[var(--c-text-40)] text-xs mt-1">
               Early in the season, try switching to "All" players.
             </p>
           )}

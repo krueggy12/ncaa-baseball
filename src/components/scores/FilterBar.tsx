@@ -29,7 +29,7 @@ export default function FilterBar({
   hasFavorites,
 }: FilterBarProps) {
   return (
-    <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-3 py-2.5 items-center bg-bg-dark dark:bg-bg-dark border-b border-white/[0.05]">
+    <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-3 py-2.5 items-center bg-[var(--c-bg)] border-b border-[var(--c-border-faint)]">
       {statusOptions.map(opt => {
         const isActive = statusFilter === opt.value;
         const isLiveOpt = opt.value === 'live';
@@ -42,7 +42,7 @@ export default function FilterBar({
                 ? isLiveOpt
                   ? 'bg-d1red text-white shadow-[0_0_10px_rgba(240,64,64,0.4)]'
                   : 'bg-royal text-white shadow-[0_0_10px_rgba(52,116,230,0.4)]'
-                : 'bg-white/[0.07] text-white/40 hover:bg-white/[0.11] hover:text-white/70'
+                : 'bg-[var(--c-surface-subtle)] text-[var(--c-text-40)] hover:bg-[var(--c-surface-alt)] hover:text-[var(--c-text-60)]'
             }`}
           >
             {opt.label}
@@ -50,7 +50,7 @@ export default function FilterBar({
         );
       })}
 
-      <div className="w-px h-4 bg-white/[0.08] shrink-0 mx-0.5" />
+      <div className="w-px h-4 bg-[var(--c-border-strong)] shrink-0 mx-0.5" />
 
       {hasFavorites && (
         <button
@@ -58,7 +58,7 @@ export default function FilterBar({
           className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wide transition-all duration-200 flex items-center gap-1.5 ${
             favoritesOnly
               ? 'bg-amber-400/15 text-amber-400 ring-1 ring-amber-400/40 shadow-[0_0_10px_rgba(251,191,36,0.2)]'
-              : 'bg-white/[0.07] text-white/40 hover:bg-white/[0.11] hover:text-white/70'
+              : 'bg-[var(--c-surface-subtle)] text-[var(--c-text-40)] hover:bg-[var(--c-surface-alt)] hover:text-[var(--c-text-60)]'
           }`}
         >
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -74,7 +74,7 @@ export default function FilterBar({
         className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-bold border-none outline-none cursor-pointer appearance-none pr-6 transition-all duration-200 ${
           conferenceFilter
             ? 'bg-royal text-white shadow-[0_0_10px_rgba(52,116,230,0.4)]'
-            : 'bg-white/[0.07] text-white/40'
+            : 'bg-[var(--c-surface-subtle)] text-[var(--c-text-40)]'
         }`}
         style={{
           backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' stroke='%236b7280' fill='none' stroke-width='1.5'/%3E%3C/svg%3E\")",
@@ -82,9 +82,9 @@ export default function FilterBar({
           backgroundPosition: 'right 8px center',
         }}
       >
-        <option value="" style={{ background: '#0b1225' }}>Conference</option>
+        <option value="">Conference</option>
         {conferences.map(c => (
-          <option key={c.id} value={c.id} style={{ background: '#0b1225' }}>{c.abbreviation}</option>
+          <option key={c.id} value={c.id}>{c.abbreviation}</option>
         ))}
       </select>
     </div>

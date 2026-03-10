@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* D1 Diamond brand palette — Obsidian */
+  /* D1 Diamond brand palette */
   --color-navy: #0d0d15;
   --color-royal: #3d7ef5;
   --color-royal-bright: #5a96ff;
@@ -15,6 +15,62 @@
   --color-bg-dark: #09090e;
 }
 
+/* ── Semantic theme tokens ───────────────────────────────── */
+:root {
+  /* Light mode (default) */
+  --c-bg: #f2f4f8;
+  --c-surface: #ffffff;
+  --c-surface-alt: #eaecf2;
+  --c-surface-subtle: rgba(0,0,0,0.04);
+  --c-overlay: rgba(0,0,0,0.04);
+  --c-border: rgba(0,0,0,0.08);
+  --c-border-faint: rgba(0,0,0,0.05);
+  --c-border-strong: rgba(0,0,0,0.12);
+  --c-text: #0d0d16;
+  --c-text-90: rgba(13,13,22,0.9);
+  --c-text-85: rgba(13,13,22,0.85);
+  --c-text-80: rgba(13,13,22,0.8);
+  --c-text-60: rgba(13,13,22,0.6);
+  --c-text-55: rgba(13,13,22,0.55);
+  --c-text-50: rgba(13,13,22,0.5);
+  --c-text-40: rgba(13,13,22,0.4);
+  --c-text-30: rgba(13,13,22,0.3);
+  --c-text-25: rgba(13,13,22,0.25);
+  --c-text-20: rgba(13,13,22,0.2);
+  --c-text-15: rgba(13,13,22,0.15);
+  --c-glass: rgba(242,244,248,0.92);
+  --c-header-bg: #f8f9fc;
+  --c-bleed: #f2f4f8;
+  --c-nav-bg: #f8f9fc;
+}
+
+.dark {
+  --c-bg: #09090e;
+  --c-surface: #111119;
+  --c-surface-alt: #0d0d14;
+  --c-surface-subtle: rgba(255,255,255,0.04);
+  --c-overlay: rgba(0,0,0,0.20);
+  --c-border: rgba(255,255,255,0.06);
+  --c-border-faint: rgba(255,255,255,0.04);
+  --c-border-strong: rgba(255,255,255,0.08);
+  --c-text: #eeedf5;
+  --c-text-90: rgba(238,237,245,0.9);
+  --c-text-85: rgba(238,237,245,0.85);
+  --c-text-80: rgba(238,237,245,0.8);
+  --c-text-60: rgba(238,237,245,0.6);
+  --c-text-55: rgba(238,237,245,0.55);
+  --c-text-50: rgba(238,237,245,0.5);
+  --c-text-40: rgba(238,237,245,0.4);
+  --c-text-30: rgba(238,237,245,0.3);
+  --c-text-25: rgba(238,237,245,0.25);
+  --c-text-20: rgba(238,237,245,0.2);
+  --c-text-15: rgba(238,237,245,0.15);
+  --c-glass: rgba(13,13,21,0.82);
+  --c-header-bg: #0d0d15;
+  --c-bleed: #09090e;
+  --c-nav-bg: #0d0d15;
+}
+
 html, body, #root {
   height: 100%;
   margin: 0;
@@ -25,14 +81,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-bg-dark);
-  color: #eeedf5;
+  background-color: var(--c-bg);
+  color: var(--c-text);
   overscroll-behavior-y: contain;
-}
-
-.dark body {
-  background-color: var(--color-bg-dark);
-  color: #eeedf5;
 }
 
 .tabular-nums {
@@ -110,7 +161,7 @@ body {
 
 /* ── Glass surface ─────────────────────────────────────── */
 .glass {
-  background: rgba(13, 13, 21, 0.82);
+  background: var(--c-glass);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
 }

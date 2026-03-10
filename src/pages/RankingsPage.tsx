@@ -19,10 +19,10 @@ export default function RankingsPage() {
     <div>
       {/* Page header */}
       <div className="px-4 pt-4 pb-3">
-        <h2 className="text-[22px] font-black text-white tracking-tight">
+        <h2 className="text-[22px] font-black text-[var(--c-text)] tracking-tight">
           Top 25 Rankings
         </h2>
-        <p className="text-[11px] text-white/30 font-medium mt-0.5">
+        <p className="text-[11px] text-[var(--c-text-30)] font-medium mt-0.5">
           {activeTab === 'top25' ? 'D1 Diamond composite model' : 'D1Baseball media poll'}
         </p>
       </div>
@@ -34,7 +34,7 @@ export default function RankingsPage() {
           className={`flex-1 py-2 rounded-xl text-[12px] font-black tracking-wide transition-all duration-200 ${
             activeTab === 'top25'
               ? 'bg-royal text-white shadow-[0_0_14px_rgba(52,116,230,0.4)]'
-              : 'bg-white/[0.06] text-white/35 hover:bg-white/[0.09] hover:text-white/60'
+              : 'bg-[var(--c-surface-subtle)] text-[var(--c-text-40)] hover:bg-[var(--c-surface-alt)] hover:text-[var(--c-text-60)]'
           }`}
         >
           D1 Diamond
@@ -44,7 +44,7 @@ export default function RankingsPage() {
           className={`flex-1 py-2 rounded-xl text-[12px] font-black tracking-wide transition-all duration-200 ${
             activeTab === 'poll'
               ? 'bg-royal text-white shadow-[0_0_14px_rgba(52,116,230,0.4)]'
-              : 'bg-white/[0.06] text-white/35 hover:bg-white/[0.09] hover:text-white/60'
+              : 'bg-[var(--c-surface-subtle)] text-[var(--c-text-40)] hover:bg-[var(--c-surface-alt)] hover:text-[var(--c-text-60)]'
           }`}
         >
           Media Poll

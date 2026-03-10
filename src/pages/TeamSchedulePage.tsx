@@ -55,7 +55,7 @@ export default function TeamSchedulePage() {
       <div className="flex items-center gap-2 px-4 py-3">
         <button
           onClick={() => navigate(-1)}
-          className="p-1 -ml-1 text-gray-400 dark:text-gray-500"
+          className="p-1 -ml-1 text-[var(--c-text-40)]"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -70,15 +70,15 @@ export default function TeamSchedulePage() {
               size={32}
             />
             <div>
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white">{schedule.teamName}</h2>
-              <p className="text-xs text-gray-400 dark:text-gray-500">
+              <h2 className="text-lg font-bold text-[var(--c-text)]">{schedule.teamName}</h2>
+              <p className="text-xs text-[var(--c-text-40)]">
                 {record.wins}-{record.losses} &middot; {schedule.season}
               </p>
             </div>
           </div>
         )}
         {!schedule && !loading && (
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white">Schedule</h2>
+          <h2 className="text-lg font-bold text-[var(--c-text)]">Schedule</h2>
         )}
       </div>
 
@@ -96,7 +96,7 @@ export default function TeamSchedulePage() {
               className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
                 filter === opt.value
                   ? 'bg-royal text-white'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
+                  : 'bg-[var(--c-surface-alt)] text-[var(--c-text-60)]'
               }`}
             >
               {opt.label}
@@ -109,7 +109,7 @@ export default function TeamSchedulePage() {
       {loading && (
         <div className="px-4 space-y-1">
           {[1, 2, 3, 4, 5, 6].map(i => (
-            <div key={i} className="h-14 bg-white dark:bg-slate-800 rounded-lg animate-pulse" />
+            <div key={i} className="h-14 bg-[var(--c-surface)] rounded-lg animate-pulse" />
           ))}
         </div>
       )}
@@ -117,7 +117,7 @@ export default function TeamSchedulePage() {
       {/* Schedule list */}
       {!loading && filteredGames.length > 0 && (
         <div className="px-3">
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-[var(--c-surface)] rounded-xl shadow-sm overflow-hidden">
             {filteredGames.map((game: ScheduleGame, idx: number) => {
               const { dayOfWeek, monthDay, time } = formatGameDate(game.date);
               const isCompleted = game.state === 'post';
@@ -125,17 +125,17 @@ export default function TeamSchedulePage() {
               return (
                 <div
                   key={game.id || idx}
-                  className="flex items-center gap-3 px-3 py-2.5 border-b border-gray-50 dark:border-gray-700/30 last:border-b-0"
+                  className="flex items-center gap-3 px-3 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0"
                 >
                   {/* Date column */}
                   <div className="w-12 shrink-0 text-center">
-                    <p className="text-[10px] font-medium text-gray-400 dark:text-gray-500 uppercase">{dayOfWeek}</p>
-                    <p className="text-xs font-bold text-gray-700 dark:text-gray-300">{monthDay}</p>
+                    <p className="text-[10px] font-medium text-[var(--c-text-40)] uppercase">{dayOfWeek}</p>
+                    <p className="text-xs font-bold text-[var(--c-text-80)]">{monthDay}</p>
                   </div>
 
                   {/* Opponent */}
                   <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <span className="text-[10px] text-gray-400 dark:text-gray-500 w-3 shrink-0">
+                    <span className="text-[10px] text-[var(--c-text-40)] w-3 shrink-0">
                       {game.isHome ? 'vs' : '@'}
                     </span>
                     <TeamLogo
@@ -144,7 +144,7 @@ export default function TeamSchedulePage() {
                       abbreviation={game.opponent.abbreviation}
                       size={24}
                     />
-                    <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                    <span className="text-sm font-medium text-[var(--c-text)] truncate">
                       {game.opponent.displayName}
                     </span>
                   </div>
@@ -160,14 +160,14 @@ export default function TeamSchedulePage() {
                         }`}>
                           {game.isWin ? 'W' : 'L'}
                         </span>
-                        <span className="text-xs font-semibold tabular-nums text-gray-700 dark:text-gray-300">
+                        <span className="text-xs font-semibold tabular-nums text-[var(--c-text-80)]">
                           {game.teamScore}-{game.opponentScore}
                         </span>
                       </div>
                     ) : game.state === 'in' ? (
                       <span className="text-xs font-bold text-live animate-pulse-live">LIVE</span>
                     ) : (
-                      <span className="text-[11px] text-gray-400 dark:text-gray-500">{time}</span>
+                      <span className="text-[11px] text-[var(--c-text-40)]">{time}</span>
                     )}
                   </div>
                 </div>
@@ -180,8 +180,8 @@ export default function TeamSchedulePage() {
       {/* Empty state */}
       {!loading && filteredGames.length === 0 && (
         <div className="text-center py-12 px-8">
-          <p className="text-gray-500 dark:text-gray-400 text-sm">No games found</p>
-          <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">
+          <p className="text-[var(--c-text-50)] text-sm">No games found</p>
+          <p className="text-[var(--c-text-40)] text-xs mt-1">
             {filter !== 'all' ? 'Try a different filter.' : 'Schedule not yet available.'}
           </p>
         </div>

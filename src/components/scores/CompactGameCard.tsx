@@ -32,8 +32,8 @@ function CompactGameCard({ game }: { game: Game }) {
       onClick={handleTap}
       className={`rounded-lg overflow-hidden border cursor-pointer active:scale-[0.97] transition-transform duration-100 ${
         isLive
-          ? 'live-card-glow bg-surface-dark border-white/[0.08]'
-          : 'bg-surface-dark border-white/[0.06]'
+          ? 'live-card-glow bg-[var(--c-surface)] border-[var(--c-border-strong)]'
+          : 'bg-[var(--c-surface)] border-[var(--c-border)]'
       }`}
     >
       {/* Conference accent line */}
@@ -44,7 +44,7 @@ function CompactGameCard({ game }: { game: Game }) {
       {/* Status header — live and final only */}
       {(isLive || isFinal) && (
         <div className={`flex items-center justify-between px-2.5 py-1.5 border-b ${
-          isLive ? 'bg-d1red/[0.08] border-d1red/10' : 'bg-black/25 border-white/[0.04]'
+          isLive ? 'bg-d1red/[0.08] border-d1red/10' : 'bg-[var(--c-overlay)] border-[var(--c-border-faint)]'
         }`}>
           {isLive ? (
             <div className="flex items-center gap-1.5">
@@ -54,7 +54,7 @@ function CompactGameCard({ game }: { game: Game }) {
               </span>
             </div>
           ) : (
-            <span className="text-[9px] font-black text-white/25 uppercase tracking-[0.15em]">Final</span>
+            <span className="text-[9px] font-black text-[var(--c-text-25)] uppercase tracking-[0.15em]">Final</span>
           )}
           {game.isConferenceGame && (
             <span className="text-[8px] font-black text-royal-bright/40 uppercase tracking-widest shrink-0 ml-1">
@@ -78,24 +78,24 @@ function CompactGameCard({ game }: { game: Game }) {
                   <span className="text-[7px] font-black text-royal-bright shrink-0">#{awayRank}</span>
                 )}
                 <span className={`text-[12px] font-black leading-tight truncate ${
-                  isFinal && !game.away.isWinner ? 'text-white/25' : 'text-white'
+                  isFinal && !game.away.isWinner ? 'text-[var(--c-text-25)]' : 'text-[var(--c-text)]'
                 }`}>
                   {game.away.abbreviation}
                 </span>
               </div>
               {game.away.record && (
-                <span className="text-[9px] text-white/25 font-medium mt-0.5 block">{game.away.record}</span>
+                <span className="text-[9px] text-[var(--c-text-25)] font-medium mt-0.5 block">{game.away.record}</span>
               )}
             </div>
             {(isLive || isFinal) && (
               <span className={`shrink-0 text-[14px] font-black tabular-nums leading-none ${
-                isFinal && !game.away.isWinner ? 'text-white/20' : 'text-white'
+                isFinal && !game.away.isWinner ? 'text-[var(--c-text-20)]' : 'text-[var(--c-text)]'
               }`}>
                 {game.away.score}
               </span>
             )}
             {isPre && (
-              <span className="shrink-0 text-[11px] font-bold text-white/55 leading-none">{gameTime}</span>
+              <span className="shrink-0 text-[11px] font-bold text-[var(--c-text-55)] leading-none">{gameTime}</span>
             )}
           </div>
 
@@ -108,24 +108,24 @@ function CompactGameCard({ game }: { game: Game }) {
                   <span className="text-[7px] font-black text-royal-bright shrink-0">#{homeRank}</span>
                 )}
                 <span className={`text-[12px] font-black leading-tight truncate ${
-                  isFinal && !game.home.isWinner ? 'text-white/25' : 'text-white'
+                  isFinal && !game.home.isWinner ? 'text-[var(--c-text-25)]' : 'text-[var(--c-text)]'
                 }`}>
                   {game.home.abbreviation}
                 </span>
               </div>
               {game.home.record && (
-                <span className="text-[9px] text-white/25 font-medium mt-0.5 block">{game.home.record}</span>
+                <span className="text-[9px] text-[var(--c-text-25)] font-medium mt-0.5 block">{game.home.record}</span>
               )}
             </div>
             {(isLive || isFinal) && (
               <span className={`shrink-0 text-[14px] font-black tabular-nums leading-none ${
-                isFinal && !game.home.isWinner ? 'text-white/20' : 'text-white'
+                isFinal && !game.home.isWinner ? 'text-[var(--c-text-20)]' : 'text-[var(--c-text)]'
               }`}>
                 {game.home.score}
               </span>
             )}
             {isPre && game.broadcasts.length > 0 && (
-              <span className="shrink-0 text-[9px] font-semibold text-white/30 leading-none truncate max-w-[52px]">
+              <span className="shrink-0 text-[9px] font-semibold text-[var(--c-text-30)] leading-none truncate max-w-[52px]">
                 {game.broadcasts[0]}
               </span>
             )}

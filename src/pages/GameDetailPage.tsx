@@ -103,7 +103,7 @@ export default function GameDetailPage() {
   if (!game) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center px-8">
-        <p className="text-gray-500 dark:text-gray-400 mb-4">Game not found.</p>
+        <p className="text-[var(--c-text-50)] mb-4">Game not found.</p>
         <button
           onClick={() => navigate('/')}
           className="px-4 py-2 bg-royal text-white rounded-lg text-sm font-medium"

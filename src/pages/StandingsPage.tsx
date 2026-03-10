@@ -45,15 +45,15 @@ export default function StandingsPage() {
       <div className="flex items-center gap-2 px-4 py-3">
         <button
           onClick={() => navigate('/more')}
-          className="p-1 -ml-1 text-gray-400 dark:text-gray-500"
+          className="p-1 -ml-1 text-[var(--c-text-40)]"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
         </button>
         <div>
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white">Conference Standings</h2>
-          <p className="text-xs text-gray-400 dark:text-gray-500">
+          <h2 className="text-lg font-bold text-[var(--c-text)]">Conference Standings</h2>
+          <p className="text-xs text-[var(--c-text-40)]">
             {activeConf ? activeConf.conferenceName : 'Select a conference'}
           </p>
         </div>
@@ -72,7 +72,7 @@ export default function StandingsPage() {
               className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
                 selectedConf === conf.conferenceId
                   ? 'bg-royal text-white'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
+                  : 'bg-[var(--c-surface-alt)] text-[var(--c-text-60)]'
               }`}
             >
               {conf.conferenceAbbreviation}
@@ -85,7 +85,7 @@ export default function StandingsPage() {
       {isLoading && (
         <div className="px-4 space-y-2">
           {[1, 2, 3, 4, 5].map(i => (
-            <div key={i} className="h-12 bg-white dark:bg-slate-800 rounded-lg animate-pulse" />
+            <div key={i} className="h-12 bg-[var(--c-surface)] rounded-lg animate-pulse" />
           ))}
         </div>
       )}
@@ -93,12 +93,12 @@ export default function StandingsPage() {
       {/* Standings Table */}
       {activeConf && activeConf.entries.length > 0 && (
         <div className="px-3">
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-[var(--c-surface)] rounded-xl shadow-sm overflow-hidden">
             {/* Table header */}
             <div className="overflow-x-auto">
               <table className="w-full min-w-[480px]">
                 <thead>
-                  <tr className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 border-b border-gray-100 dark:border-gray-700/50">
+                  <tr className="text-[10px] font-semibold uppercase tracking-wider text-[var(--c-text-40)] border-b border-[var(--c-border)]">
                     <th className="text-left pl-3 pr-1 py-2 w-6">#</th>
                     <th className="text-left px-1 py-2">Team</th>
                     <th className="text-center px-2 py-2 w-16">Conf</th>
@@ -115,11 +115,11 @@ export default function StandingsPage() {
                     return (
                       <tr
                         key={entry.teamId}
-                        className={`border-b border-gray-50 dark:border-gray-700/30 last:border-b-0 ${
+                        className={`border-b border-[var(--c-border-faint)] last:border-b-0 ${
                           fav ? 'bg-yellow-50/60 dark:bg-yellow-900/10' : ''
                         }`}
                       >
-                        <td className="pl-3 pr-1 py-2 text-xs text-gray-400 dark:text-gray-500 tabular-nums">
+                        <td className="pl-3 pr-1 py-2 text-xs text-[var(--c-text-40)] tabular-nums">
                           {idx + 1}
                         </td>
                         <td className="px-1 py-2">
@@ -130,18 +130,18 @@ export default function StandingsPage() {
                               abbreviation={entry.abbreviation}
                               size={22}
                             />
-                            <span className="text-xs font-medium text-gray-900 dark:text-white truncate max-w-[120px]">
+                            <span className="text-xs font-medium text-[var(--c-text)] truncate max-w-[120px]">
                               {entry.displayName}
                             </span>
                           </div>
                         </td>
-                        <td className="text-center px-2 py-2 text-xs tabular-nums text-gray-700 dark:text-gray-300">
+                        <td className="text-center px-2 py-2 text-xs tabular-nums text-[var(--c-text-80)]">
                           {entry.conferenceWins}-{entry.conferenceLosses}
                         </td>
-                        <td className="text-center px-2 py-2 text-xs tabular-nums text-gray-700 dark:text-gray-300">
+                        <td className="text-center px-2 py-2 text-xs tabular-nums text-[var(--c-text-80)]">
                           {entry.overallWins}-{entry.overallLosses}
                         </td>
-                        <td className="text-center px-2 py-2 text-xs tabular-nums text-gray-500 dark:text-gray-400">
+                        <td className="text-center px-2 py-2 text-xs tabular-nums text-[var(--c-text-50)]">
                           {entry.overallWinPct.toFixed(3).replace(/^0/, '')}
                         </td>
                         <td className="text-center px-2 py-2">
@@ -150,7 +150,7 @@ export default function StandingsPage() {
                               ? 'text-green-600 dark:text-green-400'
                               : entry.streak.startsWith('L')
                               ? 'text-red-500 dark:text-red-400'
-                              : 'text-gray-500 dark:text-gray-400'
+                              : 'text-[var(--c-text-50)]'
                           }`}>
                             {entry.streak}
                           </span>
@@ -161,7 +161,7 @@ export default function StandingsPage() {
                               ? 'text-green-600 dark:text-green-400'
                               : entry.runDifferential.startsWith('-')
                               ? 'text-red-500 dark:text-red-400'
-                              : 'text-gray-500 dark:text-gray-400'
+                              : 'text-[var(--c-text-50)]'
                           }`}>
                             {entry.runDifferential}
                           </span>
@@ -173,7 +173,7 @@ export default function StandingsPage() {
                             aria-label={fav ? `Remove ${entry.displayName} from favorites` : `Add ${entry.displayName} to favorites`}
                           >
                             <svg
-                              className={`w-4 h-4 ${fav ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
+                              className={`w-4 h-4 ${fav ? 'text-yellow-400 fill-yellow-400' : 'text-[var(--c-text-30)]'}`}
                               viewBox="0 0 24 24"
                               strokeWidth={1.5}
                               stroke="currentColor"
@@ -193,7 +193,7 @@ export default function StandingsPage() {
 
           {/* Run scoring breakdown */}
           {activeConf.entries.length > 0 && (
-            <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-2 px-1 text-center">
+            <p className="text-[10px] text-[var(--c-text-40)] mt-2 px-1 text-center">
               Conf = Conference Record &middot; Diff = Run Differential (RS - RA) &middot; Tap star to favorite
             </p>
           )}
@@ -203,8 +203,8 @@ export default function StandingsPage() {
       {/* Empty state */}
       {!isLoading && standings.length === 0 && (
         <div className="text-center py-16 px-8">
-          <p className="text-gray-500 dark:text-gray-400 text-sm">No standings data available.</p>
-          <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">
+          <p className="text-[var(--c-text-50)] text-sm">No standings data available.</p>
+          <p className="text-[var(--c-text-40)] text-xs mt-1">
             Standings will appear once the season begins.
           </p>
         </div>

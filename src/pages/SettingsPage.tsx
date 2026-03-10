@@ -6,13 +6,13 @@ import { useState } from 'react';
 function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (val: boolean) => void; label: string }) {
   return (
     <label className="flex items-center justify-between py-3 cursor-pointer">
-      <span className="text-sm text-gray-700 dark:text-gray-300">{label}</span>
+      <span className="text-sm text-[var(--c-text-80)]">{label}</span>
       <button
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
         className={`relative w-10 h-6 rounded-full transition-colors ${
-          checked ? 'bg-royal' : 'bg-gray-300 dark:bg-gray-600'
+          checked ? 'bg-royal' : 'bg-[var(--c-border-strong)]'
         }`}
       >
         <span
@@ -42,28 +42,28 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="px-4 pb-8">
+    <div className="px-4 pb-8 bg-[var(--c-bg)] min-h-full">
       <div className="py-3">
-        <h2 className="text-lg font-bold text-gray-900 dark:text-white">Settings</h2>
+        <h2 className="text-lg font-bold text-[var(--c-text)]">Settings</h2>
       </div>
 
       {/* Appearance */}
       <section className="mb-6">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--c-text-40)] mb-2">
           Appearance
         </h3>
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm px-4">
+        <div className="bg-[var(--c-surface)] rounded-xl shadow-sm px-4">
           <div className="flex items-center justify-between py-3">
-            <span className="text-sm text-gray-700 dark:text-gray-300">Theme</span>
-            <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-0.5">
+            <span className="text-sm text-[var(--c-text-80)]">Theme</span>
+            <div className="flex bg-[var(--c-surface-alt)] rounded-lg p-0.5">
               {(['light', 'system', 'dark'] as const).map(t => (
                 <button
                   key={t}
                   onClick={() => setTheme(t)}
                   className={`px-3 py-1 text-xs font-medium rounded-md transition-colors capitalize ${
                     theme === t
-                      ? 'bg-white dark:bg-slate-600 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-500 dark:text-gray-400'
+                      ? 'bg-[var(--c-surface)] text-[var(--c-text)] shadow-sm'
+                      : 'text-[var(--c-text-50)]'
                   }`}
                 >
                   {t}
@@ -76,10 +76,10 @@ export default function SettingsPage() {
 
       {/* Notifications */}
       <section className="mb-6">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--c-text-40)] mb-2">
           Notifications
         </h3>
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm px-4 divide-y divide-gray-50 dark:divide-gray-700/50">
+        <div className="bg-[var(--c-surface)] rounded-xl shadow-sm px-4 divide-y divide-[var(--c-border-faint)]">
           <Toggle
             label="Enable notifications"
             checked={prefs.enabled}
@@ -111,7 +111,7 @@ export default function SettingsPage() {
           </p>
         )}
         {prefs.enabled && (
-          <p className="text-xs text-gray-400 dark:text-gray-500 mt-2 px-1">
+          <p className="text-xs text-[var(--c-text-40)] mt-2 px-1">
             Notifications work when the app is open. Add favorite teams to receive alerts about their games.
           </p>
         )}
@@ -119,15 +119,15 @@ export default function SettingsPage() {
 
       {/* About */}
       <section>
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--c-text-40)] mb-2">
           About
         </h3>
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm px-4 py-3">
-          <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">D1 Diamond — College Baseball Scores</p>
-          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+        <div className="bg-[var(--c-surface)] rounded-xl shadow-sm px-4 py-3">
+          <p className="text-sm text-[var(--c-text-80)] font-medium">D1 Diamond — College Baseball Scores</p>
+          <p className="text-xs text-[var(--c-text-40)] mt-1">
             Track live NCAA college baseball scores, rankings, and your favorite teams. Data provided by ESPN.
           </p>
-          <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+          <p className="text-xs text-[var(--c-text-40)] mt-2">
             Version 1.0.0
           </p>
         </div>

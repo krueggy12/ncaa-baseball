@@ -18,15 +18,15 @@ function BattingTable({ players }: { players: NcaaBoxScoreData['batting'] }) {
     { ab: 0, r: 0, h: 0, rbi: 0, bb: 0, k: 0 }
   );
 
-  const cell = 'px-1.5 py-1 text-center text-gray-600 dark:text-gray-400';
+  const cell = 'px-1.5 py-1 text-center text-[var(--c-text-60)]';
   const hdr = 'px-1.5 py-1 text-center font-medium';
 
   return (
     <div className="overflow-x-auto no-scrollbar mb-4">
       <table className="w-full text-[11px] tabular-nums">
         <thead>
-          <tr className="text-gray-400 dark:text-gray-500 border-b border-gray-100 dark:border-gray-700">
-            <th className="text-left py-1 pr-2 font-medium sticky left-0 bg-white dark:bg-slate-800 min-w-[90px]">
+          <tr className="text-[var(--c-text-40)] border-b border-[var(--c-border)]">
+            <th className="text-left py-1 pr-2 font-medium sticky left-0 bg-[var(--c-surface)] min-w-[90px]">
               Batters
             </th>
             <th className={hdr}>AB</th>
@@ -39,8 +39,8 @@ function BattingTable({ players }: { players: NcaaBoxScoreData['batting'] }) {
         </thead>
         <tbody>
           {players.map((p, i) => (
-            <tr key={i} className="border-b border-gray-50 dark:border-gray-700/50">
-              <td className="py-1 pr-2 text-left text-gray-700 dark:text-gray-300 sticky left-0 bg-white dark:bg-slate-800 truncate max-w-[90px]">
+            <tr key={i} className="border-b border-[var(--c-border-faint)] last:border-b-0">
+              <td className="py-1 pr-2 text-left text-[var(--c-text-80)] sticky left-0 bg-[var(--c-surface)] truncate max-w-[90px]">
                 {p.name}
               </td>
               <td className={cell}>{p.ab}</td>
@@ -51,8 +51,8 @@ function BattingTable({ players }: { players: NcaaBoxScoreData['batting'] }) {
               <td className={cell}>{p.k}</td>
             </tr>
           ))}
-          <tr className="border-t border-gray-200 dark:border-gray-600 font-semibold text-gray-700 dark:text-gray-300">
-            <td className="py-1 pr-2 text-left sticky left-0 bg-white dark:bg-slate-800">Totals</td>
+          <tr className="border-t border-[var(--c-border)] font-semibold text-[var(--c-text-80)]">
+            <td className="py-1 pr-2 text-left sticky left-0 bg-[var(--c-surface)]">Totals</td>
             <td className="px-1.5 py-1 text-center">{totals.ab}</td>
             <td className="px-1.5 py-1 text-center">{totals.r}</td>
             <td className="px-1.5 py-1 text-center">{totals.h}</td>
@@ -69,15 +69,15 @@ function BattingTable({ players }: { players: NcaaBoxScoreData['batting'] }) {
 function PitchingTable({ players }: { players: NcaaBoxScoreData['pitching'] }) {
   if (players.length === 0) return null;
 
-  const cell = 'px-1.5 py-1 text-center text-gray-600 dark:text-gray-400';
+  const cell = 'px-1.5 py-1 text-center text-[var(--c-text-60)]';
   const hdr = 'px-1.5 py-1 text-center font-medium';
 
   return (
     <div className="overflow-x-auto no-scrollbar">
       <table className="w-full text-[11px] tabular-nums">
         <thead>
-          <tr className="text-gray-400 dark:text-gray-500 border-b border-gray-100 dark:border-gray-700">
-            <th className="text-left py-1 pr-2 font-medium sticky left-0 bg-white dark:bg-slate-800 min-w-[90px]">
+          <tr className="text-[var(--c-text-40)] border-b border-[var(--c-border)]">
+            <th className="text-left py-1 pr-2 font-medium sticky left-0 bg-[var(--c-surface)] min-w-[90px]">
               Pitchers
             </th>
             <th className={hdr}>IP</th>
@@ -91,8 +91,8 @@ function PitchingTable({ players }: { players: NcaaBoxScoreData['pitching'] }) {
         </thead>
         <tbody>
           {players.map((p, i) => (
-            <tr key={i} className="border-b border-gray-50 dark:border-gray-700/50">
-              <td className="py-1 pr-2 text-left text-gray-700 dark:text-gray-300 sticky left-0 bg-white dark:bg-slate-800 truncate max-w-[90px]">
+            <tr key={i} className="border-b border-[var(--c-border-faint)] last:border-b-0">
+              <td className="py-1 pr-2 text-left text-[var(--c-text-80)] sticky left-0 bg-[var(--c-surface)] truncate max-w-[90px]">
                 {p.name}
               </td>
               <td className={cell}>{p.ip}</td>
@@ -123,7 +123,7 @@ function TeamSection({
 
   return (
     <div>
-      <h4 className="text-sm font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+      <h4 className="text-sm font-bold text-[var(--c-text)] mb-2 flex items-center gap-2">
         <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={20} />
         {team.displayName}
       </h4>
@@ -138,7 +138,7 @@ export default function NcaaBoxScore({ game }: { game: Game }) {
 
   if (game.status.state === 'pre') {
     return (
-      <p className="text-sm text-gray-400 dark:text-gray-500 text-center py-8">
+      <p className="text-sm text-[var(--c-text-40)] text-center py-8">
         Box score available after game starts.
       </p>
     );
@@ -148,14 +148,14 @@ export default function NcaaBoxScore({ game }: { game: Game }) {
     return (
       <div className="py-10 flex flex-col items-center gap-2">
         <div className="w-5 h-5 border-2 border-royal border-t-transparent rounded-full animate-spin" />
-        <p className="text-xs text-gray-400 dark:text-gray-500">Loading box score…</p>
+        <p className="text-xs text-[var(--c-text-40)]">Loading box score…</p>
       </div>
     );
   }
 
   if (error || !data) {
     return (
-      <p className="text-sm text-gray-400 dark:text-gray-500 text-center py-8">
+      <p className="text-sm text-[var(--c-text-40)] text-center py-8">
         Box score not available.
       </p>
     );
