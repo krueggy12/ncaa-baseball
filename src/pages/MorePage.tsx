@@ -2,6 +2,16 @@ import { useNavigate } from 'react-router-dom';
 
 const menuItems = [
   {
+    title: 'Top 25 Rankings',
+    subtitle: 'D1 Diamond composite + media poll',
+    path: '/rankings',
+    icon: (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.75} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+      </svg>
+    ),
+  },
+  {
     title: 'Conference Standings',
     subtitle: 'Full standings for every D1 conference',
     path: '/more/standings',

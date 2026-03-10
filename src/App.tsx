@@ -4,6 +4,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { NotificationProvider } from './context/NotificationContext';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import AppShell from './components/layout/AppShell';
+import DashboardPage from './pages/DashboardPage';
 import ScoresPage from './pages/ScoresPage';
 import GameDetailPage from './pages/GameDetailPage';
 import RankingsPage from './pages/RankingsPage';
@@ -23,7 +24,8 @@ function App() {
           <ErrorBoundary>
             <Routes>
               <Route element={<AppShell />}>
-                <Route path="/" element={<ScoresPage />} />
+                <Route path="/" element={<DashboardPage />} />
+                <Route path="/scores" element={<ScoresPage />} />
                 <Route path="/rankings" element={<RankingsPage />} />
                 <Route path="/favorites" element={<FavoritesPage />} />
                 <Route path="/more" element={<MorePage />} />
