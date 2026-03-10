@@ -23,14 +23,14 @@ export default function AppShell() {
       <div className="relative flex-1 min-h-0">
 
         {/* Top bleed — fades in once user scrolls away from top */}
-        <div className={`absolute top-0 left-0 right-0 h-14 bg-gradient-to-b from-[#060c1a] to-transparent pointer-events-none z-10 transition-opacity duration-300 ${atTop ? 'opacity-0' : 'opacity-100'}`} />
+        <div className={`absolute top-0 left-0 right-0 h-14 bg-gradient-to-b from-[#09090e] to-transparent pointer-events-none z-10 transition-opacity duration-300 ${atTop ? 'opacity-0' : 'opacity-100'}`} />
 
         <main ref={mainRef} onScroll={handleScroll} className="h-full overflow-y-auto pb-[76px]">
           <Outlet />
         </main>
 
         {/* Bottom bleed — fades out when user reaches the end */}
-        <div className={`absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#060c1a] to-transparent pointer-events-none z-10 transition-opacity duration-300 ${atBottom ? 'opacity-0' : 'opacity-100'}`} />
+        <div className={`absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#09090e] to-transparent pointer-events-none z-10 transition-opacity duration-300 ${atBottom ? 'opacity-0' : 'opacity-100'}`} />
 
       </div>
 
