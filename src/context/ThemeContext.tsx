@@ -18,7 +18,7 @@ function getSystemDark() {
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(() =>
-    getStorageItem<Theme>(STORAGE_KEYS.THEME, 'system')
+    getStorageItem<Theme>(STORAGE_KEYS.THEME, 'dark')
   );
   const [systemDark, setSystemDark] = useState(getSystemDark);
 

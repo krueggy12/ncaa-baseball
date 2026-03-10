@@ -4,7 +4,7 @@ import BottomNav from './BottomNav';
 
 export default function AppShell() {
   return (
-    <div className="flex flex-col h-full bg-bg-light dark:bg-bg-dark">
+    <div className="flex flex-col h-full bg-bg-dark">
       <Header />
       <main className="flex-1 overflow-y-auto pb-[76px]">
         <Outlet />
