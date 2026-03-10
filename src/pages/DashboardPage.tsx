@@ -76,13 +76,13 @@ function GameCell({
   return (
     <div
       onClick={onClick}
-      className={`flex items-center gap-2 p-3 cursor-pointer active:bg-white/[0.06] transition-colors ${borderCls}`}
+      className={`flex items-center gap-1.5 p-2.5 cursor-pointer active:bg-white/[0.06] transition-colors ${borderCls}`}
     >
       {/* Left: teams stacked */}
       <div className="flex-1 flex flex-col gap-2.5 min-w-0">
         {/* Away */}
         <div className="flex items-center gap-2 min-w-0">
-          <TeamLogo src={game.away.logo} alt={game.away.displayName} abbreviation={game.away.abbreviation} size={30} />
+          <TeamLogo src={game.away.logo} alt={game.away.displayName} abbreviation={game.away.abbreviation} size={26} />
           <div className="min-w-0">
             <div className="flex items-center gap-1 min-w-0">
               {awayRank != null && (
@@ -100,7 +100,7 @@ function GameCell({
 
         {/* Home */}
         <div className="flex items-center gap-2 min-w-0">
-          <TeamLogo src={game.home.logo} alt={game.home.displayName} abbreviation={game.home.abbreviation} size={30} />
+          <TeamLogo src={game.home.logo} alt={game.home.displayName} abbreviation={game.home.abbreviation} size={26} />
           <div className="min-w-0">
             <div className="flex items-center gap-1 min-w-0">
               {homeRank != null && (
@@ -214,7 +214,7 @@ export default function DashboardPage() {
           <div className="mx-4 rounded-md border border-white/[0.07] bg-surface-dark overflow-hidden">
             {/* Horizontally scrollable on mobile so 3 columns never get squished */}
             <div className="overflow-x-auto scrollbar-hide">
-              <div className="grid grid-cols-3 min-w-[390px]">
+              <div className="grid grid-cols-3 min-w-[510px]">
                 {featured.map((game, idx) => (
                   <GameCell
                     key={game.id}
