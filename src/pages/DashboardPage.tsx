@@ -76,8 +76,19 @@ function GameCell({
   return (
     <div
       onClick={onClick}
-      className={`flex items-center gap-1.5 p-2.5 cursor-pointer active:bg-white/[0.06] transition-colors ${borderCls}`}
+      className={`relative flex items-center gap-1.5 p-2.5 cursor-pointer active:bg-white/[0.06] transition-colors ${borderCls}`}
     >
+      {/* Status badge — absolute top-right, never pushes scores down */}
+      {isLive && (
+        <div className="absolute top-1.5 right-2 flex items-center gap-1">
+          <span className="w-1 h-1 rounded-full bg-d1red animate-glow-live shrink-0" />
+          <span className="text-[7px] font-black text-d1red uppercase leading-none tracking-wide">{game.status.shortDetail}</span>
+        </div>
+      )}
+      {isFinal && (
+        <span className="absolute top-1.5 right-2 text-[7px] font-black text-white/20 uppercase tracking-wider leading-none">Final</span>
+      )}
+
       {/* Left: teams stacked */}
       <div className="flex-1 flex flex-col gap-2.5 min-w-0">
         {/* Away */}
@@ -117,20 +128,15 @@ function GameCell({
         </div>
       </div>
 
-      {/* Right: score / time+channel */}
-      <div className="shrink-0 flex flex-col items-end justify-center gap-1">
+      {/* Right: scores (live/final) or time+channel (pre) */}
+      <div className="shrink-0 flex flex-col items-end justify-center gap-2.5">
         {isLive ? (
           <>
-            <div className="flex items-center gap-1 mb-0.5">
-              <span className="w-1 h-1 rounded-full bg-d1red animate-glow-live" />
-              <span className="text-[8px] font-black text-d1red uppercase">{game.status.shortDetail}</span>
-            </div>
             <span className={`text-[13px] font-black tabular-nums leading-none ${game.away.isWinner ? 'text-white' : 'text-white/35'}`}>{game.away.score}</span>
             <span className={`text-[13px] font-black tabular-nums leading-none ${game.home.isWinner ? 'text-white' : 'text-white/35'}`}>{game.home.score}</span>
           </>
         ) : isFinal ? (
           <>
-            <span className="text-[8px] font-black text-white/20 uppercase tracking-wider mb-0.5">Final</span>
             <span className={`text-[13px] font-black tabular-nums leading-none ${game.away.isWinner ? 'text-white' : 'text-white/25'}`}>{game.away.score}</span>
             <span className={`text-[13px] font-black tabular-nums leading-none ${game.home.isWinner ? 'text-white' : 'text-white/25'}`}>{game.home.score}</span>
           </>
