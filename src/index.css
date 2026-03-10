@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* D1 Diamond brand palette */
   --color-navy: #0d0d15;
@@ -137,7 +139,7 @@ body {
 }
 
 .safe-top {
-  padding-top: env(safe-area-inset-top, 0px);
+  padding-top: max(env(safe-area-inset-top, 0px), 12px);
 }
 
 /* ── Hide scrollbar for scrollable strips ──────────────── */
