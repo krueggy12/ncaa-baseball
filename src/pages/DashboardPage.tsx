@@ -39,70 +39,83 @@ function SectionHeader({ title, label, onViewMore }: { title: string; label?: st
 
 // ─── Compact game row for dashboard ──────────────────────────────────────────
 
+function TeamRow({ team, isFinal }: { team: Game['away']; isFinal: boolean }) {
+  const dimmed = isFinal && !team.isWinner;
+  return (
+    <div className="flex items-center gap-2.5">
+      <TeamLogo src={team.logo} alt={team.displayName} abbreviation={team.abbreviation} size={30} />
+      <div className="min-w-0">
+        <div className="flex items-center gap-1.5">
+          {team.rank != null && (
+            <span className="text-[10px] font-black text-royal-bright shrink-0">#{team.rank}</span>
+          )}
+          <span className={`text-[15px] font-black leading-tight ${dimmed ? 'text-white/30' : 'text-white'}`}>
+            {team.abbreviation}
+          </span>
+        </div>
+        {team.record && (
+          <span className="text-[11px] text-white/30 font-medium leading-tight">{team.record}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function GamePreview({ game, onClick }: { game: Game; onClick: () => void }) {
   const isLive = game.status.state === 'in';
   const isFinal = game.status.state === 'post';
-  const awayWin = !isFinal || game.away.isWinner;
-  const homeWin = !isFinal || game.home.isWinner;
+
+  const gameTime = (() => {
+    if (!game.date) return '';
+    try {
+      return new Date(game.date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    } catch { return ''; }
+  })();
 
   return (
     <div
       onClick={onClick}
-      className="flex items-center px-4 py-3 border-b border-white/[0.04] last:border-b-0 active:bg-white/5 cursor-pointer transition-colors"
+      className="flex items-center gap-3 px-4 py-3.5 border-b border-white/[0.04] last:border-b-0 active:bg-white/5 cursor-pointer transition-colors"
     >
-      {/* Away */}
-      <div className="flex items-center gap-2 flex-1 min-w-0">
-        <TeamLogo src={game.away.logo} alt={game.away.displayName} abbreviation={game.away.abbreviation} size={28} />
-        <div className="min-w-0">
-          <span className={`text-[13px] font-bold truncate block ${!isFinal || awayWin ? 'text-white/85' : 'text-white/30'}`}>
-            {game.away.abbreviation}
-          </span>
-          {game.away.rank != null && (
-            <span className="text-[9px] font-black text-royal-bright leading-none">#{game.away.rank}</span>
-          )}
-        </div>
+      {/* Teams — stacked away over home */}
+      <div className="flex-1 min-w-0 flex flex-col gap-2.5">
+        <TeamRow team={game.away} isFinal={isFinal} />
+        <TeamRow team={game.home} isFinal={isFinal} />
       </div>
 
-      {/* Score / Status */}
-      <div className="flex flex-col items-center px-3 min-w-[90px]">
-        {isLive || isFinal ? (
+      {/* Right column: score (live/final) or time + channel (pre) */}
+      <div className="shrink-0 flex flex-col items-end justify-between gap-2">
+        {isLive ? (
           <>
-            <div className="flex items-center gap-2.5">
-              <span className={`text-[20px] font-black tabular-nums leading-none ${awayWin ? 'text-white' : 'text-white/30'}`}>
-                {game.away.score}
-              </span>
-              <span className="text-white/15 text-sm">–</span>
-              <span className={`text-[20px] font-black tabular-nums leading-none ${homeWin ? 'text-white' : 'text-white/30'}`}>
-                {game.home.score}
-              </span>
+            <span className={`text-[20px] font-black tabular-nums leading-none ${game.away.isWinner || !isFinal ? 'text-white' : 'text-white/30'}`}>
+              {game.away.score}
+            </span>
+            <div className="flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-d1red animate-glow-live" />
+              <span className="text-[10px] font-black text-d1red">{game.status.shortDetail}</span>
             </div>
-            {isLive ? (
-              <div className="flex items-center gap-1 mt-0.5">
-                <span className="w-1 h-1 rounded-full bg-d1red animate-glow-live" />
-                <span className="text-[10px] font-black text-d1red">{game.status.shortDetail}</span>
-              </div>
-            ) : (
-              <span className="text-[9px] font-black text-white/20 uppercase tracking-widest mt-0.5">Final</span>
-            )}
+            <span className={`text-[20px] font-black tabular-nums leading-none ${game.home.isWinner || !isFinal ? 'text-white' : 'text-white/30'}`}>
+              {game.home.score}
+            </span>
+          </>
+        ) : isFinal ? (
+          <>
+            <span className={`text-[20px] font-black tabular-nums leading-none ${game.away.isWinner ? 'text-white' : 'text-white/30'}`}>
+              {game.away.score}
+            </span>
+            <span className="text-[9px] font-black text-white/20 uppercase tracking-widest">Final</span>
+            <span className={`text-[20px] font-black tabular-nums leading-none ${game.home.isWinner ? 'text-white' : 'text-white/30'}`}>
+              {game.home.score}
+            </span>
           </>
         ) : (
-          <span className="text-[12px] font-bold text-white/40 text-center leading-snug">
-            {game.status.shortDetail}
-          </span>
+          <div className="flex flex-col items-end gap-0.5">
+            <span className="text-[15px] font-bold text-white/70">{gameTime}</span>
+            {game.broadcasts.length > 0 && (
+              <span className="text-[11px] font-semibold text-white/35">{game.broadcasts[0]}</span>
+            )}
+          </div>
         )}
-      </div>
-
-      {/* Home */}
-      <div className="flex items-center gap-2 flex-1 min-w-0 justify-end">
-        <div className="min-w-0 text-right">
-          <span className={`text-[13px] font-bold truncate block ${!isFinal || homeWin ? 'text-white/85' : 'text-white/30'}`}>
-            {game.home.abbreviation}
-          </span>
-          {game.home.rank != null && (
-            <span className="text-[9px] font-black text-royal-bright leading-none">#{game.home.rank}</span>
-          )}
-        </div>
-        <TeamLogo src={game.home.logo} alt={game.home.displayName} abbreviation={game.home.abbreviation} size={28} />
       </div>
     </div>
   );
@@ -155,7 +168,7 @@ export default function DashboardPage() {
       {/* ── Page Header ── */}
       <div className="px-4 pt-4 pb-4">
         <p className="text-[11px] font-bold text-white/25 uppercase tracking-[0.18em]">{dateLabel}</p>
-        <h1 className="text-[28px] font-black text-white tracking-tight leading-tight">Dashboard</h1>
+        <h1 className="text-[28px] font-black text-white tracking-tight leading-tight uppercase">Dashboard</h1>
       </div>
 
       {/* ── Today's Games ── */}

@@ -60,7 +60,7 @@ export default function MorePage() {
   return (
     <div className="px-4 pb-4">
       <div className="pt-4 pb-3">
-        <h2 className="text-[22px] font-black text-white tracking-tight">More</h2>
+        <h2 className="text-[22px] font-black text-white tracking-tight uppercase">More</h2>
         <p className="text-[11px] text-white/30 font-medium mt-0.5">Standings, stats, teams & settings</p>
       </div>
 
