@@ -25,7 +25,7 @@ export function useTop25() {
     };
     return json.top25.map((t): Top25Team => ({
       rank: t.rank,
-      teamId: t.teamId,
+      teamId: String(t.teamId),
       displayName: t.name,
       abbreviation: t.abbreviation ?? '',
       logo: t.logoUrl ?? '',

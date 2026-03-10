@@ -7,7 +7,7 @@ const Top25RankContext = createContext<Map<string, number>>(new Map());
 export function Top25Provider({ children }: { children: React.ReactNode }) {
   const { rankings } = useTop25();
   const rankMap = useMemo(
-    () => new Map(rankings.map(t => [t.teamId, t.rank])),
+    () => new Map(rankings.map(t => [String(t.teamId), t.rank])),
     [rankings]
   );
   return <Top25RankContext.Provider value={rankMap}>{children}</Top25RankContext.Provider>;

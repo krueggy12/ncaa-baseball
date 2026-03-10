@@ -67,12 +67,12 @@ function CompactGameCard({ game }: { game: Game }) {
       {/* Teams */}
       <div className="px-2.5 py-2.5 flex gap-2">
 
-        {/* Left: team rows */}
+        {/* Team rows — scores inline so they center perfectly with each row */}
         <div className="flex-1 min-w-0 space-y-2">
           {/* Away */}
           <div className="flex items-center gap-1.5">
             <TeamLogo src={game.away.logo} alt={game.away.displayName} abbreviation={game.away.abbreviation} size={24} />
-            <div className="min-w-0">
+            <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1">
                 {awayRank != null && (
                   <span className="text-[7px] font-black text-royal-bright shrink-0">#{awayRank}</span>
@@ -87,12 +87,22 @@ function CompactGameCard({ game }: { game: Game }) {
                 <span className="text-[9px] text-white/25 font-medium mt-0.5 block">{game.away.record}</span>
               )}
             </div>
+            {(isLive || isFinal) && (
+              <span className={`shrink-0 text-[14px] font-black tabular-nums leading-none ${
+                isFinal && !game.away.isWinner ? 'text-white/20' : 'text-white'
+              }`}>
+                {game.away.score}
+              </span>
+            )}
+            {isPre && (
+              <span className="shrink-0 text-[11px] font-bold text-white/55 leading-none">{gameTime}</span>
+            )}
           </div>
 
           {/* Home */}
           <div className="flex items-center gap-1.5">
             <TeamLogo src={game.home.logo} alt={game.home.displayName} abbreviation={game.home.abbreviation} size={24} />
-            <div className="min-w-0">
+            <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1">
                 {homeRank != null && (
                   <span className="text-[7px] font-black text-royal-bright shrink-0">#{homeRank}</span>
@@ -107,37 +117,19 @@ function CompactGameCard({ game }: { game: Game }) {
                 <span className="text-[9px] text-white/25 font-medium mt-0.5 block">{game.home.record}</span>
               )}
             </div>
-          </div>
-        </div>
-
-        {/* Right: time+channel (pre) or scores (live/final) */}
-        <div className="shrink-0 flex flex-col items-end justify-center gap-1.5">
-          {isPre ? (
-            <>
-              <span className="text-[12px] font-bold text-white/60 leading-none">{gameTime}</span>
-              {game.broadcasts.length > 0 && (
-                <span className="text-[9px] font-semibold text-white/30 leading-none text-right max-w-[56px] truncate">
-                  {game.broadcasts[0]}
-                </span>
-              )}
-              {game.isConferenceGame && !game.broadcasts.length && (
-                <span className="text-[8px] font-black text-royal-bright/40 uppercase tracking-widest">CONF</span>
-              )}
-            </>
-          ) : (
-            <>
-              <span className={`text-[15px] font-black tabular-nums leading-none ${
-                isFinal && !game.away.isWinner ? 'text-white/20' : 'text-white'
-              }`}>
-                {game.away.score}
-              </span>
-              <span className={`text-[15px] font-black tabular-nums leading-none ${
+            {(isLive || isFinal) && (
+              <span className={`shrink-0 text-[14px] font-black tabular-nums leading-none ${
                 isFinal && !game.home.isWinner ? 'text-white/20' : 'text-white'
               }`}>
                 {game.home.score}
               </span>
-            </>
-          )}
+            )}
+            {isPre && game.broadcasts.length > 0 && (
+              <span className="shrink-0 text-[9px] font-semibold text-white/30 leading-none truncate max-w-[52px]">
+                {game.broadcasts[0]}
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>
