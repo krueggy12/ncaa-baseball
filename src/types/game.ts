@@ -119,6 +119,19 @@ export interface PowerRankedTeam {
   powerScore: number;
 }
 
+export interface Top25Team {
+  rank: number;
+  teamId: string;
+  displayName: string;
+  abbreviation: string;
+  logo: string;
+  wins: number;
+  losses: number;
+  elo: number;
+  runDiffPerGame: number;
+  compositeScore: number;
+}
+
 export interface ScheduleGame {
   id: string;
   date: string;
