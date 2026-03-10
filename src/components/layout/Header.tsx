@@ -6,7 +6,7 @@ export default function Header() {
       <div className="flex items-center justify-between px-4 py-2.5">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="absolute inset-0 rounded-xl bg-royal/20 blur-md" />
+            <div className="absolute inset-0 rounded-xl bg-white/[0.06] blur-md" />
             <img
               src={logoImg}
               alt="D1 Diamond"

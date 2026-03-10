@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { NotificationProvider } from './context/NotificationContext';
+import { Top25Provider } from './context/Top25Context';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import AppShell from './components/layout/AppShell';
 import DashboardPage from './pages/DashboardPage';
@@ -21,6 +22,7 @@ function App() {
     <ThemeProvider>
       <FavoritesProvider>
         <NotificationProvider>
+          <Top25Provider>
           <ErrorBoundary>
             <Routes>
               <Route element={<AppShell />}>
@@ -40,6 +42,7 @@ function App() {
               <Route path="/game/:id" element={<GameDetailPage />} />
             </Routes>
           </ErrorBoundary>
+          </Top25Provider>
         </NotificationProvider>
       </FavoritesProvider>
     </ThemeProvider>

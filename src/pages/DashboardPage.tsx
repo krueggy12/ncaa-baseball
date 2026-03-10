@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useScoreboard } from '../hooks/useScoreboard';
 import { useTop25 } from '../hooks/useTop25';
 import { useCollegeStats } from '../hooks/useCollegeStats';
+import { useTop25RankMap } from '../context/Top25Context';
 import { toESPNDate, getToday } from '../utils/dateUtils';
 import TeamLogo from '../components/common/TeamLogo';
 import type { Game } from '../types/game';
@@ -52,6 +53,10 @@ function GameCell({
 }) {
   const isLive = game.status.state === 'in';
   const isFinal = game.status.state === 'post';
+  const rankMap = useTop25RankMap();
+
+  const awayRank = rankMap.get(game.away.id);
+  const homeRank = rankMap.get(game.home.id);
 
   const gameTime = (() => {
     if (!game.date) return '';
@@ -60,9 +65,9 @@ function GameCell({
     } catch { return ''; }
   })();
 
-  // Border logic: right border unless last in row, bottom border unless last row
-  const isLastInRow = (idx + 1) % 3 === 0;
-  const isLastRow = idx >= total - (total % 3 === 0 ? 3 : total % 3);
+  // Border logic: 2-column grid
+  const isLastInRow = (idx + 1) % 2 === 0;
+  const isLastRow = Math.floor(idx / 2) === Math.ceil(total / 2) - 1;
   const borderCls = [
     !isLastInRow ? 'border-r border-white/[0.07]' : '',
     !isLastRow   ? 'border-b border-white/[0.07]' : '',
@@ -80,15 +85,15 @@ function GameCell({
           <TeamLogo src={game.away.logo} alt={game.away.displayName} abbreviation={game.away.abbreviation} size={30} />
           <div className="min-w-0">
             <div className="flex items-center gap-1 min-w-0">
-              {game.away.rank != null && (
-                <span className="text-[8px] font-black text-royal-bright shrink-0">#{game.away.rank}</span>
+              {awayRank != null && (
+                <span className="text-[8px] font-black text-royal-bright shrink-0">#{awayRank}</span>
               )}
               <span className={`text-[13px] font-black truncate leading-tight ${isFinal && !game.away.isWinner ? 'text-white/25' : 'text-white'}`}>
                 {game.away.abbreviation}
               </span>
             </div>
             {game.away.record && (
-              <span className="text-[9px] text-white/30 font-medium leading-none block">{game.away.record}</span>
+              <span className="text-[9px] text-white/30 font-medium mt-0.5 block">{game.away.record}</span>
             )}
           </div>
         </div>
@@ -98,15 +103,15 @@ function GameCell({
           <TeamLogo src={game.home.logo} alt={game.home.displayName} abbreviation={game.home.abbreviation} size={30} />
           <div className="min-w-0">
             <div className="flex items-center gap-1 min-w-0">
-              {game.home.rank != null && (
-                <span className="text-[8px] font-black text-royal-bright shrink-0">#{game.home.rank}</span>
+              {homeRank != null && (
+                <span className="text-[8px] font-black text-royal-bright shrink-0">#{homeRank}</span>
               )}
               <span className={`text-[13px] font-black truncate leading-tight ${isFinal && !game.home.isWinner ? 'text-white/25' : 'text-white'}`}>
                 {game.home.abbreviation}
               </span>
             </div>
             {game.home.record && (
-              <span className="text-[9px] text-white/30 font-medium leading-none block">{game.home.record}</span>
+              <span className="text-[9px] text-white/30 font-medium mt-0.5 block">{game.home.record}</span>
             )}
           </div>
         </div>
@@ -207,7 +212,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="mx-4 rounded-md overflow-hidden border border-white/[0.07] bg-surface-dark">
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-2">
               {featured.map((game, idx) => (
                 <GameCell
                   key={game.id}

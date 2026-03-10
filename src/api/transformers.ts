@@ -2,6 +2,13 @@ import type { Game, TeamScore, GameSituation, GameState, RankedTeam, ConferenceS
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+function deriveAbbr(name: string): string {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return '?';
+  if (words.length === 1) return words[0].slice(0, 4).toUpperCase();
+  return words.map(w => w[0]).join('').slice(0, 4).toUpperCase();
+}
+
 function extractTeam(competitor: any): TeamScore {
   const team = competitor.team || {};
   const rank = competitor.curatedRank?.current;
@@ -9,7 +16,7 @@ function extractTeam(competitor: any): TeamScore {
     id: team.id || '',
     name: team.name || team.shortDisplayName || '',
     displayName: team.displayName || '',
-    abbreviation: team.abbreviation || '',
+    abbreviation: team.abbreviation || deriveAbbr(team.displayName || team.name || team.shortDisplayName || ''),
     location: team.location || team.shortDisplayName || '',
     logo: team.logo || team.logos?.[0]?.href || '',
     color: team.color ? `#${team.color}` : '#666666',

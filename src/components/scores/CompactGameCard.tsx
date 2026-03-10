@@ -2,13 +2,18 @@ import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Game } from '../../types/game';
 import { toESPNDate } from '../../utils/dateUtils';
+import { useTop25RankMap } from '../../context/Top25Context';
 import TeamLogo from '../common/TeamLogo';
 
 function CompactGameCard({ game }: { game: Game }) {
   const navigate = useNavigate();
+  const rankMap = useTop25RankMap();
   const isLive = game.status.state === 'in';
   const isFinal = game.status.state === 'post';
   const isPre = game.status.state === 'pre';
+
+  const awayRank = rankMap.get(game.away.id);
+  const homeRank = rankMap.get(game.home.id);
 
   const gameTime = (() => {
     if (!game.date) return '';
@@ -69,17 +74,17 @@ function CompactGameCard({ game }: { game: Game }) {
             <TeamLogo src={game.away.logo} alt={game.away.displayName} abbreviation={game.away.abbreviation} size={24} />
             <div className="min-w-0">
               <div className="flex items-center gap-1">
-                {game.away.rank != null && (
-                  <span className="text-[7px] font-black text-royal-bright shrink-0">#{game.away.rank}</span>
+                {awayRank != null && (
+                  <span className="text-[7px] font-black text-royal-bright shrink-0">#{awayRank}</span>
                 )}
-                <span className={`text-[12px] font-black leading-none truncate ${
+                <span className={`text-[12px] font-black leading-tight truncate ${
                   isFinal && !game.away.isWinner ? 'text-white/25' : 'text-white'
                 }`}>
                   {game.away.abbreviation}
                 </span>
               </div>
               {game.away.record && (
-                <span className="text-[9px] text-white/25 font-medium leading-none">{game.away.record}</span>
+                <span className="text-[9px] text-white/25 font-medium mt-0.5 block">{game.away.record}</span>
               )}
             </div>
           </div>
@@ -89,17 +94,17 @@ function CompactGameCard({ game }: { game: Game }) {
             <TeamLogo src={game.home.logo} alt={game.home.displayName} abbreviation={game.home.abbreviation} size={24} />
             <div className="min-w-0">
               <div className="flex items-center gap-1">
-                {game.home.rank != null && (
-                  <span className="text-[7px] font-black text-royal-bright shrink-0">#{game.home.rank}</span>
+                {homeRank != null && (
+                  <span className="text-[7px] font-black text-royal-bright shrink-0">#{homeRank}</span>
                 )}
-                <span className={`text-[12px] font-black leading-none truncate ${
+                <span className={`text-[12px] font-black leading-tight truncate ${
                   isFinal && !game.home.isWinner ? 'text-white/25' : 'text-white'
                 }`}>
                   {game.home.abbreviation}
                 </span>
               </div>
               {game.home.record && (
-                <span className="text-[9px] text-white/25 font-medium leading-none">{game.home.record}</span>
+                <span className="text-[9px] text-white/25 font-medium mt-0.5 block">{game.home.record}</span>
               )}
             </div>
           </div>
