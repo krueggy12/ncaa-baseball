@@ -1,5 +1,5 @@
 import type { Game, StatusFilter } from '../../types/game';
-import GameCard from './GameCard';
+import CompactGameCard from './CompactGameCard';
 import EmptyState from './EmptyState';
 
 interface ScoreListProps {
@@ -68,9 +68,9 @@ export default function ScoreList({ games, statusFilter, favoritesOnly, favorite
               <span className="text-[10px] font-bold text-white/20">{section.games.length}</span>
             </div>
           )}
-          <div className="space-y-2">
+          <div className="grid grid-cols-2 gap-2">
             {section.games.map(game => (
-              <GameCard key={game.id} game={game} />
+              <CompactGameCard key={game.id} game={game} />
             ))}
           </div>
         </div>

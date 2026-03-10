@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* D1 Diamond brand palette — Premium Midnight */
-  --color-navy: #060c1a;
-  --color-royal: #3474e6;
-  --color-royal-bright: #4d8ef5;
+  /* D1 Diamond brand palette — Obsidian */
+  --color-navy: #0d0d15;
+  --color-royal: #3d7ef5;
+  --color-royal-bright: #5a96ff;
   --color-d1red: #f04040;
   --color-silver: #6b7280;
   --color-live: #f04040;
   --color-surface-light: #ffffff;
-  --color-surface-dark: #0b1225;
-  --color-surface-elevated: #101a30;
+  --color-surface-dark: #111119;
+  --color-surface-elevated: #18181f;
   --color-bg-light: #eef2f9;
-  --color-bg-dark: #050810;
+  --color-bg-dark: #09090e;
 }
 
 html, body, #root {
@@ -26,13 +26,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-bg-dark);
-  color: #e8edf8;
+  color: #eeedf5;
   overscroll-behavior-y: contain;
 }
 
 .dark body {
   background-color: var(--color-bg-dark);
-  color: #e8edf8;
+  color: #eeedf5;
 }
 
 .tabular-nums {
@@ -102,7 +102,7 @@ body {
 
 /* ── Gradient brand text ───────────────────────────────── */
 .gradient-brand {
-  background: linear-gradient(135deg, #ffffff 0%, #a8c4f8 60%, #3474e6 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #c8d8ff 50%, #5a96ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -110,9 +110,9 @@ body {
 
 /* ── Glass surface ─────────────────────────────────────── */
 .glass {
-  background: rgba(11, 18, 37, 0.75);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(13, 13, 21, 0.82);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
 }
 
 /* ── Live card accent glow ─────────────────────────────── */

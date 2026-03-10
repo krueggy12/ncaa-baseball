@@ -76,7 +76,7 @@ export default function BottomNav() {
                 return (
                   <>
                     <div className={`p-1.5 rounded-xl transition-all duration-200 ${
-                      active ? 'bg-royal shadow-[0_0_14px_rgba(52,116,230,0.5)]' : ''
+                      active ? 'bg-royal shadow-[0_0_16px_rgba(61,126,245,0.55)]' : ''
                     }`}>
                       {tab.icon(active)}
                     </div>
