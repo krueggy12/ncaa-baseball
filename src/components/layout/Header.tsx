@@ -23,11 +23,6 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Live badge indicator slot */}
-        <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-d1red animate-glow-live" />
-          <span className="text-[10px] font-bold text-d1red uppercase tracking-widest">Live</span>
-        </div>
       </div>
 
     </header>

@@ -32,7 +32,7 @@ export default function FavoritesPage() {
     <div className="pb-4">
       <div className="flex items-center justify-between px-4 py-3">
         <div>
-          <h2 className="text-lg font-bold text-[var(--c-text)]">My Teams</h2>
+          <h2 className="text-[11px] font-black uppercase tracking-[0.18em] text-[var(--c-text-25)]">MY TEAMS</h2>
           <p className="text-xs text-[var(--c-text-40)]">{favoriteIds.size} team{favoriteIds.size !== 1 ? 's' : ''} tracked</p>
         </div>
         <button
