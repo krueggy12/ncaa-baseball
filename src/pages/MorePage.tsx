@@ -64,53 +64,6 @@ export default function MorePage() {
         <p className="text-[11px] text-[var(--c-text-30)] font-medium mt-0.5">Standings, stats, teams & settings</p>
       </div>
 
-      {/* D1 Diamond Predictions — featured card */}
-      <a
-        href="https://predictions.d1diamond.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block mb-4 rounded-2xl overflow-hidden active:scale-[0.98] transition-transform duration-150"
-      >
-        <div className="relative px-5 py-5 bg-gradient-to-br from-royal via-[#2a5fd4] to-[#1a3fa0] border border-royal/30">
-          {/* Subtle texture overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.08),transparent_60%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,0,0,0.25),transparent_60%)]" />
-
-          <div className="relative flex items-center justify-between gap-4">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[9px] font-black text-white/60 uppercase tracking-[0.2em]">D1 Diamond</span>
-                <span className="px-1.5 py-0.5 rounded-full bg-white/15 text-[8px] font-black text-white uppercase tracking-wider">New</span>
-              </div>
-              <h3 className="text-[18px] font-black text-white tracking-tight leading-tight">
-                Game Predictions
-              </h3>
-              <p className="text-[11px] text-white/60 font-medium mt-1 leading-snug">
-                AI-powered picks & win probabilities for every D1 matchup
-              </p>
-            </div>
-
-            {/* Icon */}
-            <div className="shrink-0 w-12 h-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={1.75} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-              </svg>
-            </div>
-          </div>
-
-          {/* Bottom row */}
-          <div className="relative flex items-center justify-between mt-4 pt-3 border-t border-white/10">
-            <span className="text-[10px] text-white/40 font-medium">predictions.d1diamond.com</span>
-            <div className="flex items-center gap-1 text-white/70">
-              <span className="text-[11px] font-bold">Open</span>
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </a>
-
       <div className="space-y-1.5">
         {menuItems.map((item, idx) => (
           <button
@@ -132,6 +85,27 @@ export default function MorePage() {
           </button>
         ))}
       </div>
+
+      {/* D1 Diamond Predictions */}
+      <a
+        href="https://predictions.d1diamond.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3.5 mt-3 px-4 py-3.5 rounded-2xl border border-[#572932]/40 bg-[#572932]/20 active:scale-[0.98] transition-transform duration-150"
+      >
+        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#572932]/40 border border-[#572932]/30 shrink-0">
+          <svg className="w-5 h-5 text-[#e8909a]" fill="none" viewBox="0 0 24 24" strokeWidth={1.75} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+          </svg>
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-[14px] font-bold text-[var(--c-text-90)]">Game Predictions</p>
+          <p className="text-[11px] text-[var(--c-text-30)] mt-0.5 font-medium">AI-powered predictions for every D1 matchup</p>
+        </div>
+        <svg className="w-3.5 h-3.5 text-[var(--c-text-15)] shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+        </svg>
+      </a>
     </div>
   );
 }
