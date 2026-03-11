@@ -32,8 +32,8 @@ function CompactGameCard({ game }: { game: Game }) {
       onClick={handleTap}
       className={`rounded-lg overflow-hidden border cursor-pointer active:scale-[0.97] transition-transform duration-100 ${
         isLive
-          ? 'live-card-glow bg-[var(--c-surface)] border-[var(--c-border-strong)]'
-          : 'bg-[var(--c-surface)] border-[var(--c-border)]'
+          ? 'live-card-glow glass-card border-[var(--c-border-strong)]'
+          : 'glass-card border-[var(--c-border)]'
       }`}
     >
       {/* Conference accent line */}

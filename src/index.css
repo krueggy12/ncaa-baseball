@@ -40,7 +40,8 @@
   --c-text-25: rgba(13,13,22,0.25);
   --c-text-20: rgba(13,13,22,0.2);
   --c-text-15: rgba(13,13,22,0.15);
-  --c-glass: rgba(242,244,248,0.92);
+  --c-glass: rgba(242,244,248,0.80);
+  --c-glass-card: rgba(255,255,255,0.68);
   --c-header-bg: #f8f9fc;
   --c-bleed: #f2f4f8;
   --c-nav-bg: #f8f9fc;
@@ -67,7 +68,8 @@
   --c-text-25: rgba(238,237,245,0.25);
   --c-text-20: rgba(238,237,245,0.2);
   --c-text-15: rgba(238,237,245,0.15);
-  --c-glass: rgba(13,13,21,0.82);
+  --c-glass: rgba(9,9,14,0.75);
+  --c-glass-card: rgba(17,17,25,0.70);
   --c-header-bg: #0d0d15;
   --c-bleed: #09090e;
   --c-nav-bg: #0d0d15;
@@ -166,6 +168,12 @@ body {
   background: var(--c-glass);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+.glass-card {
+  background: var(--c-glass-card);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
 }
 
 /* ── Live card accent glow ─────────────────────────────── */

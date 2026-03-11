@@ -40,7 +40,7 @@ export default function TeamSearchModal({ open, onClose }: Props) {
   return (
     <div className="fixed inset-0 z-50 bg-[var(--c-bg)] flex flex-col">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-[var(--c-border)]">
+      <div className="flex items-center gap-3 px-4 py-3 glass border-b border-[var(--c-border)]">
         <button onClick={onClose} className="text-[var(--c-text-50)]">
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />

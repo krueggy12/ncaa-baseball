@@ -156,7 +156,7 @@ function GameCell({
 
 function SkeletonRows({ count = 4 }: { count?: number }) {
   return (
-    <div className="rounded-md overflow-hidden border border-[var(--c-border)] bg-[var(--c-surface)] mx-4">
+    <div className="rounded-md overflow-hidden border border-[var(--c-border)] glass-card mx-4">
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} className="flex items-center px-4 py-3 border-b border-[var(--c-border-faint)] last:border-b-0 gap-3">
           <div className="w-7 h-7 rounded-full animate-shimmer flex-shrink-0" />
@@ -212,11 +212,11 @@ export default function DashboardPage() {
         {gamesLoading && featured.length === 0 ? (
           <SkeletonRows count={3} />
         ) : featured.length === 0 ? (
-          <div className="mx-4 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] px-4 py-8 text-center">
+          <div className="mx-4 rounded-md border border-[var(--c-border)] glass-card px-4 py-8 text-center">
             <p className="text-[var(--c-text-30)] text-sm font-bold">No games scheduled today</p>
           </div>
         ) : (
-          <div className="mx-4 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] overflow-hidden">
+          <div className="mx-4 rounded-md border border-[var(--c-border)] glass-card overflow-hidden">
             {/* Horizontally scrollable on mobile so 3 columns never get squished */}
             <div className="overflow-x-auto scrollbar-hide">
               <div className="grid grid-cols-3 min-w-[510px]">
@@ -253,7 +253,7 @@ export default function DashboardPage() {
         {rankingsLoading && top10.length === 0 ? (
           <SkeletonRows count={5} />
         ) : (
-          <div className="mx-4 rounded-md overflow-hidden border border-[var(--c-border)] bg-[var(--c-surface)]">
+          <div className="mx-4 rounded-md overflow-hidden border border-[var(--c-border)] glass-card">
             {top10.map((team, idx) => {
               const rankColor = idx === 0 ? 'text-amber-400' : idx === 1 ? 'text-slate-300' : idx === 2 ? 'text-amber-600' : 'text-[var(--c-text-30)]';
               return (
@@ -280,11 +280,11 @@ export default function DashboardPage() {
         {batLoading && top5Bat.length === 0 ? (
           <SkeletonRows count={5} />
         ) : top5Bat.length === 0 ? (
-          <div className="mx-4 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] px-4 py-6 text-center">
+          <div className="mx-4 rounded-md border border-[var(--c-border)] glass-card px-4 py-6 text-center">
             <p className="text-[var(--c-text-30)] text-sm">Stats unavailable</p>
           </div>
         ) : (
-          <div className="mx-4 rounded-md overflow-hidden border border-[var(--c-border)] bg-[var(--c-surface)]">
+          <div className="mx-4 rounded-md overflow-hidden border border-[var(--c-border)] glass-card">
             {top5Bat.map((row, idx) => (
               <div key={String(row['UPID']) || idx} className="flex items-center px-4 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0">
                 <span className="w-5 text-[11px] font-black text-[var(--c-text-25)] tabular-nums">{idx + 1}</span>
@@ -326,11 +326,11 @@ export default function DashboardPage() {
         {pitLoading && top5Pit.length === 0 ? (
           <SkeletonRows count={5} />
         ) : top5Pit.length === 0 ? (
-          <div className="mx-4 rounded-md border border-[var(--c-border)] bg-[var(--c-surface)] px-4 py-6 text-center">
+          <div className="mx-4 rounded-md border border-[var(--c-border)] glass-card px-4 py-6 text-center">
             <p className="text-[var(--c-text-30)] text-sm">Stats unavailable</p>
           </div>
         ) : (
-          <div className="mx-4 rounded-md overflow-hidden border border-[var(--c-border)] bg-[var(--c-surface)]">
+          <div className="mx-4 rounded-md overflow-hidden border border-[var(--c-border)] glass-card">
             {top5Pit.map((row, idx) => (
               <div key={String(row['UPID']) || idx} className="flex items-center px-4 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0">
                 <span className="w-5 text-[11px] font-black text-[var(--c-text-25)] tabular-nums">{idx + 1}</span>

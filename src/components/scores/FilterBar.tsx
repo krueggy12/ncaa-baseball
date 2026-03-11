@@ -29,7 +29,7 @@ export default function FilterBar({
   hasFavorites,
 }: FilterBarProps) {
   return (
-    <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-3 py-2.5 items-center bg-[var(--c-bg)] border-b border-[var(--c-border-faint)]">
+    <div className="flex gap-1.5 overflow-x-auto no-scrollbar px-3 py-2.5 items-center glass border-b border-[var(--c-border-faint)]">
       {statusOptions.map(opt => {
         const isActive = statusFilter === opt.value;
         const isLiveOpt = opt.value === 'live';

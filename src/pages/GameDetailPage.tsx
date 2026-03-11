@@ -93,7 +93,7 @@ export default function GameDetailPage() {
   }, [id, isLive]);
 
   const BackBar = () => (
-    <div className="safe-top sticky top-0 z-20 flex items-center gap-2 px-3 py-2.5 bg-[var(--c-surface)] border-b border-[var(--c-border)]">
+    <div className="safe-top sticky top-0 z-20 flex items-center gap-2 px-3 py-2.5 glass border-b border-[var(--c-border)]">
       <button
         onClick={() => navigate(-1)}
         className="flex items-center gap-1.5 text-[var(--c-text-55)] hover:text-[var(--c-text)] transition-colors"

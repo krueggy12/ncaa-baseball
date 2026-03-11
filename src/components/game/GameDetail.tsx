@@ -28,7 +28,7 @@ export default function GameDetail({ game, summary }: Props) {
       <MatchupHeader game={game} />
 
       {/* Tab bar */}
-      <div className="sticky top-0 z-10 flex bg-[var(--c-surface)] border-b border-[var(--c-border)]">
+      <div className="sticky top-0 z-10 flex glass border-b border-[var(--c-border)]">
         {tabs.map(tab => (
           <button
             key={tab.id}
@@ -51,7 +51,7 @@ export default function GameDetail({ game, summary }: Props) {
       <div className="p-4">
         {activeTab === 'linescore' && (
           <div>
-            <div className="bg-[var(--c-surface)] rounded-xl border border-[var(--c-border)] overflow-hidden">
+            <div className="glass-card rounded-xl border border-[var(--c-border)] overflow-hidden">
               <div className="px-3 pt-3 pb-4">
                 <LinescoreTable
                   away={game.away}
@@ -62,7 +62,7 @@ export default function GameDetail({ game, summary }: Props) {
             </div>
 
             {(game.venue.name || game.broadcasts.length > 0) && (
-              <div className="mt-3 bg-[var(--c-surface)] rounded-xl border border-[var(--c-border)] px-4 py-3 space-y-1">
+              <div className="mt-3 glass-card rounded-xl border border-[var(--c-border)] px-4 py-3 space-y-1">
                 {game.venue.name && (
                   <p className="text-[12px] font-semibold text-[var(--c-text-60)]">{game.venue.name}</p>
                 )}
@@ -83,13 +83,13 @@ export default function GameDetail({ game, summary }: Props) {
         )}
 
         {activeTab === 'boxscore' && (
-          <div className="bg-[var(--c-surface)] rounded-xl border border-[var(--c-border)] overflow-hidden px-3 py-3">
+          <div className="glass-card rounded-xl border border-[var(--c-border)] overflow-hidden px-3 py-3">
             <NcaaBoxScore game={game} />
           </div>
         )}
 
         {activeTab === 'plays' && (
-          <div className="bg-[var(--c-surface)] rounded-xl border border-[var(--c-border)] overflow-hidden px-3 py-2">
+          <div className="glass-card rounded-xl border border-[var(--c-border)] overflow-hidden px-3 py-2">
             <PlayByPlay plays={summary?.plays || []} />
           </div>
         )}

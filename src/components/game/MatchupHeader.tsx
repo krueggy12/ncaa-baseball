@@ -24,7 +24,7 @@ export default function MatchupHeader({ game }: Props) {
   })();
 
   return (
-    <div className="relative bg-[var(--c-surface)] border-b border-[var(--c-border)]">
+    <div className="relative glass-card border-b border-[var(--c-border)]">
       {/* Subtle top accent for live games */}
       {isLive && <div className="h-[2px] bg-gradient-to-r from-transparent via-d1red/60 to-transparent" />}
 
