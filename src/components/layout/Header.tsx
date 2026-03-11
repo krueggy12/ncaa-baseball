@@ -8,7 +8,7 @@ export default function Header() {
           <img
             src={logoImg}
             alt="D1 Diamond"
-            className="h-[30px] w-auto object-contain drop-shadow-sm"
+            className="h-[28px] w-auto object-contain drop-shadow-sm"
           />
           <div>
             <h1 className="text-sm font-black tracking-wide leading-tight">
