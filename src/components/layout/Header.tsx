@@ -12,7 +12,7 @@ export default function Header() {
           />
           <div>
             <h1 className="text-sm font-black tracking-wide leading-tight">
-              <span className="gradient-brand">D1 DIAMOND</span>
+              <span className="text-[var(--c-text)]">D1 </span><span className="text-royal-bright">DIAMOND</span>
             </h1>
             <p className="text-[10px] font-medium text-[var(--c-text-30)] uppercase tracking-widest leading-tight">
               College Baseball
