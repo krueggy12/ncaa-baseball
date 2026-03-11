@@ -22,7 +22,7 @@ function SectionHeader({ title, label, onViewMore }: { title: string; label?: st
   return (
     <div className="flex items-center justify-between px-4 mb-2">
       <div>
-        <h2 className="text-[17px] font-black text-[var(--c-text)] tracking-tight">{title}</h2>
+        <h2 className="text-[11px] font-black text-[var(--c-text-25)] uppercase tracking-[0.18em]">{title}</h2>
         {label && <p className="text-[10px] text-[var(--c-text-30)] font-semibold mt-0.5">{label}</p>}
       </div>
       <button
@@ -205,7 +205,7 @@ export default function DashboardPage() {
       {/* ── Today's Games ── */}
       <div className="mb-6">
         <SectionHeader
-          title="Today's Games"
+          title="TODAY'S GAMES"
           label={games.length > 0 ? `${games.filter(g => g.status.state === 'in').length} live · ${games.length} total` : undefined}
           onViewMore={() => navigate('/scores')}
         />
@@ -246,7 +246,7 @@ export default function DashboardPage() {
       {/* ── D1 Diamond Top 10 ── */}
       <div className="mb-6">
         <SectionHeader
-          title="D1 Diamond Top 10"
+          title="D1 DIAMOND RANKINGS"
           label="Composite ELO ranking"
           onViewMore={() => navigate('/rankings')}
         />
@@ -273,7 +273,7 @@ export default function DashboardPage() {
       {/* ── Top Batters ── */}
       <div className="mb-6">
         <SectionHeader
-          title="Top Batters"
+          title="TOP BATTERS"
           label="Sorted by wRC+"
           onViewMore={() => navigate('/more/stats')}
         />
@@ -319,7 +319,7 @@ export default function DashboardPage() {
       {/* ── Top Pitchers ── */}
       <div className="mb-2">
         <SectionHeader
-          title="Top Pitchers"
+          title="TOP PITCHERS"
           label="Sorted by ERA"
           onViewMore={() => navigate('/more/stats')}
         />
