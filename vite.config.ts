@@ -10,21 +10,22 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg'],
+      includeAssets: ['favicon-64.png', 'icons/icon-192x192.png', 'icons/icon-512x512.png'],
       manifest: {
         name: 'D1 Diamond',
         short_name: 'D1 Diamond',
         description: 'Live college baseball scores, rankings, and favorite team tracking',
-        theme_color: '#1a2b4a',
-        background_color: '#f8fafc',
+        theme_color: '#09090e',
+        background_color: '#09090e',
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',
         start_url: '/',
         categories: ['sports'],
         icons: [
-          { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' },
-          { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'maskable' },
+          { src: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+          { src: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+          { src: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
       workbox: {
