@@ -22,7 +22,7 @@ function SectionHeader({ title, label, onViewMore }: { title: string; label?: st
   return (
     <div className="flex items-center justify-between px-4 mb-2">
       <div>
-        <h2 className="text-[15px] font-black text-[var(--c-text)] uppercase tracking-[0.18em]">{title}</h2>
+        <h2 className="text-[15px] font-black text-[var(--c-text)] uppercase tracking-[0.06em]">{title}</h2>
         {label && <p className="text-[10px] text-[var(--c-text-30)] font-semibold mt-0.5">{label}</p>}
       </div>
       <button
