@@ -4,6 +4,7 @@ import { useTop25 } from '../hooks/useTop25';
 import RankingsTable from '../components/rankings/RankingsTable';
 import Top25Table from '../components/rankings/Top25Table';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import Reveal from '../components/common/Reveal';
 
 type Tab = 'top25' | 'poll';
 
@@ -18,6 +19,7 @@ export default function RankingsPage() {
   return (
     <div>
       {/* Page header */}
+      <Reveal>
       <div className="px-4 pt-4 pb-3">
         <h2 className="text-[22px] font-black text-[var(--c-text)] tracking-tight">
           Top 25 Rankings
@@ -26,6 +28,7 @@ export default function RankingsPage() {
           {activeTab === 'top25' ? 'D1 Diamond composite model' : 'D1Baseball media poll'}
         </p>
       </div>
+      </Reveal>
 
       {/* Tab switcher */}
       <div className="flex gap-1.5 px-4 mb-3">

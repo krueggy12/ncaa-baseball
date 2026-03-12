@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStandings } from '../hooks/useStandings';
 import { useFavorites } from '../context/FavoritesContext';
 import TeamLogo from '../components/common/TeamLogo';
+import Reveal from '../components/common/Reveal';
 
 const STORAGE_KEY = 'd1-standings-conference';
 
@@ -92,6 +93,7 @@ export default function StandingsPage() {
 
       {/* Standings Table */}
       {activeConf && activeConf.entries.length > 0 && (
+        <Reveal>
         <div className="px-3">
           <div className="bg-[var(--c-surface)] rounded-xl shadow-sm overflow-hidden">
             {/* Table header */}
@@ -198,6 +200,7 @@ export default function StandingsPage() {
             </p>
           )}
         </div>
+        </Reveal>
       )}
 
       {/* Empty state */}

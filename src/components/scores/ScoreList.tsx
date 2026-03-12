@@ -1,6 +1,7 @@
 import type { Game, StatusFilter } from '../../types/game';
 import CompactGameCard from './CompactGameCard';
 import EmptyState from './EmptyState';
+import Reveal from '../common/Reveal';
 
 interface ScoreListProps {
   games: Game[];
@@ -57,20 +58,24 @@ export default function ScoreList({ games, statusFilter, favoritesOnly, favorite
       {sections.map(section => (
         <div key={section.label}>
           {sections.length > 1 && (
-            <div className="flex items-center gap-2 py-1.5 px-1">
-              {section.label === 'Live' && (
-                <span className="w-1.5 h-1.5 rounded-full bg-d1red animate-glow-live" />
-              )}
-              <h3 className="text-[10px] font-black uppercase tracking-[0.18em] text-[var(--c-text-25)]">
-                {section.label}
-              </h3>
-              <div className="flex-1 h-px bg-[var(--c-border-faint)]" />
-              <span className="text-[10px] font-bold text-[var(--c-text-20)]">{section.games.length}</span>
-            </div>
+            <Reveal>
+              <div className="flex items-center gap-2 py-1.5 px-1">
+                {section.label === 'Live' && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-d1red animate-glow-live" />
+                )}
+                <h3 className="text-[10px] font-black uppercase tracking-[0.18em] text-[var(--c-text-25)]">
+                  {section.label}
+                </h3>
+                <div className="flex-1 h-px bg-[var(--c-border-faint)]" />
+                <span className="text-[10px] font-bold text-[var(--c-text-20)]">{section.games.length}</span>
+              </div>
+            </Reveal>
           )}
           <div className="grid grid-cols-2 gap-2">
-            {section.games.map(game => (
-              <CompactGameCard key={game.id} game={game} />
+            {section.games.map((game, cardIdx) => (
+              <Reveal key={game.id} delay={cardIdx * 28}>
+                <CompactGameCard game={game} />
+              </Reveal>
             ))}
           </div>
         </div>

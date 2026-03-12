@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom';
 import logoImg from '/logo.png?url';
 
 export default function Header() {
   return (
     <header className="safe-top sticky top-0 z-30 glass">
       <div className="flex items-center justify-between px-4 py-2.5">
-        <div className="flex items-start gap-2.5">
+        <Link to="/" className="flex items-start gap-2.5">
           <img
             src={logoImg}
             alt="D1 Diamond"
@@ -18,7 +19,7 @@ export default function Header() {
               College Baseball
             </p>
           </div>
-        </div>
+        </Link>
       </div>
     </header>
   );

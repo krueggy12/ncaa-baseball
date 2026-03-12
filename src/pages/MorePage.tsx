@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Reveal from '../components/common/Reveal';
 
 const menuItems = [
   {
@@ -59,15 +60,17 @@ export default function MorePage() {
 
   return (
     <div className="px-4 pb-4">
-      <div className="pt-4 pb-3">
-        <h2 className="text-[22px] font-black text-[var(--c-text)] tracking-tight uppercase">More</h2>
-        <p className="text-[11px] text-[var(--c-text-30)] font-medium mt-0.5">Standings, stats, teams & settings</p>
-      </div>
+      <Reveal>
+        <div className="pt-4 pb-3">
+          <h2 className="text-[22px] font-black text-[var(--c-text)] tracking-tight uppercase">More</h2>
+          <p className="text-[11px] text-[var(--c-text-30)] font-medium mt-0.5">Standings, stats, teams & settings</p>
+        </div>
+      </Reveal>
 
       <div className="space-y-1.5">
         {menuItems.map((item, idx) => (
+          <Reveal key={item.path} delay={idx * 50}>
           <button
-            key={item.path}
             onClick={() => navigate(item.path)}
             className="w-full flex items-center gap-3.5 bg-[var(--c-surface)] rounded-2xl border border-[var(--c-border)] px-4 py-3.5 text-left active:scale-[0.98] transition-all duration-150 hover:bg-[var(--c-surface-alt)]"
             style={{ opacity: 1 - idx * 0.04 }}
@@ -83,10 +86,12 @@ export default function MorePage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
           </button>
+          </Reveal>
         ))}
       </div>
 
       {/* D1 Diamond Predictions */}
+      <Reveal delay={260}>
       <a
         href="https://predictions.d1diamond.com"
         target="_blank"
@@ -106,6 +111,7 @@ export default function MorePage() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
         </svg>
       </a>
+      </Reveal>
     </div>
   );
 }
