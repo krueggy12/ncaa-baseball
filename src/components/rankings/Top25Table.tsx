@@ -128,7 +128,7 @@ export default function Top25Table({ rankings }: Props) {
       </div>
 
       <p className="text-[10px] text-[var(--c-text-20)] text-center mt-3 px-2">
-        D1 Diamond composite ranking — ELO + run differential. Min. 5 games played.
+        D1 Diamond composite ranking — Min. 5 games played.
       </p>
     </div>
   );
