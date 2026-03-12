@@ -56,8 +56,6 @@ export default function Top25Table({ rankings }: Props) {
               className={`flex items-center px-3 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0 transition-colors duration-150 ${
                 fav
                   ? 'bg-amber-400/5'
-                  : isTop3
-                  ? 'bg-royal/[0.04]'
                   : idx % 2 === 0
                   ? 'bg-[var(--c-surface)]'
                   : 'bg-[var(--c-surface-alt)]'
