@@ -30,7 +30,7 @@ export default function PowerRankingsTable({ rankings }: Props) {
           <span className="w-6" />
         </div>
 
-        {rankings.map(team => {
+        {rankings.map((team, idx) => {
           const fav = isFavorite(team.teamId);
           const rdColor =
             team.runDiffPerGame > 2
@@ -46,7 +46,11 @@ export default function PowerRankingsTable({ rankings }: Props) {
             <div
               key={team.teamId}
               className={`flex items-center px-4 py-2.5 border-b border-[var(--c-border-faint)] last:border-b-0 ${
-                fav ? 'bg-yellow-50/50 dark:bg-yellow-900/10' : ''
+                fav
+                  ? 'bg-yellow-50/50 dark:bg-yellow-900/10'
+                  : idx % 2 === 0
+                  ? 'bg-[var(--c-surface)]'
+                  : 'bg-[var(--c-surface-alt)]'
               }`}
             >
               <span className="w-8 text-center text-sm font-bold tabular-nums text-[var(--c-text-80)]">
