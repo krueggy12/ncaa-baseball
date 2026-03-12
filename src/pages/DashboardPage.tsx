@@ -5,6 +5,7 @@ import { useCollegeStats } from '../hooks/useCollegeStats';
 import { useTop25RankMap } from '../context/Top25Context';
 import { toESPNDate, getToday } from '../utils/dateUtils';
 import TeamLogo from '../components/common/TeamLogo';
+import Reveal from '../components/common/Reveal';
 import type { Game } from '../types/game';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -197,12 +198,15 @@ export default function DashboardPage() {
     <div className="pb-6">
 
       {/* ── Page Header ── */}
-      <div className="px-4 pt-4 pb-4">
-        <p className="text-[11px] font-bold text-[var(--c-text-25)] uppercase tracking-[0.18em]">{dateLabel}</p>
-        <h1 className="text-[28px] font-black text-[var(--c-text)] tracking-tight leading-tight uppercase">Dashboard</h1>
-      </div>
+      <Reveal>
+        <div className="px-4 pt-4 pb-4">
+          <p className="text-[11px] font-bold text-[var(--c-text-25)] uppercase tracking-[0.18em]">{dateLabel}</p>
+          <h1 className="text-[28px] font-black text-[var(--c-text)] tracking-tight leading-tight uppercase">Dashboard</h1>
+        </div>
+      </Reveal>
 
       {/* ── Today's Games ── */}
+      <Reveal delay={60}>
       <div className="mb-6">
         <SectionHeader
           title="TODAY'S GAMES"
@@ -242,8 +246,10 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+      </Reveal>
 
       {/* ── D1 Diamond Top 10 ── */}
+      <Reveal delay={120}>
       <div className="mb-6">
         <SectionHeader
           title="D1 DIAMOND RANKINGS"
@@ -269,8 +275,10 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+      </Reveal>
 
       {/* ── Top Batters ── */}
+      <Reveal delay={180}>
       <div className="mb-6">
         <SectionHeader
           title="TOP BATTERS"
@@ -315,8 +323,10 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+      </Reveal>
 
       {/* ── Top Pitchers ── */}
+      <Reveal delay={240}>
       <div className="mb-2">
         <SectionHeader
           title="TOP PITCHERS"
@@ -361,6 +371,7 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+      </Reveal>
 
     </div>
   );
