@@ -128,7 +128,7 @@ export default function SettingsPage() {
             Track live NCAA college baseball scores, rankings, and your favorite teams. Data provided by ESPN.
           </p>
           <p className="text-xs text-[var(--c-text-40)] mt-2">
-            Version 1.0.0
+            Version 2.0.0
           </p>
         </div>
       </section>
