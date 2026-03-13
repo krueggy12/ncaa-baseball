@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { useState, useRef, useCallback } from 'react';
 import Header from './Header';
-import BottomNav from './BottomNav';
 import { useTheme } from '../../context/ThemeContext';
 
 export default function AppShell() {
@@ -31,7 +30,7 @@ export default function AppShell() {
           style={{ background: `linear-gradient(to bottom, ${bleedColor}, transparent)` }}
         />
 
-        <main ref={mainRef} onScroll={handleScroll} className="h-full overflow-y-auto pb-[76px]" style={{ paddingBottom: 'calc(76px + env(safe-area-inset-bottom, 0px))' }}>
+        <main ref={mainRef} onScroll={handleScroll} className="h-full overflow-y-auto pb-6 safe-bottom">
           <Outlet />
         </main>
 
@@ -42,8 +41,6 @@ export default function AppShell() {
         />
 
       </div>
-
-      <BottomNav />
     </div>
   );
 }
