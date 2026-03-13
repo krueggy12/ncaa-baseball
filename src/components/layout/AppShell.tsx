@@ -30,7 +30,7 @@ export default function AppShell() {
           style={{ background: `linear-gradient(to bottom, ${bleedColor}, transparent)` }}
         />
 
-        <main ref={mainRef} onScroll={handleScroll} className="h-full overflow-y-auto" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
+        <main ref={mainRef} onScroll={handleScroll} className="h-full overflow-y-auto" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom, 2.125rem))' }}>
           <Outlet />
         </main>
 
