@@ -18,7 +18,7 @@ export default function AppShell() {
   }, []);
 
   return (
-    <div className="flex flex-col h-full bg-[var(--c-bg)]">
+    <div className="flex flex-col bg-[var(--c-bg)]" style={{ height: '100dvh' }}>
       <Header />
 
       {/* Scroll container + bleed overlays */}

@@ -64,16 +64,19 @@ export default function Header() {
             </Link>
           ))}
 
-          {/* More dropdown */}
+          {/* More — navigates to /more, hover reveals dropdown */}
           <div className="relative group">
-            <button className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-[0.14em] transition-colors ${
-              moreActive ? 'bg-royal text-white' : 'text-[var(--c-text-60)] hover:text-[var(--c-text)]'
-            }`}>
+            <Link
+              to="/more"
+              className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-[0.14em] transition-colors ${
+                moreActive ? 'bg-royal text-white' : 'text-[var(--c-text-60)] hover:text-[var(--c-text)]'
+              }`}
+            >
               More
               <svg className="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
-            </button>
+            </Link>
             <div className="hidden group-hover:block absolute right-0 top-full pt-1 z-50">
               <div className="bg-[var(--c-surface)] rounded-xl shadow-lg border border-[var(--c-border)] py-1 min-w-[140px]">
                 {moreLinks.map(link => (
@@ -115,13 +118,36 @@ export default function Header() {
       {/* Mobile dropdown */}
       {mobileOpen && (
         <div className="sm:hidden border-t border-[var(--c-border)] bg-[var(--c-nav-bg)]">
-          {[...navLinks.map(l => ({ ...l, exact: l.exact })), ...moreLinks.map(l => ({ ...l, exact: false }))].map(link => (
+          {navLinks.map(link => (
             <Link
               key={link.href}
               to={link.href}
               onClick={() => setMobileOpen(false)}
               className={`block w-full px-5 py-3.5 text-[11px] font-black uppercase tracking-[0.14em] border-b border-[var(--c-border)] transition-colors ${
                 isActive(pathname, link.href, link.exact) ? 'text-royal' : 'text-[var(--c-text-60)]'
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          {/* More — top-level link */}
+          <Link
+            to="/more"
+            onClick={() => setMobileOpen(false)}
+            className={`block w-full px-5 py-3.5 text-[11px] font-black uppercase tracking-[0.14em] border-b border-[var(--c-border)] transition-colors ${
+              pathname === '/more' ? 'text-royal' : 'text-[var(--c-text-60)]'
+            }`}
+          >
+            More
+          </Link>
+          {/* More sub-items — indented */}
+          {moreLinks.map(link => (
+            <Link
+              key={link.href}
+              to={link.href}
+              onClick={() => setMobileOpen(false)}
+              className={`block w-full pl-9 pr-5 py-3 text-[11px] font-black uppercase tracking-[0.14em] border-b border-[var(--c-border)] transition-colors ${
+                isActive(pathname, link.href, false) ? 'text-royal' : 'text-[var(--c-text-40)]'
               }`}
             >
               {link.label}
