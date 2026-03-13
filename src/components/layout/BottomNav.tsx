@@ -52,7 +52,7 @@ export default function BottomNav() {
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 glass">
+    <nav className="safe-bottom fixed bottom-0 left-0 right-0 z-30 glass" style={{ backgroundColor: 'var(--c-nav-bg)' }}>
 
       <div className="flex items-center justify-around h-[60px] max-w-lg mx-auto px-2">
         {tabs.map(tab => {
@@ -91,8 +91,6 @@ export default function BottomNav() {
           );
         })}
       </div>
-      {/* Explicit safe area fill — backdrop-filter doesn't always cover padding on iOS PWA */}
-      <div className="bg-[var(--c-nav-bg)]" style={{ height: 'env(safe-area-inset-bottom, 0px)' }} />
     </nav>
   );
 }
