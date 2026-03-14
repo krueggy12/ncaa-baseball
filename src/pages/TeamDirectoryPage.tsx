@@ -6,7 +6,6 @@ import { transformTeams, type ESPNTeam } from '../api/transformers';
 import { CONFERENCES } from '../api/conferences';
 import { useFavorites } from '../context/FavoritesContext';
 import TeamLogo from '../components/common/TeamLogo';
-import Reveal from '../components/common/Reveal';
 
 export default function TeamDirectoryPage() {
   const navigate = useNavigate();
@@ -129,7 +128,6 @@ export default function TeamDirectoryPage() {
 
       {/* Teams list */}
       {!loading && filteredTeams.length > 0 && (
-        <Reveal>
         <div className="px-3">
           <div className="bg-[var(--c-surface)] rounded-xl shadow-sm overflow-hidden">
             {filteredTeams.map(team => {
@@ -179,7 +177,6 @@ export default function TeamDirectoryPage() {
             })}
           </div>
         </div>
-        </Reveal>
       )}
 
       {/* Empty state */}
